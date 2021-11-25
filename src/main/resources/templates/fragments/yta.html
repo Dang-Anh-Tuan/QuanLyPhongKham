@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="html_head(type)" th:remove="${type}">
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css}"
+	integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" th:href="@{/css/base.css}" />
+<link rel="stylesheet" th:href="@{/css/grid.css}" />
+<link rel="stylesheet" th:href="@{/css/admin/admin-header.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin-sidebar.css}">
+
+</head>
+<body>
+
+
+	<!--  ----------------------SIDEBAR Y Ta ----------------------- -->
+	<div th:fragment="sidebar_yta">
+		<div class="side-bar-container">
+			<ul class="side-bar-list-btn">
+				<li class="side-bar-item"><img class="side-bar-item__icon-img"
+					th:src="@{/img/icon-doctor.png}" alt=""> <a
+					class="side-bar-item__link" th:href="@{/list-benhan}">Danh sách bệnh án</a> </li>
+				<li class="side-bar-item"><i
+					class="fas fa-plus-circle side-bar-item__icon"></i> <a
+					class="side-bar-item__link" th:href="@{/add-benhan}">Thêm bệnh án</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+	<!--  ---------------------- END SIDEBAR SIDEBAR Y Ta ----------------------- -->
+
+
+	<!--  ---------------------- List Benh An Y Ta----------------------- -->
+	<div th:fragment="list_benhan_yta" th:remove="tag">
+		<div class="container-list-entity grow-full">
+			<p class="list-entity-heading">Danh Sách Bệnh Án</p>
+			<div class="grid__full-width table-list">
+				<div
+					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+					<div class="grid__col-lg-1 table-list__th table-list__cell">STT</div>
+					<div class="grid__col-lg-2 table-list__th table-list__cell">Mã
+						Bệnh nhân</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">Họ
+						Tên</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">CMT</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">Ngày
+						sinh</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">SĐT</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">Hành
+						động</div>
+				</div>
+				<div
+					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+					<div class="grid__col-lg-1 table-list__cell">1</div>
+					<div class="grid__col-lg-2 table-list__cell">BN1</div>
+					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
+					<div class="grid__col-lg-3 table-list__cell">021324564</div>
+					<div class="grid__col-lg-3 table-list__cell">19/08/2000</div>
+					<div class="grid__col-lg-3 table-list__cell">02132454</div>
+					<div class="grid__col-lg-3 table-list__cell">
+						<div class="grid__row grid__row--item-center">
+							<a href="" class="table-list__cell-link"><i
+								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+							<a href="" class="table-list__cell-link"><i
+								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>	
+							<a href="" class="table-list__cell-link btn btn-size-s btn--warning">Phát, tiêm thuốc</a>
+						</div>
+					</div>
+				</div>
+
+				<div
+					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+					<div class="grid__col-lg-1 table-list__cell">1</div>
+					<div class="grid__col-lg-2 table-list__cell">BN1</div>
+					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
+					<div class="grid__col-lg-3 table-list__cell">021324564</div>
+					<div class="grid__col-lg-3 table-list__cell">19/08/2000</div>
+					<div class="grid__col-lg-3 table-list__cell">02132454</div>
+					<div class="grid__col-lg-3 table-list__cell">
+						<div class="grid__row grid__row--item-center">
+							<a href="" class="table-list__cell-link"><i
+								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+							<a href="" class="table-list__cell-link"><i
+								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>	
+							<a href="" class="table-list__cell-link btn btn-size-s btn--warning">Phát, tiêm thuốc</a>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+	</div>
+
+
+	<!--  ---------------------- END List Benh An Y Ta----------------------- -->
+
+
+<!--  ---------------------- FORM ADD NURSE  QUAN LY NHAN SU ----------------------- -->
+
+	<div th:fragment="add_form_benhan_yta" th:remove="tag">
+		<form class="container-add-form grow-full" method="post">
+			<p class="add-form__heading">Thêm Bệnh Án</p>
+			<div class="grid__full-width add-form__form">
+
+				<div class="grid__row form__row">
+					<div class="form__field-container">
+						<p class="form__field-heading">Họ Tên</p>
+						<input type="text" class="form__field-input--text" />
+					</div>
+					<div class="form__field-container">
+						<p class="form__field-heading">CMT</p>
+						<input type="text" class="form__field-input--text" />
+					</div>
+				</div>
+
+				<div class="grid__row form__row">
+					<div class="form__field-container">
+						<p class="form__field-heading">Ngày sinh</p>
+						<input type="date" class="form__field-input--text" />
+					</div>
+					<div class="form__field-container">
+						<p class="form__field-heading">SĐT</p>
+						<input type="text" class="form__field-input--text" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="add-form__container-btn">
+				<input type="submit" class="btn btn--primary add-form__btn"
+					value="Thêm Y Tá" /> <a href=""
+					class="btn btn--border-primary add-form__btn">Quay lại</a>
+			</div>
+		</form>
+	</div>
+
+	<!--  ---------------------- END FORM NURSE DOCTOR  QUAN LY NHAN SU ----------------------- -->
+
+</body>
+</html>
