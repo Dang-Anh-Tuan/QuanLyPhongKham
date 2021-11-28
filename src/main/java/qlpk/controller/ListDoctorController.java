@@ -1,6 +1,7 @@
 package qlpk.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -32,7 +33,9 @@ public class ListDoctorController {
 	}
 	
 	@GetMapping("/add-medicine")
-	public String showAddFormMedicne() {
+	public String showAddFormMedicne(Model model) {
 		return "QuanLyNhanSu/AddMedicine";
 	}
+	
+	
 }
