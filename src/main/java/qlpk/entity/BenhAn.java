@@ -15,7 +15,8 @@ public class BenhAn {
     private Date ngayVaoVien;
     private Date ngayXuatVien;
     private float tongTien;
-    private int daKhoi;
+    private boolean daPhat;
+    private boolean daKhoi;
     @ManyToOne(targetEntity = BacSy.class)
     @JoinColumn(name = "bac_sy_id", referencedColumnName = "id")
     private BacSy bacSy;

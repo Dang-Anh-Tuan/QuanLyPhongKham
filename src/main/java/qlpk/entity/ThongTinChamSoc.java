@@ -1,6 +1,7 @@
 package qlpk.entity;
 
 import lombok.Data;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -19,5 +20,6 @@ public class ThongTinChamSoc {
     private BenhNhan benhNhan;
     @ManyToOne(targetEntity = DonThuoc.class)
     @JoinColumn(name = "don_thuoc_id", referencedColumnName = "id")
+    @Nullable
     private DonThuoc donThuoc;
 }
