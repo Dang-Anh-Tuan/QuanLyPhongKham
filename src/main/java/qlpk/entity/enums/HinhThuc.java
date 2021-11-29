@@ -5,7 +5,7 @@ public enum HinhThuc {
     CAPTHUOC("capthuoc", 2),
     TIEMTHUOC("tiemthuoc", 3),
     CHAMSOC("chamsoc", 4),
-    THEODOI("uong", 5);
+    THEODOI("theodoi", 5);
     private final String type;
     private final int value;
 
