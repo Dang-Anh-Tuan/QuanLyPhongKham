@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Controller
-public class YtaController {
+public class NurseController {
 	@GetMapping("/list-benhan")
 	public String showListDoctor() {
 		return "Yta/ListBenhAn";
