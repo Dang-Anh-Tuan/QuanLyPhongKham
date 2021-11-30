@@ -170,6 +170,10 @@ body{
   padding-left: 100px;
 }
 
+.pd-0-24{
+  padding: 0 24px;;
+}
+
 .align-item-right {
   justify-content: flex-end;
 }
