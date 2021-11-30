@@ -3,10 +3,7 @@ package qlpk.entity;
 import lombok.Data;
 import qlpk.entity.enums.Role;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -19,5 +16,6 @@ public class TaiKhoan {
     @NotNull
     private String password;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Role role;
 }

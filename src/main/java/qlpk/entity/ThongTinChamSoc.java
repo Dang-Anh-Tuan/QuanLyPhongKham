@@ -1,6 +1,8 @@
 package qlpk.entity;
 
 import lombok.Data;
+import org.springframework.lang.Nullable;
+import qlpk.entity.enums.HinhThuc;
 
 import javax.persistence.*;
 
@@ -10,7 +12,7 @@ public class ThongTinChamSoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int hinhThuc;
+    private HinhThuc hinhThuc;
     @ManyToOne(targetEntity = YTa.class)
     @JoinColumn(name = "y_ta_id", referencedColumnName = "id")
     private YTa yTa;
@@ -19,5 +21,6 @@ public class ThongTinChamSoc {
     private BenhNhan benhNhan;
     @ManyToOne(targetEntity = DonThuoc.class)
     @JoinColumn(name = "don_thuoc_id", referencedColumnName = "id")
+    @Nullable
     private DonThuoc donThuoc;
 }
