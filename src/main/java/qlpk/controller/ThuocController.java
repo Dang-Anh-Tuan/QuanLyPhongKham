@@ -10,16 +10,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import qlpk.model.Medicine;
-import qlpk.service.MedicineService;
+import qlpk.entity.Thuoc;
+import qlpk.service.ThuocService;
 
 @Controller
-public class MedicineController {
+public class ThuocController {
 	@Autowired
-	private MedicineService medicineService;
-	@GetMapping("/medicine")
+	private ThuocService thuocService;
+	public ThuocController (ThuocService thuocService) {
+		this.thuocService = thuocService;
+	};
+	@GetMapping("/thuoc")
 	public String index(Model model) {
-		model.addAttribute("medicine", medicineService.findAll());
+		model.addAttribute("dsthuoc", thuocService.findAll());
 		return "QuanLyNhanSu/ListMedicine";
 	}
 	@GetMapping("/medicine/add")
