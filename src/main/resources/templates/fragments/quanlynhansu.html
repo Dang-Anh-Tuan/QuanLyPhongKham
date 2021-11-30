@@ -226,34 +226,28 @@
 				</div>
 				<div
 					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
-					<div class="grid__col-lg-1 table-list__cell">1</div>
-					<div class="grid__col-lg-2 table-list__cell">T1</div>
-					<div class="grid__col-lg-3 table-list__cell">Totri</div>
-					<div class="grid__col-lg-3 table-list__cell">300000</div>
+					<div class="grid__col-lg-1 table-list__cell">${item.stt}</div>
+					<div class="grid__col-lg-2 table-list__cell">${item.mathuoc}</div>
+					<div class="grid__col-lg-3 table-list__cell">${item.tenthuoc}</div>
+					<div class="grid__col-lg-3 table-list__cell">${item.giathuoc}</div>
 					<div class="grid__col-lg-1 table-list__cell">
 						<div class="grid__row">
 							<a href="" class="table-list__cell-link"><i
 								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+								
+								<td><a th:href="@{/medicine/{id}/edit(id=${contact.id})}"><span
+									class="grid__row grid__row--spbw grid__row--item-center table-list__row"></span></a></td>
+								
 							<a href="" class="table-list__cell-link"><i
 								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
+								
+								<td><a th:href="@{/medicine/{id}/delete(id=${contact.id})}"><span
+									class="grid__row grid__row--spbw grid__row--item-center table-list__row"></span></a></td>
+								
 						</div>
 					</div>
 				</div>
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
-					<div class="grid__col-lg-1 table-list__cell">2</div>
-					<div class="grid__col-lg-2 table-list__cell">T2</div>
-					<div class="grid__col-lg-3 table-list__cell">Astra</div>
-					<div class="grid__col-lg-3 table-list__cell">500000</div>
-					<div class="grid__col-lg-1 table-list__cell">
-						<div class="grid__row">
-							<a href="" class="table-list__cell-link"><i
-								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
-							<a href="" class="table-list__cell-link"><i
-								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 
@@ -429,7 +423,7 @@
 		<form class="container-add-form grow-full" method="post" >
 			<p class="add-form__heading">Thêm Thuốc</p>
 			<div class="grid__full-width add-form__form">
-
+			
 				<div class="grid__row form__row">
 					<div class="form__field-container">
 						<p class="form__field-heading">Tên thuốc</p>
