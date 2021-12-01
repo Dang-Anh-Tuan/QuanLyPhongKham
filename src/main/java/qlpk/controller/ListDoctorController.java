@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ListDoctorController {
-	@GetMapping("/list-doctor")
-	public String showListDoctor() {
-		return "QuanLyNhanSu/ListDoctor";
-	}
+
 	
 	@GetMapping("/add-doctor")
 	public String showAddFormDoctor() {

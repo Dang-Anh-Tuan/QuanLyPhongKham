@@ -198,6 +198,14 @@ body{
   font-size: 1.6rem;
 }
 
+.text-font-32{
+  font-size: 3.2rem;
+}
+
+.text-color-primary{
+  color: var(--primary-color);
+}
+
 .input-width-300x40{
   width: 300px;
   height : 40px;

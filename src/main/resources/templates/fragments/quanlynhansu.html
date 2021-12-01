@@ -20,11 +20,11 @@
 			<ul class="side-bar-list-btn">
 				<li class="side-bar-item"><img class="side-bar-item__icon-img"
 					th:src="@{/img/icon-doctor.png}" alt=""> <a
-					class="side-bar-item__link" th:href="@{/list-doctor}">Xem danh
+					class="side-bar-item__link" th:href="@{/qlns/bacsi/ds-bacsi}">Xem danh
 						sách bác sĩ</a></li>
 				<li class="side-bar-item"><i
 					class="fas fa-plus-circle side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/add-doctor}">Thêm bác
+					class="side-bar-item__link" th:href="@{/qlns/bacsi/add}">Thêm bác
 						sĩ</a></li>
 				<li class="side-bar-item"><img class="side-bar-item__icon-img"
 					th:src="@{/img/icon-nurse.png}" alt=""> <a
@@ -61,7 +61,7 @@
 	<div th:fragment="list_doctor_qlns" th:remove="tag">
 		<div class="container-list-entity grow-full">
 			<p class="list-entity-heading">Danh Sách Bác Sĩ</p>
-			<div class="grid__full-width table-list">
+			<div class="grid__full-width table-list" th:object="${dsBacSi}">
 				<div
 					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
 					<div class="grid__col-lg-1 table-list__th table-list__cell">STT</div>
@@ -85,48 +85,30 @@
 					<div class="grid__col-lg-1 table-list__th table-list__cell">Hành
 						động</div>
 				</div>
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
-					<div class="grid__col-lg-1 table-list__cell">1</div>
-					<div class="grid__col-lg-2 table-list__cell">BS1</div>
-					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
-					<div class="grid__col-lg-3 table-list__cell">021324564</div>
-					<div class="grid__col-lg-3 table-list__cell">19/08/2000</div>
-					<div class="grid__col-lg-3 table-list__cell">Hà Nội</div>
-					<div class="grid__col-lg-3 table-list__cell">Pro</div>
-					<div class="grid__col-lg-3 table-list__cell">10</div>
-					<div class="grid__col-lg-3 table-list__cell">10</div>
-					<div class="grid__col-lg-3 table-list__cell">Nội</div>
-					<div class="grid__col-lg-1 table-list__cell">
-						<div class="grid__row">
-							<a href="" class="table-list__cell-link"><i
-								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
-							<a href="" class="table-list__cell-link"><i
-								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
+				<th:block th:each="bacsi, state : ${dsBacSi}">
+					<div
+						class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+						<div class="grid__col-lg-1 table-list__cell" th:utext="${state.count}"></div>
+						<div class="grid__col-lg-2 table-list__cell" th:utext="${bacsi.id}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${bacsi.ten}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${bacsi.cmt}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${#dates.format(bacsi.ngaySinh, 'dd/MMM/yyyy')}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${bacsi.diaChi}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${bacsi.bacNghe}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${bacsi.thamNien}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${bacsi.trinhDo}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${bacsi.chuyenMon}"></div>
+						<div class="grid__col-lg-1 table-list__cell">
+							<div class="grid__row">
+								<a th:href="@{'/qlns/bacsi/edit/' + ${bacsi.id}}" class="table-list__cell-link"><i
+									class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+								<a th:href="@{'/qlns/bacsi/delete/' + ${bacsi.id}}" class="table-list__cell-link"><i
+									class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
-					<div class="grid__col-lg-1 table-list__cell">2</div>
-					<div class="grid__col-lg-2 table-list__cell">BS2</div>
-					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
-					<div class="grid__col-lg-3 table-list__cell">021324564</div>
-					<div class="grid__col-lg-3 table-list__cell">19/08/2000</div>
-					<div class="grid__col-lg-3 table-list__cell">Hà Nội</div>
-					<div class="grid__col-lg-3 table-list__cell">Pro</div>
-					<div class="grid__col-lg-3 table-list__cell">10</div>
-					<div class="grid__col-lg-3 table-list__cell">10</div>
-					<div class="grid__col-lg-3 table-list__cell">Nội</div>
-					<div class="grid__col-lg-1 table-list__cell">
-						<div class="grid__row">
-							<a href="" class="table-list__cell-link"><i
-								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
-							<a href="" class="table-list__cell-link"><i
-								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
-						</div>
-					</div>
-				</div>
+				</th:block>
+
 			</div>
 		</div>
 
@@ -261,96 +243,6 @@
 	<!--  ---------------------- END LIST MEDICINE QUAN LY NHAN SU ----------------------- -->
 
 
-	<!--  ---------------------- FORM ADD DOCTOR  QUAN LY NHAN SU ----------------------- -->
-
-	<div th:fragment="add_form_doctor_qlns" th:remove="tag">
-		<form class="container-add-form grow-full" method="post">
-			<p class="add-form__heading">Thêm Bác Sĩ</p>
-			<div class="grid__full-width add-form__form">
-
-				<div class="grid__row form__row">
-					<div class="form__field-container">
-						<p class="form__field-heading">Họ Tên</p>
-						<input type="text" class="form__field-input--text" />
-					</div>
-					<div class="form__field-container">
-						<p class="form__field-heading">CMT</p>
-						<input type="text" class="form__field-input--text" />
-					</div>
-				</div>
-
-				<div class="grid__row form__row">
-					<div class="form__field-container">
-						<p class="form__field-heading">Ngày sinh</p>
-						<input type="date" class="form__field-input--text" />
-					</div>
-					<div class="form__field-container">
-						<p class="form__field-heading">Địa chỉ</p>
-						<input type="text" class="form__field-input--text" />
-					</div>
-				</div>
-
-				<div class="grid__row form__row">
-					<div class="form__field-container">
-						<p class="form__field-heading">Bậc nghề</p>
-						<select class="form__field-input--select" name="cars" id="cars">
-							<option class="form__field-input--select-option" value="1">
-								Bậc 1</option>
-							<option class="form__field-input--select-option" value="2">
-								Bậc 2</option>
-							<option class="form__field-input--select-option" value="3">
-								Bậc 3</option>
-							<option class="form__field-input--select-option" value="4">
-								Bậc 4</option>
-							<option class="form__field-input--select-option" value="1">
-								Bậc 5</option>
-							<option class="form__field-input--select-option" value="2">
-								Bậc 6</option>
-							<option class="form__field-input--select-option" value="3">
-								Bậc 7</option>
-							<option class="form__field-input--select-option" value="4">
-								Bậc 8</option>
-							<option class="form__field-input--select-option" value="4">
-								Bậc 9</option>
-						</select>
-					</div>
-					<div class="form__field-container">
-						<p class="form__field-heading">Thâm niên</p>
-						<input type="number" class="form__field-input--text" value="0"
-							min="0" />
-					</div>
-				</div>
-				<div class="grid__row form__row">
-					<div class="form__field-container">
-						<p class="form__field-heading">Trình độ</p>
-						<input type="text" class="form__field-input--text" />
-					</div>
-					<div class="form__field-container">
-						<p class="form__field-heading">Chuyên môn</p>
-						<input type="text" class="form__field-input--text" />
-					</div>
-				</div>
-				<div class="grid__row form__row">
-					<div class="form__field-container">
-						<p class="form__field-heading">Username</p>
-						<input type="text" class="form__field-input--text" />
-					</div>
-					<div class="form__field-container">
-						<p class="form__field-heading">Password</p>
-						<input type="password" class="form__field-input--text" />
-					</div>
-				</div>
-			</div>
-			<div class="add-form__container-btn">
-				<input type="submit" class="btn btn--primary add-form__btn"
-					value="Thêm Bác sĩ" /> <a href=""
-					class="btn btn--border-primary add-form__btn">Quay lại</a>
-			</div>
-		</form>
-	</div>
-
-	<!--  ---------------------- END FORM ADD DOCTOR  QUAN LY NHAN SU ----------------------- -->
-
 	<!--  ---------------------- FORM ADD NURSE  QUAN LY NHAN SU ----------------------- -->
 
 	<div th:fragment="add_form_nurse_qlns" th:remove="tag">
@@ -408,7 +300,7 @@
 					</div>
 
 				</div>
-				
+
 			</div>
 			<div class="add-form__container-btn">
 				<input type="submit" class="btn btn--primary add-form__btn"
@@ -426,7 +318,7 @@
 	<!--  ---------------------- FORM ADD MEDICINE  QUAN LY NHAN SU ----------------------- -->
 
 	<div th:fragment="add_form_medicine_qlns" th:remove="tag">
-		<form class="container-add-form grow-full" method="post" >
+		<form class="container-add-form grow-full" method="post">
 			<p class="add-form__heading">Thêm Thuốc</p>
 			<div class="grid__full-width add-form__form">
 
@@ -438,7 +330,7 @@
 					<div class="form__field-container">
 						<p class="form__field-heading">Giá thuốc (VNĐ)</p>
 						<input type="number" class="form__field-input--text" value="0"
-							min="0"  />
+							min="0" />
 					</div>
 				</div>
 
@@ -451,5 +343,98 @@
 	</div>
 
 	<!--  ---------------------- END FORM MEDICINE DOCTOR  QUAN LY NHAN SU ----------------------- -->
+	
+	
+	
+	
+		<!--  ---------------------- FORM EDIT DOCTOR  QUAN LY NHAN SU ----------------------- -->
+
+	<div th:fragment="add_edit_form_doctor_qlns(heading)" th:remove="tag">
+		<form class="container-add-form grow-full" method="post" th:object="${bacsi}">
+			<p class="add-form__heading" th:text="${heading}"></p>
+			<div class="grid__full-width add-form__form">
+
+				<div class="grid__row form__row">
+					<div class="form__field-container">
+						<p class="form__field-heading">Họ Tên</p>
+						<input type="text" class="form__field-input--text" th:field="*{ten}"/>
+					</div>
+					<div class="form__field-container">
+						<p class="form__field-heading">CMT</p>
+						<input type="text" class="form__field-input--text" th:field="*{cmt}"/>
+					</div>
+				</div>
+
+				<div class="grid__row form__row">
+					<div class="form__field-container">
+						<p class="form__field-heading">Ngày sinh</p>
+						<input type="text" class="form__field-input--text" th:value="*{#dates.format(ngaySinh, 'dd/MM/yyyy')}" th:field="*{ngaySinh}"/>
+					</div>
+					<div class="form__field-container">
+						<p class="form__field-heading">Địa chỉ</p>
+						<input type="text" class="form__field-input--text" th:field="*{diaChi}"/>
+					</div>
+				</div>
+
+				<div class="grid__row form__row">
+					<div class="form__field-container">
+						<p class="form__field-heading">Bậc nghề</p>
+						<select class="form__field-input--select" name="cars" id="cars" th:field="*{bacNghe}">
+							<option class="form__field-input--select-option" value="1">
+								Bậc 1</option>
+							<option class="form__field-input--select-option" value="2">
+								Bậc 2</option>
+							<option class="form__field-input--select-option" value="3">
+								Bậc 3</option>
+							<option class="form__field-input--select-option" value="4">
+								Bậc 4</option>
+							<option class="form__field-input--select-option" value="1">
+								Bậc 5</option>
+							<option class="form__field-input--select-option" value="2">
+								Bậc 6</option>
+							<option class="form__field-input--select-option" value="3">
+								Bậc 7</option>
+							<option class="form__field-input--select-option" value="4">
+								Bậc 8</option>
+							<option class="form__field-input--select-option" value="4">
+								Bậc 9</option>
+						</select>
+					</div>
+					<div class="form__field-container">
+						<p class="form__field-heading">Thâm niên</p>
+						<input type="number" class="form__field-input--text" th:field="*{thamNien}"
+							min="0" />
+					</div>
+				</div>
+				<div class="grid__row form__row">
+					<div class="form__field-container">
+						<p class="form__field-heading">Trình độ</p>
+						<input type="text" class="form__field-input--text"  th:field="*{trinhDo}"/>
+					</div>
+					<div class="form__field-container">
+						<p class="form__field-heading">Chuyên môn</p>
+						<input type="text" class="form__field-input--text"  th:field="*{chuyenMon}"/>
+					</div>
+				</div>
+				<div class="grid__row form__row" th:object="${taikhoan}">
+					<div class="form__field-container">
+						<p class="form__field-heading">Username</p>
+						<input type="text" class="form__field-input--text" th:field="*{userName}"/>
+					</div>
+					<div class="form__field-container">
+						<p class="form__field-heading">Password</p>
+						<input type="password" class="form__field-input--text" th:field="*{password}"/>
+					</div>
+				</div>
+			</div>
+			<div class="add-form__container-btn">
+				<input type="submit" class="btn btn--primary add-form__btn"
+					th:value="${heading}" /> <a href=""
+					class="btn btn--border-primary add-form__btn">Quay lại</a>
+			</div>
+		</form>
+	</div>
+
+	<!--  ---------------------- END FORM EDIT DOCTOR  QUAN LY NHAN SU ----------------------- -->
 </body>
 </html>
