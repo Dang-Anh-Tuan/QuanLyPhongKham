@@ -1,23 +1,27 @@
 package qlpk.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import qlpk.entity.BacSy;
 import qlpk.entity.Thuoc;
 import qlpk.repo.ThuocRepo;
-
+@Service
 public class ThuocServiceImpl implements ThuocService{
+
 	@Autowired
 	private ThuocRepo thuocRepo;
+	
 	public ThuocServiceImpl(ThuocRepo thuocRepo) {
-		super();
 		this.thuocRepo = thuocRepo;
 	}
+	
 	@Override
 	public void deleteThuoc(int id) {
-		thuocRepo.deleteById(id);
-		
+		thuocRepo.deleteById(id);	
 	}
 
 	@Override
@@ -26,18 +30,28 @@ public class ThuocServiceImpl implements ThuocService{
 		return true;
 	}
 
-	
+	@Override
+	public boolean updateThuoc(Thuoc thuoc) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	@Override
-	public Thuoc addThuoc(String cmt) {
+	public Thuoc searchThuocByCMT(String cmt) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Thuoc> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return thuocRepo.findAll();
 	}
 
+	@Override
+	public Optional<Thuoc> findById(int id) {
+		return thuocRepo.findById(id);
+	}
+
+	
+	
 }

@@ -1,53 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet"
-	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css}"
-	integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" th:href="@{/css/base.css}" />
-<link rel="stylesheet" th:href="@{/css/grid.css}" />
-<link rel="stylesheet" th:href="@{/css/admin/admin-header.css}">
-<link rel="stylesheet" th:href="@{/css/admin/admin-sidebar.css}">
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css}"
+		integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" th:href="@{/css/base.css}" />
+	<link rel="stylesheet" th:href="@{/css/grid.css}" />
+	<link rel="stylesheet" th:href="@{/css/admin/admin-header.css}">
+	<link rel="stylesheet" th:href="@{/css/admin/admin-sidebar.css}">
+	
 </head>
+
 <body>
 	<!--  ----------------------SIDEBAR QUAN LY NHAN SU ----------------------- -->
 	<div th:fragment="sidebar_qlns" th:remove="tag">
 		<div class="side-bar-container">
 			<ul class="side-bar-list-btn">
-				<li class="side-bar-item"><img class="side-bar-item__icon-img"
-					th:src="@{/img/icon-doctor.png}" alt=""> <a
-					class="side-bar-item__link" th:href="@{/list-doctor}">Xem danh
+				<li class="side-bar-item"><img class="side-bar-item__icon-img" th:src="@{/img/icon-doctor.png}" alt="">
+					<a class="side-bar-item__link" th:href="@{/list-doctor}">Xem danh
 						sách bác sĩ</a></li>
-				<li class="side-bar-item"><i
-					class="fas fa-plus-circle side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/add-doctor}">Thêm bác
+				<li class="side-bar-item"><i class="fas fa-plus-circle side-bar-item__icon"></i> <a
+						class="side-bar-item__link" th:href="@{/add-doctor}">Thêm bác
 						sĩ</a></li>
-				<li class="side-bar-item"><img class="side-bar-item__icon-img"
-					th:src="@{/img/icon-nurse.png}" alt=""> <a
-					class="side-bar-item__link" th:href="@{/list-nurse}">Xem danh
+				<li class="side-bar-item"><img class="side-bar-item__icon-img" th:src="@{/img/icon-nurse.png}" alt="">
+					<a class="side-bar-item__link" th:href="@{/list-nurse}">Xem danh
 						sách y tá</a></li>
-				<li class="side-bar-item"><i
-					class="fas fa-plus-circle side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/add-nurse}">Thêm y tá</a></li>
-				<li class="side-bar-item"><img class="side-bar-item__icon-img"
-					th:src="@{/img/icon-medicine.png}" alt=""> <a
-					class="side-bar-item__link" th:href="@{/list-medicine}">Xem
+				<li class="side-bar-item"><i class="fas fa-plus-circle side-bar-item__icon"></i> <a
+						class="side-bar-item__link" th:href="@{/add-nurse}">Thêm y tá</a></li>
+				<li class="side-bar-item"><img class="side-bar-item__icon-img" th:src="@{/img/icon-medicine.png}"
+						alt=""> <a class="side-bar-item__link" th:href="@{/qlns/thuoc/ds-thuoc}">Xem
 						danh thuốc</a></li>
-				<li class="side-bar-item"><i
-					class="fas fa-plus-circle side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/add-medicine}">Thêm
+				<li class="side-bar-item"><i class="fas fa-plus-circle side-bar-item__icon"></i> <a
+						class="side-bar-item__link" th:href="@{/add-medicine}">Thêm
 						thuốc</a></li>
-				<li class="side-bar-item"><i
-					class="fas fa-chart-pie side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/statistic-diseases}">Thống
+				<li class="side-bar-item"><i class="fas fa-chart-pie side-bar-item__icon"></i> <a
+						class="side-bar-item__link" th:href="@{/statistic-diseases}">Thống
 						kê các bệnh mắc nhiều</a></li>
-				<li class="side-bar-item"><i
-					class="fas fa-money-check-alt side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/salary-employee}">Xem
+				<li class="side-bar-item"><i class="fas fa-money-check-alt side-bar-item__icon"></i> <a
+						class="side-bar-item__link" th:href="@{/salary-employee}">Xem
 						bảng lương</a></li>
 			</ul>
 		</div>
@@ -62,8 +56,7 @@
 		<div class="container-list-entity grow-full">
 			<p class="list-entity-heading">Danh Sách Bác Sĩ</p>
 			<div class="grid__full-width table-list">
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+				<div class="grid__row grid__row--spbw grid__row--item-center table-list__row">
 					<div class="grid__col-lg-1 table-list__th table-list__cell">STT</div>
 					<div class="grid__col-lg-2 table-list__th table-list__cell">Mã
 						Bác Sĩ</div>
@@ -85,8 +78,7 @@
 					<div class="grid__col-lg-1 table-list__th table-list__cell">Hành
 						động</div>
 				</div>
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+				<div class="grid__row grid__row--spbw grid__row--item-center table-list__row">
 					<div class="grid__col-lg-1 table-list__cell">1</div>
 					<div class="grid__col-lg-2 table-list__cell">BS1</div>
 					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
@@ -100,14 +92,13 @@
 					<div class="grid__col-lg-1 table-list__cell">
 						<div class="grid__row">
 							<a href="" class="table-list__cell-link"><i
-								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+									class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
 							<a href="" class="table-list__cell-link"><i
-								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
+									class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
 						</div>
 					</div>
 				</div>
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+				<div class="grid__row grid__row--spbw grid__row--item-center table-list__row">
 					<div class="grid__col-lg-1 table-list__cell">2</div>
 					<div class="grid__col-lg-2 table-list__cell">BS2</div>
 					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
@@ -121,9 +112,9 @@
 					<div class="grid__col-lg-1 table-list__cell">
 						<div class="grid__row">
 							<a href="" class="table-list__cell-link"><i
-								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+									class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
 							<a href="" class="table-list__cell-link"><i
-								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
+									class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
 						</div>
 					</div>
 				</div>
@@ -139,8 +130,7 @@
 		<div class="container-list-entity grow-full">
 			<p class="list-entity-heading">Danh Sách Y Tá</p>
 			<div class="grid__full-width table-list">
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+				<div class="grid__row grid__row--spbw grid__row--item-center table-list__row">
 					<div class="grid__col-lg-1 table-list__th table-list__cell">STT</div>
 					<div class="grid__col-lg-2 table-list__th table-list__cell">Mã
 						Y Tá</div>
@@ -159,8 +149,7 @@
 					<div class="grid__col-lg-1 table-list__th table-list__cell">Hành
 						động</div>
 				</div>
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+				<div class="grid__row grid__row--spbw grid__row--item-center table-list__row">
 					<div class="grid__col-lg-1 table-list__cell">1</div>
 					<div class="grid__col-lg-2 table-list__cell">YT001</div>
 					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
@@ -173,14 +162,13 @@
 					<div class="grid__col-lg-1 table-list__cell">
 						<div class="grid__row">
 							<a href="" class="table-list__cell-link"><i
-								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+									class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
 							<a href="" class="table-list__cell-link"><i
-								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
+									class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
 						</div>
 					</div>
 				</div>
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+				<div class="grid__row grid__row--spbw grid__row--item-center table-list__row">
 					<div class="grid__col-lg-1 table-list__cell">1</div>
 					<div class="grid__col-lg-2 table-list__cell">YT001</div>
 					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
@@ -193,9 +181,9 @@
 					<div class="grid__col-lg-1 table-list__cell">
 						<div class="grid__row">
 							<a href="" class="table-list__cell-link"><i
-								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+									class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
 							<a href="" class="table-list__cell-link"><i
-								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
+									class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
 						</div>
 					</div>
 				</div>
@@ -209,11 +197,10 @@
 
 	<!--  ----------------------LIST MEDICINE QUAN LY NHAN SU ----------------------- -->
 	<div th:fragment="list_medicine_qlns" th:remove="tag">
-		<div class="container-list-entity grow-full">
+		<div class="container-list-entity grow-full" th:object="${listThuoc}">
 			<p class="list-entity-heading">Danh Sách Thuốc</p>
 			<div class="grid__full-width table-list">
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+				<div class="grid__row grid__row--spbw grid__row--item-center table-list__row">
 					<div class="grid__col-lg-1 table-list__th table-list__cell">STT</div>
 					<div class="grid__col-lg-2 table-list__th table-list__cell">Mã
 						thuốc</div>
@@ -224,30 +211,34 @@
 					<div class="grid__col-lg-1 table-list__th table-list__cell">Hành
 						động</div>
 				</div>
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
-					<div class="grid__col-lg-1 table-list__cell">${item.stt}</div>
-					<div class="grid__col-lg-2 table-list__cell">${item.mathuoc}</div>
-					<div class="grid__col-lg-3 table-list__cell">${item.tenthuoc}</div>
-					<div class="grid__col-lg-3 table-list__cell">${item.giathuoc}</div>
-					<div class="grid__col-lg-1 table-list__cell">
-						<div class="grid__row">
-							<a href="" class="table-list__cell-link"><i
-								class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
-								
-								<td><a th:href="@{/medicine/{id}/edit(id=${contact.id})}"><span
-									class="grid__row grid__row--spbw grid__row--item-center table-list__row"></span></a></td>
-								
-							<a href="" class="table-list__cell-link"><i
-								class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
-								
-								<td><a th:href="@{/medicine/{id}/delete(id=${contact.id})}"><span
-									class="grid__row grid__row--spbw grid__row--item-center table-list__row"></span></a></td>
-								
+				<th:block th:each="thuoc, state : ${listThuoc}">
+					<div class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+						<div class="grid__col-lg-1 table-list__cell" th:utext="${state.count}"></div>
+						<div class="grid__col-lg-2 table-list__cell" th:utext="${thuoc.id}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${thuoc.ten}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${thuoc.gia}"></div>
+						<div class="grid__col-lg-1 table-list__cell">
+							<div class="grid__row">
+								<a href="" class="table-list__cell-link"><i
+										class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+
+								<td><a th:href="${'/qlns/thuoc/edit/' + {thuoc.id}}"><span
+											class="grid__row grid__row--spbw grid__row--item-center table-list__row"></span></a>
+								</td>
+
+								<a href="" class="table-list__cell-link"><i
+										class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
+
+								<td><a th:href="${'/qlns/thuoc/delete/' + {thuoc.id}}"><span
+											class="grid__row grid__row--spbw grid__row--item-center table-list__row"></span></a>
+								</td>
+
+							</div>
 						</div>
 					</div>
-				</div>
-				
+				</th:block>
+
+
 			</div>
 		</div>
 
@@ -310,8 +301,7 @@
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Thâm niên</p>
-						<input type="number" class="form__field-input--text" value="0"
-							min="0" />
+						<input type="number" class="form__field-input--text" value="0" min="0" />
 					</div>
 				</div>
 				<div class="grid__row form__row">
@@ -336,8 +326,7 @@
 				</div>
 			</div>
 			<div class="add-form__container-btn">
-				<input type="submit" class="btn btn--primary add-form__btn"
-					value="Thêm Bác sĩ" /> <a href=""
+				<input type="submit" class="btn btn--primary add-form__btn" value="Thêm Bác sĩ" /> <a href=""
 					class="btn btn--border-primary add-form__btn">Quay lại</a>
 			</div>
 		</form>
@@ -381,8 +370,7 @@
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Thâm niên</p>
-						<input type="number" class="form__field-input--text" value="0"
-							min="0" />
+						<input type="number" class="form__field-input--text" value="0" min="0" />
 					</div>
 				</div>
 				<div class="grid__row form__row">
@@ -402,11 +390,10 @@
 					</div>
 
 				</div>
-				
+
 			</div>
 			<div class="add-form__container-btn">
-				<input type="submit" class="btn btn--primary add-form__btn"
-					value="Thêm Y Tá" /> <a href=""
+				<input type="submit" class="btn btn--primary add-form__btn" value="Thêm Y Tá" /> <a href=""
 					class="btn btn--border-primary add-form__btn">Quay lại</a>
 			</div>
 		</form>
@@ -420,10 +407,10 @@
 	<!--  ---------------------- FORM ADD MEDICINE  QUAN LY NHAN SU ----------------------- -->
 
 	<div th:fragment="add_form_medicine_qlns" th:remove="tag">
-		<form class="container-add-form grow-full" method="post" >
+		<form class="container-add-form grow-full" method="post">
 			<p class="add-form__heading">Thêm Thuốc</p>
 			<div class="grid__full-width add-form__form">
-			
+
 				<div class="grid__row form__row">
 					<div class="form__field-container">
 						<p class="form__field-heading">Tên thuốc</p>
@@ -431,19 +418,46 @@
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Giá thuốc (VNĐ)</p>
-						<input type="number" class="form__field-input--text" value="0"
-							min="0"  />
+						<input type="number" class="form__field-input--text" value="0" min="0" />
 					</div>
 				</div>
 
 				<div class="add-form__container-btn">
-					<input type="submit" class="btn btn--primary add-form__btn"
-						value="Thêm Thuốc" /> <a href=""
+					<input type="submit" class="btn btn--primary add-form__btn" value="Thêm Thuốc" /> <a href=""
 						class="btn btn--border-primary add-form__btn">Quay lại</a>
 				</div>
 		</form>
 	</div>
 
 	<!--  ---------------------- END FORM MEDICINE DOCTOR  QUAN LY NHAN SU ----------------------- -->
+	
+	<!--  ---------------------- FORM Edit MEDICINE  QUAN LY NHAN SU ----------------------- -->
+
+	<div th:fragment="edit_form_medicine_qlns" th:remove="tag">
+		<form class="container-add-form grow-full" method="post" th:object="${thuoc}">
+			<p class="add-form__heading">Sửa Thuốc</p>
+			<div class="grid__full-width add-form__form">
+
+				<div class="grid__row form__row">
+					<div class="form__field-container">
+						<p class="form__field-heading">Tên thuốc</p>
+						<input type="text" class="form__field-input--text" th:value="*{ten}" />
+					</div>
+					<div class="form__field-container">
+						<p class="form__field-heading">Giá thuốc (VNĐ)</p>
+						<input type="number" class="form__field-input--text" th:value="*{gia}" min="0" />
+					</div>
+				</div>
+
+				<div class="add-form__container-btn">
+					<input type="submit" class="btn btn--primary add-form__btn" value="Sửa Thuốc" /> 
+					<a th:href="@{/qlns/ds-thuoc}"
+						class="btn btn--border-primary add-form__btn">Quay lại</a>
+				</div>
+		</form>
+	</div>
+
+	<!--  ---------------------- END FORM Edit MEDICINE QUAN LY NHAN SU ----------------------- -->
 </body>
+
 </html>

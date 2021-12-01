@@ -27,10 +27,7 @@ public class ListDoctorController {
 		return "QuanLyNhanSu/AddNurse";
 	}
 	
-	@GetMapping("/list-medicine")
-	public String showListMedicine() {
-		return "QuanLyNhanSu/ListMedicine";
-	}
+	
 	
 	@GetMapping("/add-medicine")
 	public String showAddFormMedicne(Model model) {
