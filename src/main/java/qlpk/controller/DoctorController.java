@@ -14,6 +14,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import ch.qos.logback.classic.Logger;
 import qlpk.entity.BacSy;
+import qlpk.entity.Benh;
+import qlpk.entity.BenhAn;
 import qlpk.entity.TaiKhoan;
 import qlpk.service.BacSyService;
 import qlpk.entity.enums.Role;
@@ -77,7 +79,6 @@ public class DoctorController {
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
-		// 404
 		return "404";
 	}
 
@@ -91,32 +92,79 @@ public class DoctorController {
 		bacSyService.updateBacSy(bacsi);
 		return redirectView;
 	}
-	
+
 	@GetMapping("/qlns/bacsi/delete/{id}")
 	public RedirectView handleDeleteBacSi(@PathVariable int id, Model model) {
 		Optional<BacSy> optBacSi = bacSyService.getById(id);
-		
+
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
-		
+
 		if (optBacSi.isPresent()) {
 			bacSyService.deleteBacSy(id);
 			return redirectView;
 		}
 
-		// 404
 		redirectView.setUrl("/404");
 		return redirectView;
 	}
-	
 
-	@GetMapping("/khambenh")
-	public String showViewKhamBenh() {
+	@GetMapping("/khambenh/{id}")
+	public String showViewKhamBenh(@PathVariable int id, Model model) {
+		// get Benh An
+		// get All Benh cua Bac Si Kham ( Lấy Bac Si từ session )
+		// model add benh an
+		// model add benh cua bac si
+		// check co benh cua bac si nay chua
+		// neu chua model add new Benh()
+		// neu co model add benh do
 		return "BacSi/KhamBenh";
 	}
 
-	@GetMapping("/kedon")
-	public String showViewKeDon() {
+	@PostMapping("/bacsi/khambenh/{id}")
+	public String handleKhamBenh(@PathVariable int id
+			, @ModelAttribute("benhAn") BenhAn benhAn
+			, @ModelAttribute("benh") BacSy bacSy) {
+		// get id cua benh
+		// neu co
+		// add thêm bệnh vào bệnh án theo id benh
+		// neu khong 
+		return "BacSi/KhamBenh";
+	}
+
+	@GetMapping("/bacsi/kedon/{id}")
+	public String showViewKeDon(@PathVariable int id, Model model) {
+		// get Benh An
+		// get All Thuoc
+		// model add benh anh
+		// model add ds-thuoc
+		
+		return "BacSi/KeDon";
+	}
+
+	@PostMapping("/bacsi/kedon/{id}")
+	public String handleKeDon(@PathVariable int id) {
+		// get Benh An
+		// get JSON 
+		// convert JSON -> Map<idThuoc, soLuong>
+		// update
+		return "BacSi/KeDon";
+	}
+	
+	@GetMapping("/bacsi/xembenhan/{id}")
+	public String showBSBenhAn(@PathVariable int id, Model model) {
+		// get Benh An
+		// get ds benh cua benh an do
+		// check benh nao thuoc bac si hien tai
+		// model add benh anh
+		// model add ds benh cua benh an do ( tru benh cua bac si hien tai kham)
+		// model add ("bs-benh") benh cua bac si hien tai kham ( gen ra nut xac nhan khoi )
+		return "BacSi/KeDon";
+	}
+	
+	@PostMapping("/bacsi/xembenhan/{id}")
+	public String handleUpdateKhoiBenh(@PathVariable int id, @ModelAttribute("bs-benh") Benh benh) {
+		// update khoi benh cho benh an do
 		return "BacSi/KeDon";
 	}
 }
