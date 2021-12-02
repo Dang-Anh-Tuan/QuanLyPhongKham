@@ -11,14 +11,14 @@ import java.util.Set;
 public class YTa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String ten;
     private String cmt;
     private String trinhDo;
     private int thamNien;
     private String diaChi;
     private String sdt;
-    private Date bd;
+    private Date ngaySinh;
     @OneToMany(targetEntity = BenhAn.class, mappedBy = "yTa")
     private Set<BenhAn> benhAn;
     @OneToMany(targetEntity = ThongTinChamSoc.class, mappedBy = "yTa")

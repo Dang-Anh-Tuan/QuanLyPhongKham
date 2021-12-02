@@ -11,12 +11,8 @@ import java.util.Optional;
 
 @Service
 public class BacSyServiceImp implements BacSyService{
-    private BacSyRepo repo;
     @Autowired
-    public BacSyServiceImp(BacSyRepo bacSyRepo) {
-        super();
-        this.repo = bacSyRepo;
-    }
+    private BacSyRepo repo;
 
     @Override
     public void deleteBacSy(int id) {
@@ -32,7 +28,6 @@ public class BacSyServiceImp implements BacSyService{
     @Override
     public boolean updateBacSy(BacSy bacSy) {
     	repo.save(bacSy);
-        return true;
     }
 
     @Override

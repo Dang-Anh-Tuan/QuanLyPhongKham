@@ -10,7 +10,7 @@ import java.util.Set;
 public class Benh {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String tenBenh;
     private String mota;
     @ManyToOne(targetEntity = BacSy.class)

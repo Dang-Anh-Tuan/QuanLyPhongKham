@@ -10,7 +10,7 @@ import java.util.Set;
 public class Thuoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String ten;
     private Float gia;
     @OneToMany(targetEntity = DonThuoc.class, mappedBy = "thuoc")
