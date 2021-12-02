@@ -6,6 +6,7 @@ import qlpk.entity.BacSy;
 import qlpk.repo.BacSyRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -26,8 +27,7 @@ public class BacSyServiceImp implements BacSyService{
 
     @Override
     public boolean updateBacSy(BacSy bacSy) {
-        
-        return true;
+    	repo.save(bacSy);
     }
 
     @Override
@@ -39,4 +39,11 @@ public class BacSyServiceImp implements BacSyService{
     public List<BacSy> getAll() {
         return repo.findAll();
     }
+
+	@Override
+	public Optional<BacSy> getById(int id) {
+		return repo.findById(id);
+	}
+
+	
 }

@@ -3,6 +3,9 @@ package qlpk.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -15,6 +18,7 @@ public class BacSy {
     private String ten;
     private String cmt;
     private String diaChi;
+    @DateTimeFormat (pattern="dd/MM/yyyy")
     private Date ngaySinh;
     private String bacNghe;
     private int thamNien;

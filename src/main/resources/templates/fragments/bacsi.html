@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="html_head(type)" th:remove="${type}">
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css}"
+	integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" th:href="@{/css/base.css}" />
+<link rel="stylesheet" th:href="@{/css/grid.css}" />
+<link rel="stylesheet" th:href="@{/css/admin/admin-header.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin-sidebar.css}">
+
+</head>
+<body>
+
+
+	<!--  ----------------------SIDEBAR Bac Si ----------------------- -->
+	<div th:fragment="sidebar_bacsi">
+		<div class="side-bar-container">
+			<ul class="side-bar-list-btn">
+				<li class="side-bar-item"><img class="side-bar-item__icon-img"
+					th:src="@{/img/icon-doctor.png}" alt=""> <a
+					class="side-bar-item__link" th:href="@{/bacsi-list-benhan}">Danh
+						sách bệnh án</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+	<!--  ---------------------- END SIDEBAR SIDEBAR Y Ta ----------------------- -->
+
+
+	<!--  ---------------------- List Benh An Bac Si----------------------- -->
+	<div th:fragment="list_benhan_bacsi" th:remove="tag">
+		<div class="container-list-entity grow-full">
+			<p class="list-entity-heading">Danh Sách Bệnh Án</p>
+			<div class="grid__full-width table-list">
+				<div
+					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+					<div class="grid__col-lg-1 table-list__th table-list__cell">STT</div>
+					<div class="grid__col-lg-2 table-list__th table-list__cell">Mã
+						Bệnh nhân</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">Họ
+						Tên</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">CMT</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">Ngày
+						sinh</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">SĐT</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">Hành
+						động</div>
+				</div>
+				<div
+					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+					<div class="grid__col-lg-1 table-list__cell">1</div>
+					<div class="grid__col-lg-2 table-list__cell">BN1</div>
+					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
+					<div class="grid__col-lg-3 table-list__cell">021324564</div>
+					<div class="grid__col-lg-3 table-list__cell">19/08/2000</div>
+					<div class="grid__col-lg-3 table-list__cell">02132454</div>
+					<div class="grid__col-lg-3 table-list__cell">
+						<div class="grid__row grid__row--item-center">
+							<a href=""
+								class="table-list__cell-link btn btn-size-s btn--warning">Khám
+								bệnh</a> <a href=""
+								class="table-list__cell-link btn btn-size-s btn--warning">Xem</a>
+						</div>
+					</div>
+				</div>
+
+				<div
+					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+					<div class="grid__col-lg-1 table-list__cell">1</div>
+					<div class="grid__col-lg-2 table-list__cell">BN1</div>
+					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
+					<div class="grid__col-lg-3 table-list__cell">021324564</div>
+					<div class="grid__col-lg-3 table-list__cell">19/08/2000</div>
+					<div class="grid__col-lg-3 table-list__cell">02132454</div>
+					<div class="grid__col-lg-3 table-list__cell">
+						<div class="grid__row grid__row--item-center">
+							<a href=""
+								class="table-list__cell-link btn btn-size-s btn--warning">Khám
+								bệnh</a> <a href=""
+								class="table-list__cell-link btn btn-size-s btn--warning">Xem</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+
+	<!--  ---------------------- END List Benh An Y Ta----------------------- -->
+
+
+
+	<!--  ---------------------- SELECT Benh Bac Si----------------------- -->
+
+	<div th:fragment="select_benh_bacsi">
+		<select name="" id="select1" class="select-box" multiple>
+			<option class="select-option" value="">Đau bụng</option>
+			<option class="select-option" value="">Trĩ nội</option>
+			<option class="select-option" value="">Trĩ ngoại</option>
+		</select>
+	</div>
+	<!--  ---------------------- SELECT Benh Bac Si----------------------- -->
+
+	<!--  ---------------------- SELECT Thuoc Bac Si----------------------- -->
+
+	<div th:fragment="select_thuoc_bacsi" th:remove="tag">
+		<div class="container-add-medicine mt-16">
+			<div class="grid">
+				<div class="grid__row grid__row--item-center">
+					<div class="grid__col-lg-3">
+						<select name="" id="select-medicine" class="select-box">
+							<option class="select-option" value="1" title="Paradon">Paradon</option>
+							<option class="select-option" value="2" title="Typhy">Typhy</option>
+							<option class="select-option" value="3" title="Totri">Totri</option>
+						</select>
+					</div>
+					<div class="grid__col-lg-2">
+						<div class="grid__row grid__row--item-center">
+							<p class="text-font-16 mr-8">Số lượng</p>
+							<input id="amount" type="number"
+								class="input-width-100x40 text-font-16" value="0" min="0" />
+						</div>
+					</div>
+					<div class="grid__col-lg-3">
+						<div class="grid__row grid__row--item-center">
+							<p class="text-font-16 mr-8">Cách dùng</p>
+							<select name="" id="select-method-use" class="select-box">
+								<option class="select-option" value="">Uống</option>
+								<option class="select-option" value="">Tiêm</option>
+							</select>
+						</div>
+					</div>
+					<div class="grid__col-lg-1">
+						<button id="btn-add-medicine" class="btn btn--primary btn-sm"
+							style="height: 31.5px; display: flex; align-items: center; justify-content: center;">
+							<i class="fas fa-plus-circle btn-icon"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="grid__full-width table-list">
+				<div
+					class="
+            grid__row grid__row--spbw grid__row--item-center
+            table-list__row
+          ">
+					<div class="grid__col-lg-1 table-list__th table-list__cell">STT</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">
+						Tên thuốc</div>
+					<div class="grid__col-lg-2 table-list__th table-list__cell">
+						Liều dùng</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">
+						Cách dùng</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--  ---------------------- SELECT thuoc Bac Si----------------------- -->
+
+</body>
+</html>
