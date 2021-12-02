@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class ThongTinChamSoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private HinhThuc hinhThuc;
     @ManyToOne(targetEntity = YTa.class)
     @JoinColumn(name = "y_ta_id", referencedColumnName = "id")
