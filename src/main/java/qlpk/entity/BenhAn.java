@@ -10,7 +10,7 @@ import java.util.Date;
 public class BenhAn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private Date ngayKham;
     private Date ngayVaoVien;
     private Date ngayXuatVien;

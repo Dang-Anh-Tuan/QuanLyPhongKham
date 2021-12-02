@@ -14,7 +14,7 @@ import java.util.Set;
 public class YTa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String ten;
     private String cmt;
     private String trinhDo;
