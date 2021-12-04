@@ -54,7 +54,7 @@ public class DoctorController {
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
 		// setTK
 		bacsi.setUser(user);
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getUserName());
+		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getUsername());
 		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getPassword());
 		//taiKhoanService.saveTaiKhoan(taiKhoan);
 		bacsi.setUser(user);
