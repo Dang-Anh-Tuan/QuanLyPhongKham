@@ -28,7 +28,7 @@ public class BacSyServiceImp implements BacSyService{
     @Override
     public boolean updateBacSy(BacSy bacSy) {
     	repo.save(bacSy);
-    	return true;
+        return true;
     }
 
     @Override
