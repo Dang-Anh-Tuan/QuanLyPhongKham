@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,11 +56,16 @@ public class DoctorController {
 			@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
-		// setTK
-//		bacsi.setTaiKhoan(taiKhoan);
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(taiKhoan.getUserName());
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(taiKhoan.getPassword());
-		bacSyService.saveBacSy(bacsi);
+		try {
+			// setTK
+//			bacsi.setTaiKhoan(taiKhoan);
+			java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(taiKhoan.getUserName());
+			java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(taiKhoan.getPassword());
+			bacSyService.saveBacSy(bacsi);
+		} catch (Exception e) {
+			java.util.logging.Logger.getLogger(DoctorController.class.getName()).info("Sai cú pháp ngày");
+		}
+
 		return redirectView;
 	}
 
@@ -122,13 +128,12 @@ public class DoctorController {
 	}
 
 	@PostMapping("/bacsi/khambenh/{id}")
-	public String handleKhamBenh(@PathVariable int id
-			, @ModelAttribute("benhAn") BenhAn benhAn
-			, @ModelAttribute("benh") BacSy bacSy) {
+	public String handleKhamBenh(@PathVariable int id, @ModelAttribute("benhAn") BenhAn benhAn,
+			@ModelAttribute("benh") BacSy bacSy) {
 		// get id cua benh
 		// neu co
 		// add thêm bệnh vào bệnh án theo id benh
-		// neu khong 
+		// neu khong
 		return "BacSi/KhamBenh";
 	}
 
@@ -138,19 +143,19 @@ public class DoctorController {
 		// get All Thuoc
 		// model add benh anh
 		// model add ds-thuoc
-		
+
 		return "BacSi/KeDon";
 	}
 
 	@PostMapping("/bacsi/kedon/{id}")
 	public String handleKeDon(@PathVariable int id) {
 		// get Benh An
-		// get JSON 
+		// get JSON
 		// convert JSON -> Map<idThuoc, soLuong>
 		// update
 		return "BacSi/KeDon";
 	}
-	
+
 	@GetMapping("/bacsi/xembenhan/{id}")
 	public String showBSBenhAn(@PathVariable int id, Model model) {
 		// get Benh An
@@ -158,10 +163,11 @@ public class DoctorController {
 		// check benh nao thuoc bac si hien tai
 		// model add benh anh
 		// model add ds benh cua benh an do ( tru benh cua bac si hien tai kham)
-		// model add ("bs-benh") benh cua bac si hien tai kham ( gen ra nut xac nhan khoi )
+		// model add ("bs-benh") benh cua bac si hien tai kham ( gen ra nut xac nhan
+		// khoi )
 		return "BacSi/KeDon";
 	}
-	
+
 	@PostMapping("/bacsi/xembenhan/{id}")
 	public String handleUpdateKhoiBenh(@PathVariable int id, @ModelAttribute("bs-benh") Benh benh) {
 		// update khoi benh cho benh an do

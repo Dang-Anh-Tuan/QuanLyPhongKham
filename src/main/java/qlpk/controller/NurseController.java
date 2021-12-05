@@ -3,22 +3,23 @@ package qlpk.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.validation.Errors;
 
-import qlpk.entity.BacSy;
 import qlpk.entity.TaiKhoan;
 import qlpk.entity.YTa;
 import qlpk.entity.enums.Role;
-import qlpk.service.BacSyService;
 import qlpk.service.YTaService;
-
 
 @Controller
 public class NurseController {
@@ -40,8 +41,6 @@ public class NurseController {
 	public String showAddFormYTa(Model model) {
 		YTa yTa = new YTa();
 		TaiKhoan taiKhoan = new TaiKhoan();
-		Role role = Role.YTA;
-		taiKhoan.setRole(role);
 
 		model.addAttribute("yTa", yTa);
 		model.addAttribute("taikhoan", taiKhoan);
@@ -50,16 +49,23 @@ public class NurseController {
 	}
 
 	@PostMapping("/qlns/yta/add")
-	public RedirectView handleAddYTa(@ModelAttribute("yTa") YTa yTa,
-			@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
-		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl("/qlns/yta/ds-yta");
-		// setTK
-//		yTa.setTaiKhoan(taiKhoan);
-		java.util.logging.Logger.getLogger(NurseController.class.getName()).info(taiKhoan.getUserName());
-		java.util.logging.Logger.getLogger(NurseController.class.getName()).info(taiKhoan.getPassword());
+	public String handleAddYTa(
+			@Valid @ModelAttribute("yTa") YTa yTa,
+			BindingResult result, 
+			@ModelAttribute("taikhoan") TaiKhoan taiKhoan,
+			
+			Model model) {
+
+		if (result.hasErrors()) {
+			return "QuanLyNhanSu/AddNurse";
+		}
+		Role role = Role.YTA;
+		taiKhoan.setRole(role);
+//			 setTK
+//			yTa.setTaiKhoan(taiKhoan);
 		yTaService.saveYTa(yTa);
-		return redirectView;
+		return "redirect:/qlns/yta/ds-yta";
+
 	}
 
 	@GetMapping("/qlns/yta/edit/{id}")
@@ -83,22 +89,29 @@ public class NurseController {
 	}
 
 	@PostMapping("/qlns/yta/edit/{id}")
-	public RedirectView handleEditYTa(@ModelAttribute("yTa") YTa yTa,
-			@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
-		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl("/qlns/yta/ds-yta");
-		// setTK
-//		bacsi.setTaiKhoan(taiKhoan);
-		yTaService.updateYTa(yTa);
-		return redirectView;
+	public String handleEditYTa(@PathVariable int id, @Valid @ModelAttribute("yTa") YTa yTa,
+			@Valid @ModelAttribute("taikhoan") TaiKhoan taiKhoan, Model model, Errors errors) {
+
+		if (errors.hasErrors()) {
+//			Optional<YTa> optYTa = yTaService.getById(id);
+//			model.addAttribute("yTa", optYTa.get());
+//			model.addAttribute("taikhoan", taiKhoan);
+			return "QuanLyNhanSu/EditNurse";
+		} else {
+			// setTK
+//			yta.setTaiKhoan(taiKhoan);
+			yTaService.updateYTa(yTa);
+			return "redirect: /qlns/yta/ds-yta";
+		}
+
 	}
-	
+
 	@GetMapping("/qlns/yta/delete/{id}")
 	public RedirectView handleDeleteBacSi(@PathVariable int id, Model model) {
 		Optional<YTa> optYTa = yTaService.getById(id);
-		
+
 		RedirectView redirectView = new RedirectView();
-	
+
 		if (optYTa.isPresent()) {
 			redirectView.setUrl("/qlns/yta/ds-yta");
 			yTaService.deleteYTa(id);
@@ -109,10 +122,8 @@ public class NurseController {
 		redirectView.setUrl("/404");
 		return redirectView;
 	}
-	
-	
-	
+
 	// phat thuoc, tiem thuoc
-	// thanh toán viện phí 
+	// thanh toán viện phí
 
 }

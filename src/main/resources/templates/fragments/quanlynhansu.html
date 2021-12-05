@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -251,24 +252,28 @@
 				<div class="grid__row form__row">
 					<div class="form__field-container">
 						<p class="form__field-heading">Họ Tên</p>
-						<input type="text" class="form__field-input--text" th:field="*{ten}"/>
+						<input type="text" class="form__field-input--text" th:field="*{ten}">
+						<p class="error-msg" th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" ></p>
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">CMT</p>
 						<input type="text" class="form__field-input--text"  th:field="*{cmt}"/>
+						<p class="error-msg" th:if="${#fields.hasErrors('cmt')}" th:errors="*{cmt}" ></p>
 					</div>
 				</div>
 
 				<div class="grid__row form__row">
 					<div class="form__field-container">
-						<p class="form__field-heading">Ngày sinh</p>
-						<input type="text" class="form__field-input--text" 
-						th:value="*{#dates.format(bd, 'dd/MM/yyyy')}"
+						<p class="form__field-heading">Ngày sinh (dd/MM/yyyy)</p>
+						<input type="date" class="form__field-input--text" 
+						th:value="*{bd}"
 						th:field="*{bd}"/>
+						<p class="error-msg" th:if="${#fields.hasErrors('bd')}" th:errors="*{bd}" ></p>
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Địa chỉ</p>
 						<input type="text" class="form__field-input--text"  th:field="*{diaChi}"/>
+						<p class="error-msg" th:if="${#fields.hasErrors('diaChi')}" th:errors="*{diaChi}" ></p>
 					</div>
 				</div>
 
@@ -276,27 +281,32 @@
 					<div class="form__field-container">
 						<p class="form__field-heading">SĐT</p>
 						<input type="text" class="form__field-input--text" th:field="*{sdt}"/>
+						<p class="error-msg" th:if="${#fields.hasErrors('sdt')}" th:errors="*{sdt}" ></p>
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Thâm niên</p>
 						<input type="number" class="form__field-input--text" value="0"
 							min="0" th:field="*{thamNien}"/>
+						<p class="error-msg" th:if="${#fields.hasErrors('thamNien')}" th:errors="*{thamNien}" ></p>
 					</div>
 				</div>
 				<div class="grid__row form__row">
 					<div class="form__field-container">
 						<p class="form__field-heading">Trình độ</p>
 						<input type="text" class="form__field-input--text" th:field="*{trinhDo}"/>
+						<p class="error-msg" th:if="${#fields.hasErrors('trinhDo')}" th:errors="*{trinhDo}" ></p>
 					</div>
 				</div>
 				<div class="grid__row form__row" th:object="${taikhoan}">
 					<div class="form__field-container">
 						<p class="form__field-heading">Username</p>
 						<input type="text" class="form__field-input--text" th:field="*{userName}"/>
+						<p class="error-msg" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" ></p>
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Password</p>
 						<input type="password" class="form__field-input--text"  th:field="*{password}"/>
+						<p class="error-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></p>
 					</div>
 				</div>
 				
@@ -359,25 +369,29 @@
 						<p class="form__field-heading">Họ Tên</p>
 						<input type="text" class="form__field-input--text"
 							th:field="*{ten}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" ></p>
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">CMT</p>
 						<input type="text" class="form__field-input--text"
 							th:field="*{cmt}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('cmt')}" th:errors="*{cmt}" ></p>
 					</div>
 				</div>
 
 				<div class="grid__row form__row">
 					<div class="form__field-container">
-						<p class="form__field-heading">Ngày sinh</p>
+						<p class="form__field-heading">Ngày sinh (dd/MM/yyyy)</p>
 						<input type="text" class="form__field-input--text"
 							th:value="*{#dates.format(ngaySinh, 'dd/MM/yyyy')}"
 							th:field="*{ngaySinh}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('ngaySinh')}" th:errors="*{ngaySinh}" ></p>
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Địa chỉ</p>
 						<input type="text" class="form__field-input--text"
 							th:field="*{diaChi}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('diaChi')}" th:errors="*{diaChi}" ></p>
 					</div>
 				</div>
 
@@ -410,6 +424,7 @@
 						<p class="form__field-heading">Thâm niên</p>
 						<input type="number" class="form__field-input--text"
 							th:field="*{thamNien}" min="0" />
+						<p class="error-msg" th:if="${#fields.hasErrors('thamNien')}" th:errors="*{thamNien}" ></p>
 					</div>
 				</div>
 				<div class="grid__row form__row">
@@ -417,11 +432,13 @@
 						<p class="form__field-heading">Trình độ</p>
 						<input type="text" class="form__field-input--text"
 							th:field="*{trinhDo}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('trinhDo')}" th:errors="*{trinhDo}" ></p>
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Chuyên môn</p>
 						<input type="text" class="form__field-input--text"
 							th:field="*{chuyenMon}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('chuyenMon')}" th:errors="*{chuyenMon}" ></p>
 					</div>
 				</div>
 				<div class="grid__row form__row" th:object="${taikhoan}">
@@ -429,11 +446,13 @@
 						<p class="form__field-heading">Username</p>
 						<input type="text" class="form__field-input--text"
 							th:field="*{userName}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" ></p>
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Password</p>
 						<input type="password" class="form__field-input--text"
 							th:field="*{password}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></p>
 					</div>
 				</div>
 			</div>

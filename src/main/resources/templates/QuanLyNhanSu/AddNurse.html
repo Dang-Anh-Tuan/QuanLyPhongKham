@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
 <div th:replace="fragments/general.html :: html_head(type='tag')"></div>
 <link rel="stylesheet"
@@ -10,7 +11,7 @@
 	<div class="grid__full-width">
 		<div class="grid__row">
 			<div th:replace="fragments/quanlynhansu.html :: sidebar_qlns" ></div>
-			<div th:replace="fragments/quanlynhansu.html :: add_edit_form_nurse_qlns(content='Thêm y tá')" ></div>
+			<div th:replace="fragments/quanlynhansu.html :: add_edit_form_nurse_qlns(content='ThÃªm y tÃ¡')" ></div>
 		</div>
 	</div>
 </body>
