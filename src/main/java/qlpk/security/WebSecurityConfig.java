@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -55,7 +55,6 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/authenticateTheUser")
 //                .defaultSuccessUrl("/404")
-                //.failureUrl("/login?error")
                 .permitAll()
                 //còn lại phẳi authen mới được vào
                 .and()
