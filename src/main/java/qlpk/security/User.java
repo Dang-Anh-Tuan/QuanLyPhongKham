@@ -1,19 +1,20 @@
 package qlpk.security;
 
 import lombok.Data;
+import qlpk.entity.enums.Role;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "user")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false, unique = true)
-    private String username;
     private String password;
-    private String role;
+    @Enumerated(EnumType.ORDINAL)
+    private Role role;
+    @Column(name = "user_name")
+    private String userName;
 }

@@ -6,15 +6,13 @@ import org.springframework.web.bind.annotation.*;
 import qlpk.dto.auth.param.LoginFormParam;
 
 @Controller
-@RequestMapping({"/", "/login"})
 public class LoginController {
-	@GetMapping
+	@GetMapping("/login")
 	public String showLoginForm() {
 		return "Login";
 	}
-	@PostMapping
-	public String postLoginForm(@ModelAttribute LoginFormParam loginFormParam){
-		System.out.println(loginFormParam.toString());
-		return "Login";
-	}
+//	@PostMapping
+//	public String postLoginForm(@ModelAttribute LoginFormParam loginFormParam){
+//		return "redirect:/qlns/bacsi/ds-bacsi";
+//	}
 }

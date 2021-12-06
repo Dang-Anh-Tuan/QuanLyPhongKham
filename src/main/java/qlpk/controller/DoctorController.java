@@ -6,13 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import qlpk.entity.BacSy;
+import qlpk.entity.enums.Role;
 import qlpk.security.User;
 import qlpk.service.BacSyService;
 
@@ -27,7 +25,10 @@ public class DoctorController {
 	public DoctorController(BacSyService bacSyService) {
 		this.bacSyService = bacSyService;
 	}
-
+	@RequestMapping("/")
+	public String showList() {
+		return "404";
+	}
 	@GetMapping("/qlns/bacsi/ds-bacsi")
 	public String showListBacSi(Model model) {
 		List<BacSy> dsBacSi = bacSyService.getAll();
@@ -39,7 +40,7 @@ public class DoctorController {
 	public String showAddFormBacSi(Model model) {
 		BacSy bacSi = new BacSy();
 		User user = new User();
-		user.setRole("Role.BACSY");
+		user.setRole(Role.BACSY);
 
 		model.addAttribute("bacsi", bacSi);
 		model.addAttribute("taikhoan", user);
@@ -54,7 +55,7 @@ public class DoctorController {
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
 		// setTK
 		bacsi.setUser(user);
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getUsername());
+		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getUserName());
 		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getPassword());
 		//taiKhoanService.saveTaiKhoan(taiKhoan);
 		bacsi.setUser(user);

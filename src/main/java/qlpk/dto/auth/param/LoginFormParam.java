@@ -9,6 +9,6 @@ import lombok.*;
 @ToString
 //cái này dùng để test object gửi từ form qua
 public class LoginFormParam {
-    private String username;
+    private String userName;
     private String password;
 }
