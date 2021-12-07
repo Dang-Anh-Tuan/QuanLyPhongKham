@@ -1,9 +1,12 @@
 package qlpk.service;
 
 
+import qlpk.dto.UserDTO;
 import qlpk.entity.User;
 
 public interface UserService {
-    User getUserByName(String username);
-    boolean save(User user);
+    UserDTO getUserByID(int id);
+    UserDTO getUserByName(String username);
+    boolean save(UserDTO userDTO);
+    boolean delete(User user);
 }

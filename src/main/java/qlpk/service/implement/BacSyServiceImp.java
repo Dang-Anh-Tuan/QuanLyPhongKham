@@ -2,10 +2,12 @@ package qlpk.service.implement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import qlpk.dto.UserDTO;
 import qlpk.entity.BacSy;
 import qlpk.entity.Benh;
 import qlpk.repo.BacSyRepo;
 import qlpk.repo.BenhRepo;
+import qlpk.repo.UserRepo;
 import qlpk.service.BacSyService;
 
 import java.util.List;
@@ -18,6 +20,8 @@ public class BacSyServiceImp implements BacSyService {
     private BacSyRepo bacSyRepo;
     @Autowired
     private BenhRepo benhRepo;
+    @Autowired
+    private UserRepo userRepo;
 
     @Override
     public void deleteBacSy(int id) {
@@ -25,14 +29,15 @@ public class BacSyServiceImp implements BacSyService {
     }
 
     @Override
-    public boolean saveBacSy(BacSy bacSy) {
+    public boolean saveBacSy(BacSy bacSy, UserDTO userDTO) {
+        bacSy.setUser(userRepo.findByUserName(userDTO.getUserName()));
         bacSyRepo.save(bacSy);
         return true;
     }
 
     @Override
     public boolean updateBacSy(BacSy bacSy) {
-    	bacSyRepo.save(bacSy);
+        bacSyRepo.save(bacSy);
         return true;
     }
 
