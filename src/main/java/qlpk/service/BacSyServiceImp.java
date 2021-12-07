@@ -1,17 +1,16 @@
-package qlpk.service.implement;
+package qlpk.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qlpk.entity.BacSy;
 import qlpk.repo.BacSyRepo;
-import qlpk.service.BacSyService;
 
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-public class BacSyServiceImp implements BacSyService {
+public class BacSyServiceImp implements BacSyService{
     @Autowired
     private BacSyRepo repo;
 
@@ -29,7 +28,7 @@ public class BacSyServiceImp implements BacSyService {
     @Override
     public boolean updateBacSy(BacSy bacSy) {
     	repo.save(bacSy);
-        return true;
+    	return true;
     }
 
     @Override

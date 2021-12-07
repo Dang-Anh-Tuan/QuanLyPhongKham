@@ -2,8 +2,9 @@ package qlpk.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import qlpk.entity.BenhNhan;
+import qlpk.entity.TaiKhoan;
 
 @Repository
-public interface BenhNhanRepo extends JpaRepository<BenhNhan, Integer> {
+public interface TaiKhoanRepo extends JpaRepository<TaiKhoan, String> {
+
 }

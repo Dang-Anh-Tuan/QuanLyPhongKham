@@ -11,5 +11,6 @@ public interface BenhAnService {
 	boolean updateBenhAn(BenhAn benhAn);
 	
 	void deleteBenhAn(int id);
-
+	
+	List<BenhAn> getByName(String name);
 }

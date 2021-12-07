@@ -5,14 +5,13 @@ import lombok.Data;
 import javax.persistence.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import qlpk.security.User;
 
 import java.util.Date;
 import java.util.Set;
 
 @Data
 @Entity
-public class BacSy  {
+public class BacSy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -30,7 +29,4 @@ public class BacSy  {
     private Set<Benh> benh;
     @OneToMany(targetEntity = BenhAn.class, mappedBy = "bacSy")
     private Set<BenhAn> benhAn;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userName")
-    private User user;
 }
