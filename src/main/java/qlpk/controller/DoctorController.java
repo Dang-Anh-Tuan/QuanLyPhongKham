@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import qlpk.dto.UserDTO;
@@ -18,12 +19,18 @@ import qlpk.entity.User;
 import qlpk.service.BacSyService;
 import qlpk.entity.enums.Role;
 import qlpk.service.UserService;
+import qlpk.entity.BacSy;
+import qlpk.entity.enums.Role;
+import qlpk.security.User;
+import qlpk.service.BacSyService;
 
 @Controller
 public class DoctorController {
 
 	@Autowired
 	private BacSyService bacSyService;
+//	@Autowired
+//	private TaiKhoanService taiKhoanService;
 
 	@Autowired
 	private UserService userService;
@@ -32,7 +39,10 @@ public class DoctorController {
 		this.bacSyService = bacSyService;
 		this.userService = userService;
 	}
-
+	@RequestMapping("/")
+	public String showList() {
+		return "404";
+	}
 	@GetMapping("/qlns/bacsi/ds-bacsi")
 	public String showListBacSi(Model model) {
 		List<BacSy> dsBacSi = bacSyService.getAll();
@@ -43,7 +53,12 @@ public class DoctorController {
 	@GetMapping("/qlns/bacsi/add")
 	public String showAddFormBacSi(Model model) {
 		BacSy bacSi = new BacSy();
+<<<<<<< HEAD
 		UserDTO user = new UserDTO();
+=======
+		User user = new User();
+		user.setRole(Role.BACSY);
+>>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
 
 		model.addAttribute("bacsi", bacSi);
 		model.addAttribute("taikhoan", user);
@@ -53,6 +68,7 @@ public class DoctorController {
 
 	@PostMapping("/qlns/bacsi/add")
 	public RedirectView handleAddBacSi(@ModelAttribute("bacsi") BacSy bacsi,
+<<<<<<< HEAD
 			@ModelAttribute("taikhoan") UserDTO userDTO) {
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
@@ -64,6 +80,19 @@ public class DoctorController {
 		User user = convertDTOToEntity(userDTO);
 		user.setRole(Role.BACSY);
 		userService.save(user);
+=======
+			@ModelAttribute("taikhoan") User user) {
+		RedirectView redirectView = new RedirectView();
+		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
+		// setTK
+		bacsi.setUser(user);
+		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getUserName());
+		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getPassword());
+		//taiKhoanService.saveTaiKhoan(taiKhoan);
+		bacsi.setUser(user);
+		bacSyService.saveBacSy(bacsi);
+
+>>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
 		return redirectView;
 	}
 
@@ -72,13 +101,24 @@ public class DoctorController {
 		Optional<BacSy> optBacSi = bacSyService.getById(id);
 		// get TaiKhoan map voi Bac Sy
 //		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
+<<<<<<< HEAD
 		UserDTO userDTO = new UserDTO();
 
+=======
+		User user = new User();
+
+		//Role role = Role.BACSY;
+		//taiKhoan.setRole(role);
+>>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
 
 		if (optBacSi.isPresent()) {
 			userDTO = convertEntityToDTO(userService.getUserByName(optBacSi.get().getUser().getUserName()));
 			model.addAttribute("bacsi", optBacSi.get());
+<<<<<<< HEAD
 			model.addAttribute("taikhoan", userDTO);
+=======
+			model.addAttribute("taikhoan", user);
+>>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
@@ -88,7 +128,11 @@ public class DoctorController {
 
 	@PostMapping("/qlns/bacsi/edit/{id}")
 	public RedirectView handleEditBacSi(@ModelAttribute("bacsi") BacSy bacsi,
+<<<<<<< HEAD
 			@ModelAttribute("taikhoan") UserDTO userDTO) {
+=======
+			@ModelAttribute("taikhoan") User user) {
+>>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
 		// setTK

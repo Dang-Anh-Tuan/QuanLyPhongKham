@@ -126,4 +126,18 @@ public class NurseController {
 	// phat thuoc, tiem thuoc
 	// thanh toán viện phí
 
+
+@Controller
+public class NurseController {
+	@GetMapping("/list-benhan")
+	public String showListDoctor() {
+		return "Yta/ListBenhAn";
+	}
+	
+	@GetMapping("/add-benhan")
+	public String showAddFormDoctor() {
+		return "Yta/AddBenhAn";
+	}
+
+>>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
 }
