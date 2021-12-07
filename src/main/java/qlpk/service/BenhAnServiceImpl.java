@@ -1,16 +1,13 @@
-package qlpk.service.implement;
+package qlpk.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.stereotype.Service;
 import qlpk.entity.BenhAn;
 import qlpk.repo.BenhAnRepo;
-import qlpk.service.BenhAnService;
 
-@Service
-public class BenhAnServiceImpl implements BenhAnService {
+public class BenhAnServiceImpl implements BenhAnService{
 
 	@Autowired
 	private BenhAnRepo benhAnRepo;
@@ -42,5 +39,9 @@ public class BenhAnServiceImpl implements BenhAnService {
 		benhAnRepo.deleteById(id);	
 	}
 
+	@Override
+	public List<BenhAn> getByName(String name) {
+		return null;
+	}
 
 }
