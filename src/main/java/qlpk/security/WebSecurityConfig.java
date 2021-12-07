@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // cho phép dùng các resource
                 .antMatchers("/resources/**", "/img/**", "/css/**", "/js/**").permitAll()
-                .antMatchers("/qlns/**").hasAnyAuthority("ADMIN")
+//                .antMatchers("/**").hasAnyAuthority("ADMIN")
 //                .antMatchers("/bacsy/**").hasAnyAuthority("BACSY")
 //                .antMatchers("/yta/**").hasAnyAuthority("YTA")
                 .anyRequest().authenticated()
@@ -60,8 +60,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login");
-//                .exceptionHandling().accessDeniedPage("/403");
+                .logoutSuccessUrl("/login")
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
 
     }
 

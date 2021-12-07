@@ -32,7 +32,7 @@ public class NurseController {
 
 	@GetMapping("/qlns/yta/ds-yta")
 	public String showListYTa(Model model) {
-		List<YTa> dsYTa = yTaService.getAll();
+		List<YTa> dsYTa = yTaService.findAll();
 		model.addAttribute("dsYTa", dsYTa);
 		return "QuanLyNhanSu/ListNurse";
 	}
@@ -51,9 +51,9 @@ public class NurseController {
 	@PostMapping("/qlns/yta/add")
 	public String handleAddYTa(
 			@Valid @ModelAttribute("yTa") YTa yTa,
-			BindingResult result, 
+			BindingResult result,
 			@ModelAttribute("taikhoan") User taiKhoan,
-			
+
 			Model model) {
 
 		if (result.hasErrors()) {
@@ -90,7 +90,7 @@ public class NurseController {
 
 	@PostMapping("/qlns/yta/edit/{id}")
 	public String handleEditYTa(@PathVariable int id, @Valid @ModelAttribute("yTa") YTa yTa,
-			@Valid @ModelAttribute("taikhoan") User taiKhoan, Model model, Errors errors) {
+								@Valid @ModelAttribute("taikhoan") User taiKhoan, Model model, Errors errors) {
 
 		if (errors.hasErrors()) {
 //			Optional<YTa> optYTa = yTaService.getById(id);
@@ -125,19 +125,4 @@ public class NurseController {
 
 	// phat thuoc, tiem thuoc
 	// thanh toán viện phí
-
-
-@Controller
-public class NurseController {
-	@GetMapping("/list-benhan")
-	public String showListDoctor() {
-		return "Yta/ListBenhAn";
-	}
-	
-	@GetMapping("/add-benhan")
-	public String showAddFormDoctor() {
-		return "Yta/AddBenhAn";
-	}
-
->>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
 }

@@ -19,19 +19,12 @@ import qlpk.entity.User;
 import qlpk.service.BacSyService;
 import qlpk.entity.enums.Role;
 import qlpk.service.UserService;
-import qlpk.entity.BacSy;
-import qlpk.entity.enums.Role;
-import qlpk.security.User;
-import qlpk.service.BacSyService;
 
 @Controller
 public class DoctorController {
 
 	@Autowired
 	private BacSyService bacSyService;
-//	@Autowired
-//	private TaiKhoanService taiKhoanService;
-
 	@Autowired
 	private UserService userService;
 
@@ -53,13 +46,9 @@ public class DoctorController {
 	@GetMapping("/qlns/bacsi/add")
 	public String showAddFormBacSi(Model model) {
 		BacSy bacSi = new BacSy();
-<<<<<<< HEAD
-		UserDTO user = new UserDTO();
-=======
-		User user = new User();
-		user.setRole(Role.BACSY);
->>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
 
+		UserDTO user = new UserDTO();
+		System.out.println("day la cau sout");
 		model.addAttribute("bacsi", bacSi);
 		model.addAttribute("taikhoan", user);
 		return "QuanLyNhanSu/AddDoctor";
@@ -68,31 +57,21 @@ public class DoctorController {
 
 	@PostMapping("/qlns/bacsi/add")
 	public RedirectView handleAddBacSi(@ModelAttribute("bacsi") BacSy bacsi,
-<<<<<<< HEAD
 			@ModelAttribute("taikhoan") UserDTO userDTO) {
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
+		System.out.println("day la ham posst");
 		// setTK
-		bacsi.setUser(convertDTOToEntity(userDTO));
 		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(userDTO.getUserName());
 		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(userDTO.getPassword());
-		bacSyService.saveBacSy(bacsi);
-		User user = convertDTOToEntity(userDTO);
+		User user = new User();
+		user = convertDTOToEntity(userDTO);
+
 		user.setRole(Role.BACSY);
+		bacsi.setUser(user);
 		userService.save(user);
-=======
-			@ModelAttribute("taikhoan") User user) {
-		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
-		// setTK
-		bacsi.setUser(user);
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getUserName());
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getPassword());
-		//taiKhoanService.saveTaiKhoan(taiKhoan);
-		bacsi.setUser(user);
 		bacSyService.saveBacSy(bacsi);
 
->>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
 		return redirectView;
 	}
 
@@ -101,24 +80,20 @@ public class DoctorController {
 		Optional<BacSy> optBacSi = bacSyService.getById(id);
 		// get TaiKhoan map voi Bac Sy
 //		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
-<<<<<<< HEAD
+
 		UserDTO userDTO = new UserDTO();
 
-=======
 		User user = new User();
 
 		//Role role = Role.BACSY;
 		//taiKhoan.setRole(role);
->>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
 
 		if (optBacSi.isPresent()) {
 			userDTO = convertEntityToDTO(userService.getUserByName(optBacSi.get().getUser().getUserName()));
 			model.addAttribute("bacsi", optBacSi.get());
-<<<<<<< HEAD
+
 			model.addAttribute("taikhoan", userDTO);
-=======
-			model.addAttribute("taikhoan", user);
->>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
+
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
@@ -128,11 +103,8 @@ public class DoctorController {
 
 	@PostMapping("/qlns/bacsi/edit/{id}")
 	public RedirectView handleEditBacSi(@ModelAttribute("bacsi") BacSy bacsi,
-<<<<<<< HEAD
 			@ModelAttribute("taikhoan") UserDTO userDTO) {
-=======
-			@ModelAttribute("taikhoan") User user) {
->>>>>>> parent of 147a06b (Merge branch 'tuan' of https://github.com/Dang-Anh-Tuan/QuanLyPhongKham into nam)
+
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
 		// setTK
