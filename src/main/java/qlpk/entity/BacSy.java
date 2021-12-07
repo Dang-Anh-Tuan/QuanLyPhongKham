@@ -18,7 +18,7 @@ public class BacSy  {
     private String ten;
     private String cmt;
     private String diaChi;
-    @DateTimeFormat (pattern = "yyyy-MM-dd")
+    @DateTimeFormat (pattern="dd/MM/yyyy")
     private Date ngaySinh;
     private String bacNghe;
     private int thamNien;
