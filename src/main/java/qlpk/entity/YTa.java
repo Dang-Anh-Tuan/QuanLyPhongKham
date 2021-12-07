@@ -1,7 +1,6 @@
 package qlpk.entity;
 
 import lombok.Data;
-import qlpk.security.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;

@@ -18,8 +18,9 @@ public class YTaServiceImp implements YTaService{
 		this.repo = repo;
 	}
 
+
     @Override
-    public List<YTa> findAll() {
+    public List<YTa> getAll() {
         return repo.findAll();
     }
 

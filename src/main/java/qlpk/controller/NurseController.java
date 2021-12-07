@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.validation.Errors;
 
-import qlpk.entity.TaiKhoan;
+import qlpk.entity.User;
 import qlpk.entity.YTa;
 import qlpk.entity.enums.Role;
 import qlpk.service.YTaService;
@@ -40,7 +40,7 @@ public class NurseController {
 	@GetMapping("/qlns/yta/add")
 	public String showAddFormYTa(Model model) {
 		YTa yTa = new YTa();
-		TaiKhoan taiKhoan = new TaiKhoan();
+		User taiKhoan = new User();
 
 		model.addAttribute("yTa", yTa);
 		model.addAttribute("taikhoan", taiKhoan);
@@ -52,7 +52,7 @@ public class NurseController {
 	public String handleAddYTa(
 			@Valid @ModelAttribute("yTa") YTa yTa,
 			BindingResult result, 
-			@ModelAttribute("taikhoan") TaiKhoan taiKhoan,
+			@ModelAttribute("taikhoan") User taiKhoan,
 			
 			Model model) {
 
@@ -73,7 +73,7 @@ public class NurseController {
 		Optional<YTa> optYTa = yTaService.getById(id);
 		// get TaiKhoan map voi Bac Sy
 //		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
-		TaiKhoan taiKhoan = new TaiKhoan();
+		User taiKhoan = new User();
 
 		Role role = Role.YTA;
 		taiKhoan.setRole(role);
@@ -90,7 +90,7 @@ public class NurseController {
 
 	@PostMapping("/qlns/yta/edit/{id}")
 	public String handleEditYTa(@PathVariable int id, @Valid @ModelAttribute("yTa") YTa yTa,
-			@Valid @ModelAttribute("taikhoan") TaiKhoan taiKhoan, Model model, Errors errors) {
+			@Valid @ModelAttribute("taikhoan") User taiKhoan, Model model, Errors errors) {
 
 		if (errors.hasErrors()) {
 //			Optional<YTa> optYTa = yTaService.getById(id);

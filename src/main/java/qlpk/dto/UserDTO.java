@@ -1,4 +1,4 @@
-package qlpk.dto.auth.param;
+package qlpk.dto;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 //cái này dùng để test object gửi từ form qua
-public class LoginFormParam {
+public class UserDTO {
     private String userName;
     private String password;
 }

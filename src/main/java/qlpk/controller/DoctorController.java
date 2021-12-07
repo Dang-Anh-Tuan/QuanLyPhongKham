@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import ch.qos.logback.classic.Logger;
+import qlpk.dto.UserDTO;
 import qlpk.entity.BacSy;
-import qlpk.entity.TaiKhoan;
+import qlpk.entity.User;
 import qlpk.service.BacSyService;
 import qlpk.entity.enums.Role;
+import qlpk.service.UserService;
 
 @Controller
 public class DoctorController {
@@ -24,8 +25,12 @@ public class DoctorController {
 	@Autowired
 	private BacSyService bacSyService;
 
-	public DoctorController(BacSyService bacSyService) {
+	@Autowired
+	private UserService userService;
+
+	public DoctorController(BacSyService bacSyService, UserService userService) {
 		this.bacSyService = bacSyService;
+		this.userService = userService;
 	}
 
 	@GetMapping("/qlns/bacsi/ds-bacsi")
@@ -38,26 +43,27 @@ public class DoctorController {
 	@GetMapping("/qlns/bacsi/add")
 	public String showAddFormBacSi(Model model) {
 		BacSy bacSi = new BacSy();
-		TaiKhoan taiKhoan = new TaiKhoan();
-		Role role = Role.BACSY;
-		taiKhoan.setRole(role);
+		UserDTO user = new UserDTO();
 
 		model.addAttribute("bacsi", bacSi);
-		model.addAttribute("taikhoan", taiKhoan);
+		model.addAttribute("taikhoan", user);
 		return "QuanLyNhanSu/AddDoctor";
 
 	}
 
 	@PostMapping("/qlns/bacsi/add")
 	public RedirectView handleAddBacSi(@ModelAttribute("bacsi") BacSy bacsi,
-			@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
 		// setTK
-//		bacsi.setTaiKhoan(taiKhoan);
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(taiKhoan.getUserName());
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(taiKhoan.getPassword());
+		bacsi.setUser(convertDTOToEntity(userDTO));
+		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(userDTO.getUserName());
+		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(userDTO.getPassword());
 		bacSyService.saveBacSy(bacsi);
+		User user = convertDTOToEntity(userDTO);
+		user.setRole(Role.BACSY);
+		userService.save(user);
 		return redirectView;
 	}
 
@@ -66,14 +72,13 @@ public class DoctorController {
 		Optional<BacSy> optBacSi = bacSyService.getById(id);
 		// get TaiKhoan map voi Bac Sy
 //		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
-		TaiKhoan taiKhoan = new TaiKhoan();
+		UserDTO userDTO = new UserDTO();
 
-		Role role = Role.BACSY;
-		taiKhoan.setRole(role);
 
 		if (optBacSi.isPresent()) {
+			userDTO = convertEntityToDTO(userService.getUserByName(optBacSi.get().getUser().getUserName()));
 			model.addAttribute("bacsi", optBacSi.get());
-			model.addAttribute("taikhoan", taiKhoan);
+			model.addAttribute("taikhoan", userDTO);
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
@@ -83,11 +88,11 @@ public class DoctorController {
 
 	@PostMapping("/qlns/bacsi/edit/{id}")
 	public RedirectView handleEditBacSi(@ModelAttribute("bacsi") BacSy bacsi,
-			@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
 		// setTK
-//		bacsi.setTaiKhoan(taiKhoan);
+
 		bacSyService.updateBacSy(bacsi);
 		return redirectView;
 	}
@@ -118,5 +123,19 @@ public class DoctorController {
 	@GetMapping("/kedon")
 	public String showViewKeDon() {
 		return "BacSi/KeDon";
+	}
+
+	private User convertDTOToEntity(UserDTO userDTO){
+		User user = new User();
+		user.setUserName(userDTO.getUserName());
+		user.setPassword(userDTO.getPassword());
+		user.setRole(Role.BACSY);
+		return user;
+	}
+	private UserDTO convertEntityToDTO(User user){
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUserName(user.getUserName());
+		userDTO.setPassword(user.getPassword());
+		return userDTO;
 	}
 }

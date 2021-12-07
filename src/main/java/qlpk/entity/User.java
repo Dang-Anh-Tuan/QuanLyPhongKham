@@ -1,4 +1,4 @@
-package qlpk.security;
+package qlpk.entity;
 
 import lombok.Data;
 import qlpk.entity.enums.Role;

@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import qlpk.entity.User;
+import qlpk.repo.UserRepo;
 
 
 public class UserDetailsServiceImp implements UserDetailsService {
@@ -13,7 +14,6 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) {
         User user = repo.findByUserName(userName);
-        System.out.println(user.getUserName());
         if(user==null){
             throw new UsernameNotFoundException(userName);
         }

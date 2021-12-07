@@ -1,9 +1,7 @@
 package qlpk.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import qlpk.dto.auth.param.LoginFormParam;
 
 @Controller
 public class LoginController {
