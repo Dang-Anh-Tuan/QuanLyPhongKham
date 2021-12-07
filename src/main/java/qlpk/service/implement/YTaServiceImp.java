@@ -1,5 +1,6 @@
 package qlpk.service.implement;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qlpk.entity.YTa;
 import qlpk.repo.YTaRepo;
@@ -9,8 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class YTaServiceImp implements YTaService {
+public class YTaServiceImp implements YTaService{
+	@Autowired
     private YTaRepo repo;
+
+	public YTaServiceImp(YTaRepo repo) {
+		this.repo = repo;
+	}
+
     @Override
     public List<YTa> findAll() {
         return repo.findAll();
