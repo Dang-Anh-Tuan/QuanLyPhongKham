@@ -1,6 +1,8 @@
 package qlpk.entity;
 
 import lombok.Data;
+import qlpk.security.User;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
@@ -16,10 +18,9 @@ public class YTa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @NotEmpty(message = "không được để trống")
     private String ten;
-    
     private String cmt;
     private String trinhDo;
     private int thamNien;
@@ -32,4 +33,7 @@ public class YTa {
     private Set<BenhAn> benhAn;
     @OneToMany(targetEntity = ThongTinChamSoc.class, mappedBy = "yTa")
     private Set<ThongTinChamSoc> thongTinChamSoc;
+    @OneToOne
+    @JoinColumn(name = "userName")
+    private User user;
 }

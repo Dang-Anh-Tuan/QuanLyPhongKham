@@ -1,9 +1,10 @@
-package qlpk.service;
+package qlpk.service.implement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qlpk.entity.YTa;
 import qlpk.repo.YTaRepo;
+import qlpk.service.YTaService;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,13 +13,13 @@ import java.util.Optional;
 public class YTaServiceImp implements YTaService{
 	@Autowired
     private YTaRepo repo;
-    
+
 	public YTaServiceImp(YTaRepo repo) {
 		this.repo = repo;
 	}
-    
+
     @Override
-    public List<YTa> getAll() {
+    public List<YTa> findAll() {
         return repo.findAll();
     }
 
@@ -35,8 +36,7 @@ public class YTaServiceImp implements YTaService{
 
     @Override
     public boolean updateYTa(YTa yTa) {
-    	repo.save(yTa);
-        return true;
+        return false;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class YTaServiceImp implements YTaService{
         return repo.findByCmt(cmt);
     }
 
-	@Override
-	public Optional<YTa> getById(int id) {
-		return repo.findById(id);
-	}
+    @Override
+    public Optional<YTa> getById(int id) {
+        return repo.findById(id);
+    }
 }
