@@ -5,11 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.stereotype.Service;
 import qlpk.entity.BenhAn;
 import qlpk.repo.BenhAnRepo;
 
-@Service
 public class BenhAnServiceImpl implements BenhAnService{
 
 	@Autowired

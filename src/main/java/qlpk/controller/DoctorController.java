@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.view.RedirectView;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -36,14 +37,21 @@ import qlpk.security.User;
 import qlpk.service.BacSyService;
 import qlpk.service.BenhAnService;
 import qlpk.modelUtil.DetailThuoc;
+=======
+import ch.qos.logback.classic.Logger;
+import qlpk.entity.BacSy;
+import qlpk.entity.Benh;
+import qlpk.entity.BenhAn;
+import qlpk.entity.TaiKhoan;
+import qlpk.service.BacSyService;
+import qlpk.entity.enums.Role;
+>>>>>>> 68353bf08e164e115238d4ce3df53a727df78e80
 
 @Controller
 public class DoctorController {
 
 	@Autowired
 	private BacSyService bacSyService;
-//	@Autowired
-//	private TaiKhoanService taiKhoanService;
 
 	@Autowired
 	private BenhAnService benhAnService;
@@ -63,16 +71,18 @@ public class DoctorController {
 	@GetMapping("/qlns/bacsi/add")
 	public String showAddFormBacSi(Model model) {
 		BacSy bacSi = new BacSy();
-		User user = new User();
-		user.setRole("Role.BACSY");
+		TaiKhoan taiKhoan = new TaiKhoan();
+		Role role = Role.BACSY;
+		taiKhoan.setRole(role);
 
 		model.addAttribute("bacsi", bacSi);
-		model.addAttribute("taikhoan", user);
+		model.addAttribute("taikhoan", taiKhoan);
 		return "QuanLyNhanSu/AddDoctor";
 
 	}
 
 	@PostMapping("/qlns/bacsi/add")
+<<<<<<< HEAD
 	public String handleAddBacSi(@Valid @ModelAttribute("bacsi") BacSy bacsi, BindingResult result,
 			@ModelAttribute("taikhoan") User user) {
 
@@ -85,6 +95,21 @@ public class DoctorController {
 		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getPassword());
 		// userService.saveTaiKhoan(taiKhoan);
 //		bacsi.setUser(user);
+=======
+	public RedirectView handleAddBacSi(@ModelAttribute("bacsi") BacSy bacsi,
+			@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
+		RedirectView redirectView = new RedirectView();
+		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
+		try {
+			// setTK
+//			bacsi.setTaiKhoan(taiKhoan);
+			java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(taiKhoan.getUserName());
+			java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(taiKhoan.getPassword());
+			bacSyService.saveBacSy(bacsi);
+		} catch (Exception e) {
+			java.util.logging.Logger.getLogger(DoctorController.class.getName()).info("Sai cú pháp ngày");
+		}
+>>>>>>> 68353bf08e164e115238d4ce3df53a727df78e80
 
 		bacSyService.saveBacSy(bacsi);
 		return "redirect:/qlns/bacsi/ds-bacsi";
@@ -95,14 +120,19 @@ public class DoctorController {
 		Optional<BacSy> optBacSi = bacSyService.getById(id);
 		// get TaiKhoan map voi Bac Sy
 //		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
-		User user = new User();
+		TaiKhoan taiKhoan = new TaiKhoan();
 
+<<<<<<< HEAD
 		// Role role = Role.BACSY;
 		// taiKhoan.setRole(role);
+=======
+		Role role = Role.BACSY;
+		taiKhoan.setRole(role);
+>>>>>>> 68353bf08e164e115238d4ce3df53a727df78e80
 
 		if (optBacSi.isPresent()) {
 			model.addAttribute("bacsi", optBacSi.get());
-			model.addAttribute("taikhoan", user);
+			model.addAttribute("taikhoan", taiKhoan);
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
@@ -110,12 +140,19 @@ public class DoctorController {
 	}
 
 	@PostMapping("/qlns/bacsi/edit/{id}")
+<<<<<<< HEAD
 	public String handleEditBacSi(@Valid @ModelAttribute("bacsi") BacSy bacsi, BindingResult result,
 			@ModelAttribute("taikhoan") User user) {
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
+=======
+	public RedirectView handleEditBacSi(@ModelAttribute("bacsi") BacSy bacsi,
+			@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
+		RedirectView redirectView = new RedirectView();
+		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
+>>>>>>> 68353bf08e164e115238d4ce3df53a727df78e80
 		// setTK
 //		bacsi.setTaiKhoan(taiKhoan);
 		bacSyService.updateBacSy(bacsi);
