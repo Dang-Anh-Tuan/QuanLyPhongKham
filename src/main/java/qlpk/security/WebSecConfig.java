@@ -33,11 +33,12 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // cho phép dùng các resource
                 .antMatchers("/resources/**", "/img/**", "/css/**", "/js/**").permitAll()
+                .and().csrf().disable();
                 //cho phép login
-                .antMatchers(HttpMethod.POST,"/login", "/").permitAll()
-                .antMatchers(HttpMethod.GET,"/login", "/").permitAll()
+//                .antMatchers(HttpMethod.POST,"/login", "/").permitAll()
+//                .antMatchers(HttpMethod.GET,"/login", "/").permitAll()
                 //còn lại phẳi authen mới được vào
-                .anyRequest().authenticated();
+//                .anyRequest().authenticated();
 
     }
     @Autowired

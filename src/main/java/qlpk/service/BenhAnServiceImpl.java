@@ -1,6 +1,7 @@
 package qlpk.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,6 +45,11 @@ public class BenhAnServiceImpl implements BenhAnService{
 	@Override
 	public List<BenhAn> getByName(String name) {
 		return null;
+	}
+
+	@Override
+	public Optional<BenhAn> getById(Integer id) {
+		return benhAnRepo.findById(id);
 	}
 
 }

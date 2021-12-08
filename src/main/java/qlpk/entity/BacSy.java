@@ -3,6 +3,7 @@ package qlpk.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import qlpk.security.User;
@@ -16,6 +17,7 @@ public class BacSy  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotEmpty(message = "Tên không được để trống")
     private String ten;
     private String cmt;
     private String diaChi;

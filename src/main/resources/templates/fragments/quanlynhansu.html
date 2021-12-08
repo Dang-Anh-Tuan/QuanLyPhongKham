@@ -62,6 +62,9 @@
 	<div th:fragment="list_doctor_qlns" th:remove="tag">
 		<div class="container-list-entity grow-full">
 			<p class="list-entity-heading">Danh Sách Bác Sĩ</p>
+			<div class="ml-12 mt-24">
+				<input id="input-search" onchange="handleSearch()" type="text" class="form__field-input--text" value="" placeholder="Nhập thông tin tìm kiếm ..."/>
+			</div>
 			<div class="grid__full-width table-list" th:object="${dsBacSi}">
 				<div
 					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
@@ -98,7 +101,7 @@
 						<div class="grid__col-lg-3 table-list__cell"
 							th:utext="${bacsi.cmt}"></div>
 						<div class="grid__col-lg-3 table-list__cell"
-							th:utext="${#dates.format(bacsi.ngaySinh, 'dd/MMM/yyyy')}"></div>
+							th:utext="${#dates.format(bacsi.ngaySinh, 'dd/MM/yyyy')}"></div>
 						<div class="grid__col-lg-3 table-list__cell"
 							th:utext="${bacsi.diaChi}"></div>
 						<div class="grid__col-lg-3 table-list__cell"
@@ -133,6 +136,9 @@
 	<div th:fragment="list_nurse_qlns" th:remove="tag">
 		<div class="container-list-entity grow-full">
 			<p class="list-entity-heading">Danh Sách Y Tá</p>
+			<div class="ml-12 mt-24">
+				<input id="input-search" onchange="handleSearch()" type="text" class="form__field-input--text" value="" placeholder="Nhập thông tin tìm kiếm ..."/>
+			</div>
 			<div class="grid__full-width table-list" th:object="${dsYTa}">
 				<div
 					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
@@ -162,7 +168,7 @@
 						<div class="grid__col-lg-2 table-list__cell" th:utext="${yTa.id}"></div>
 						<div class="grid__col-lg-3 table-list__cell" th:utext="${yTa.ten}"></div>
 						<div class="grid__col-lg-3 table-list__cell" th:utext="${yTa.cmt}"></div>
-						<div class="grid__col-lg-3 table-list__cell" th:utext="${#dates.format(yTa.bd, 'dd/MMM/yyyy')}"></div>
+						<div class="grid__col-lg-3 table-list__cell" th:utext="${#dates.format(yTa.bd, 'dd/MM/yyyy')}"></div>
 						<div class="grid__col-lg-3 table-list__cell" th:utext="${yTa.diaChi}"></div>
 						<div class="grid__col-lg-3 table-list__cell" th:utext="${yTa.sdt}"></div>
 						<div class="grid__col-lg-3 table-list__cell" th:utext="${yTa.thamNien}"></div>
@@ -298,10 +304,10 @@
 					</div>
 				</div>
 				<div class="grid__row form__row" th:object="${taikhoan}">
-					<div class="form__field-container">
+					<div th:if="${content=='Thêm y tá'}" class="form__field-container">
 						<p class="form__field-heading">Username</p>
-						<input type="text" class="form__field-input--text" th:field="*{userName}"/>
-						<p class="error-msg" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" ></p>
+						<input type="text" class="form__field-input--text" th:field="*{username}"/>
+						<p class="error-msg" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" ></p>
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Password</p>
@@ -382,7 +388,7 @@
 				<div class="grid__row form__row">
 					<div class="form__field-container">
 						<p class="form__field-heading">Ngày sinh (dd/MM/yyyy)</p>
-						<input type="text" class="form__field-input--text"
+						<input type="date" class="form__field-input--text"
 							th:value="*{#dates.format(ngaySinh, 'dd/MM/yyyy')}"
 							th:field="*{ngaySinh}" />
 						<p class="error-msg" th:if="${#fields.hasErrors('ngaySinh')}" th:errors="*{ngaySinh}" ></p>
@@ -398,7 +404,7 @@
 				<div class="grid__row form__row">
 					<div class="form__field-container">
 						<p class="form__field-heading">Bậc nghề</p>
-						<select class="form__field-input--select" name="cars" id="cars"
+						<select class="form__field-input--select" 
 							th:field="*{bacNghe}">
 							<option class="form__field-input--select-option" value="1">
 								Bậc 1</option>
@@ -442,11 +448,11 @@
 					</div>
 				</div>
 				<div class="grid__row form__row" th:object="${taikhoan}">
-					<div class="form__field-container">
+					<div th:if="${heading =='Thêm bác sĩ'}" class="form__field-container">
 						<p class="form__field-heading">Username</p>
 						<input type="text" class="form__field-input--text"
-							th:field="*{userName}" />
-						<p class="error-msg" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" ></p>
+							th:field="*{username}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" ></p>
 					</div>
 					<div class="form__field-container">
 						<p class="form__field-heading">Password</p>

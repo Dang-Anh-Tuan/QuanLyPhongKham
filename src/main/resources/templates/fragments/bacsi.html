@@ -101,13 +101,20 @@
 	<!--  ---------------------- SELECT Benh Bac Si----------------------- -->
 
 	<div th:fragment="select_benh_bacsi">
-		<select name="" id="select1" class="select-box" multiple>
-			<option class="select-option" value="">Đau bụng</option>
-			<option class="select-option" value="">Trĩ nội</option>
-			<option class="select-option" value="">Trĩ ngoại</option>
-		</select>
+		<th:block th:object="${benh}">
+			<select name="" id="select1" class="select-box" th:field="${benh.id}">
+				<th:block th:object="${dsBenh}" th:each="item, state : ${dsBenh}">
+					<option class="select-option" th:value="${item.getId()}"
+						th:text="${item.getTenBenh()}"></option>
+				</th:block>
+			</select>
+		</th:block>
 	</div>
+
+
 	<!--  ---------------------- SELECT Benh Bac Si----------------------- -->
+
+
 
 	<!--  ---------------------- SELECT Thuoc Bac Si----------------------- -->
 
@@ -117,9 +124,11 @@
 				<div class="grid__row grid__row--item-center">
 					<div class="grid__col-lg-3">
 						<select name="" id="select-medicine" class="select-box">
-							<option class="select-option" value="1" title="Paradon">Paradon</option>
-							<option class="select-option" value="2" title="Typhy">Typhy</option>
-							<option class="select-option" value="3" title="Totri">Totri</option>
+							<th:block th:object="${dsThuoc}"
+								th:each="item, state : ${dsThuoc}">
+								<option class="select-option" th:value="${item.id}"
+									th:text="${item.ten}"></option>
+							</th:block>
 						</select>
 					</div>
 					<div class="grid__col-lg-2">
@@ -133,8 +142,8 @@
 						<div class="grid__row grid__row--item-center">
 							<p class="text-font-16 mr-8">Cách dùng</p>
 							<select name="" id="select-method-use" class="select-box">
-								<option class="select-option" value="">Uống</option>
-								<option class="select-option" value="">Tiêm</option>
+								<option class="select-option" >Uống</option>
+								<option class="select-option" >Tiêm</option>
 							</select>
 						</div>
 					</div>

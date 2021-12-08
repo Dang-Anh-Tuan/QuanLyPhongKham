@@ -1,6 +1,7 @@
 package qlpk.service;
 
 import java.util.List;
+import java.util.Optional;
 import qlpk.entity.BenhAn;
 
 public interface BenhAnService {
@@ -13,4 +14,6 @@ public interface BenhAnService {
 	void deleteBenhAn(int id);
 	
 	List<BenhAn> getByName(String name);
+	
+	Optional<BenhAn> getById(Integer id);
 }
