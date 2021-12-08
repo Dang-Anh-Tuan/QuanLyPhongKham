@@ -42,12 +42,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http.authorizeRequests()
                 // cho phép dùng các resource
                 .antMatchers("/resources/**", "/img/**", "/css/**", "/js/**").permitAll()
-//                .antMatchers("/**").hasAnyAuthority("ADMIN")
+//                .antMatchers("/qlns/**").hasAnyRole("ADMIN")
 //                .antMatchers("/bacsy/**").hasAnyAuthority("BACSY")
 //                .antMatchers("/yta/**").hasAnyAuthority("YTA")
+                .antMatchers(HttpMethod.POST, "/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/*").permitAll()
                 .anyRequest().authenticated()
                 //cho phép login
                 .and()
