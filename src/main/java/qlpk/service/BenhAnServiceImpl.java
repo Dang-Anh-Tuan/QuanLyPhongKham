@@ -4,17 +4,19 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import qlpk.entity.BenhAn;
 import qlpk.repo.BenhAnRepo;
 
+@Service
 public class BenhAnServiceImpl implements BenhAnService{
 
 	@Autowired
 	private BenhAnRepo benhAnRepo;
 	
 	public BenhAnServiceImpl(BenhAnRepo benhAnRepo) {
-		super();
+		
 		this.benhAnRepo = benhAnRepo;
 	}
 	
@@ -31,8 +33,8 @@ public class BenhAnServiceImpl implements BenhAnService{
 
 	@Override
 	public boolean updateBenhAn(BenhAn benhAn) {
-
-		return false;
+		benhAnRepo.save(benhAn);
+		return true;
 	}
 
 	@Override
@@ -40,9 +42,10 @@ public class BenhAnServiceImpl implements BenhAnService{
 		benhAnRepo.deleteById(id);	
 	}
 
+	
 	@Override
-	public List<BenhAn> getByName(String name) {
-		return null;
+	public Optional<BenhAn> findById(int id) {
+		return benhAnRepo.findById(id);
 	}
 
 	@Override

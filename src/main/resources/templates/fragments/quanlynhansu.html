@@ -2,18 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet"
-	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css}"
-	integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" th:href="@{/css/base.css}" />
-<link rel="stylesheet" th:href="@{/css/grid.css}" />
-<link rel="stylesheet" th:href="@{/css/admin/admin-header.css}">
-<link rel="stylesheet" th:href="@{/css/admin/admin-sidebar.css}">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css}" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" th:href="@{/css/base.css}" />
+    <link rel="stylesheet" th:href="@{/css/grid.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin/admin-header.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/admin-sidebar.css}">
+
 </head>
+
 <body>
 	<!--  ----------------------SIDEBAR QUAN LY NHAN SU ----------------------- -->
 	<div th:fragment="sidebar_qlns" th:remove="tag">
@@ -38,17 +38,11 @@
 					th:src="@{/img/icon-medicine.png}" alt=""> <a
 					class="side-bar-item__link" th:href="@{/list-medicine}">Xem
 						danh thuốc</a></li>
-				<li class="side-bar-item"><i
-					class="fas fa-plus-circle side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/add-medicine}">Thêm
+                <li class="side-bar-item"><i class="fas fa-plus-circle side-bar-item__icon"></i> <a class="side-bar-item__link" th:href="@{/qlns/thuoc/add}">Thêm
 						thuốc</a></li>
-				<li class="side-bar-item"><i
-					class="fas fa-chart-pie side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/statistic-diseases}">Thống
+                <li class="side-bar-item"><i class="fas fa-chart-pie side-bar-item__icon"></i> <a class="side-bar-item__link" th:href="@{/statistic-diseases}">Thống
 						kê các bệnh mắc nhiều</a></li>
-				<li class="side-bar-item"><i
-					class="fas fa-money-check-alt side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/salary-employee}">Xem
+                <li class="side-bar-item"><i class="fas fa-money-check-alt side-bar-item__icon"></i> <a class="side-bar-item__link" th:href="@{/salary-employee}">Xem
 						bảng lương</a></li>
 			</ul>
 		</div>
@@ -472,4 +466,5 @@
 
 	<!--  ---------------------- END FORM EDIT DOCTOR  QUAN LY NHAN SU ----------------------- -->
 </body>
+
 </html>
