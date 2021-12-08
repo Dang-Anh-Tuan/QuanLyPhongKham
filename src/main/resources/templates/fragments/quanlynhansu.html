@@ -29,7 +29,7 @@
                 <li class="side-bar-item"><i class="fas fa-plus-circle side-bar-item__icon"></i> <a class="side-bar-item__link" th:href="@{/add-nurse}">Thêm y tá</a></li>
                 <li class="side-bar-item"><img class="side-bar-item__icon-img" th:src="@{/img/icon-medicine.png}" alt=""> <a class="side-bar-item__link" th:href="@{/qlns/thuoc/ds-thuoc}">Xem
 						danh thuốc</a></li>
-                <li class="side-bar-item"><i class="fas fa-plus-circle side-bar-item__icon"></i> <a class="side-bar-item__link" th:href="@{/add-medicine}">Thêm
+                <li class="side-bar-item"><i class="fas fa-plus-circle side-bar-item__icon"></i> <a class="side-bar-item__link" th:href="@{/qlns/thuoc/add}">Thêm
 						thuốc</a></li>
                 <li class="side-bar-item"><i class="fas fa-chart-pie side-bar-item__icon"></i> <a class="side-bar-item__link" th:href="@{/statistic-diseases}">Thống
 						kê các bệnh mắc nhiều</a></li>
@@ -374,58 +374,37 @@
 
 
 
-    <!--  ---------------------- FORM ADD MEDICINE  QUAN LY NHAN SU ----------------------- -->
+    <!--  ---------------------- FORM ADD EDit MEDICINE  QUAN LY NHAN SU ----------------------- -->
 
-    <div th:fragment="add_form_medicine_qlns" th:remove="tag">
-        <form class="container-add-form grow-full" method="post">
-            <p class="add-form__heading">Thêm Thuốc</p>
+    <div th:fragment="add_form_medicine_qlns(content)" th:remove="tag">
+        <form  class="container-add-form grow-full" method="post" th:object="${thuoc}">
+            <p class="add-form__heading" th:text="${content}"></p>
             <div class="grid__full-width add-form__form">
 
                 <div class="grid__row form__row">
                     <div class="form__field-container">
                         <p class="form__field-heading">Tên thuốc</p>
-                        <input type="text" class="form__field-input--text" />
+                        <input type="text" class="form__field-input--text" th:field="*{ten}" />             
+                        <p th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" class="error-msg"></p>
                     </div>
                     <div class="form__field-container">
                         <p class="form__field-heading">Giá thuốc (VNĐ)</p>
-                        <input type="number" class="form__field-input--text" value="0" min="0" />
+                        <input type="number" class="form__field-input--text" value="0" min="0" th:field="*{gia}"/>
+                        <p th:if="${#fields.hasErrors('gia')}" th:errors="*{gia}" class="error-msg"></p>
                     </div>
                 </div>
 
                 <div class="add-form__container-btn">
-                    <input type="submit" class="btn btn--primary add-form__btn" value="Thêm Thuốc" /> <a href="" class="btn btn--border-primary add-form__btn">Quay lại</a>
+                    <input type="submit" class="btn btn--primary add-form__btn" th:value="${content}" /> <a th:href="@{/qlns/thuoc/ds-thuoc}" class="btn btn--border-primary add-form__btn">Quay lại</a>
                 </div>
         </form>
         </div>
 
         <!--  ---------------------- END FORM MEDICINE DOCTOR  QUAN LY NHAN SU ----------------------- -->
 
-        <!--  ---------------------- FORM Edit MEDICINE  QUAN LY NHAN SU ----------------------- -->
+     
 
-        <div th:fragment="edit_form_medicine_qlns" th:remove="tag">
-            <form class="container-add-form grow-full" method="post" th:object="${thuoc}">
-                <p class="add-form__heading">Sửa Thuốc</p>
-                <div class="grid__full-width add-form__form">
-
-                    <div class="grid__row form__row">
-                        <div class="form__field-container">
-                            <p class="form__field-heading">Tên thuốc</p>
-                            <input type="text" class="form__field-input--text" th:value="*{ten}" />
-                        </div>
-                        <div class="form__field-container">
-                            <p class="form__field-heading">Giá thuốc (VNĐ)</p>
-                            <input type="number" class="form__field-input--text" th:value="*{gia}" min="0" />
-                        </div>
-                    </div>
-
-                    <div class="add-form__container-btn">
-                        <input type="submit" class="btn btn--primary add-form__btn" value="Sửa Thuốc" />
-                        <a th:href="@{/qlns/ds-thuoc}" class="btn btn--border-primary add-form__btn">Quay lại</a>
-                    </div>
-            </form>
-            </div>
-
-            <!--  ---------------------- END FORM Edit MEDICINE QUAN LY NHAN SU ----------------------- -->
+            <!--  ----------------------------------------------- ----------------------- -->
             <p class="form__field-heading">Họ Tên</p>
             <input type="text" class="form__field-input--text" th:field="*{ten}" />
         </div>

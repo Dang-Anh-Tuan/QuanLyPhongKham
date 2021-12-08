@@ -52,6 +52,12 @@ body{
   flex-grow: 1;
 }
 
+.error-msg{
+	margin-top : 4px;
+	font-size:  1.4rem;
+	color : var(--error-color);
+	font-style: italic;
+}
 
 .mr-4 {
   margin-right: 4px;

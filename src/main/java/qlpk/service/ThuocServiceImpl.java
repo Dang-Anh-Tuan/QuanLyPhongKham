@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import qlpk.entity.BacSy;
+
 import qlpk.entity.Thuoc;
 import qlpk.repo.ThuocRepo;
 @Service
@@ -32,8 +32,8 @@ public class ThuocServiceImpl implements ThuocService{
 
 	@Override
 	public boolean updateThuoc(Thuoc thuoc) {
-		// TODO Auto-generated method stub
-		return false;
+		thuocRepo.save(thuoc);
+		return true;
 	}
 
 	@Override

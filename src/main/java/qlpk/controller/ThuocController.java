@@ -1,15 +1,17 @@
 package qlpk.controller;
 
-
 import java.lang.System.Logger;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +37,22 @@ public class ThuocController {
 		model.addAttribute("listThuoc", listThuoc);		
 		return "QuanLyNhanSu/ListMedicine";
 	}
+		
+	@GetMapping("/thuoc/add")
+	public String showFormAddThuoc(Model model) {
+		Thuoc thuoc = new Thuoc();
+		model.addAttribute("thuoc", thuoc);
+		return "QuanLyNhanSu/AddMedicine";
+	}
+	
+	@PostMapping("/thuoc/add")
+	public String handleAddThuoc(@Valid @ModelAttribute("thuoc") Thuoc thuoc,  BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "QuanLyNhanSu/AddMedicine";
+		}
+		thuocService.saveThuoc(thuoc);
+		return "redirect:/qlns/thuoc/ds-thuoc";
+	}
 	
 	@GetMapping("/thuoc/edit/{id}")
 	public String showEditThuoc(@PathVariable int id, Model model) {
@@ -45,16 +63,28 @@ public class ThuocController {
 			return "QuanLyNhanSu/EditMedicine";
 		}
 		
-		// 404
-		return "QuanLyNhanSu/ListMedicine";
+		return "redirect:/404";
 	}
 	
+	@PostMapping("/thuoc/edit/{id}") 
+	public String handleEditThuoc(@Valid @ModelAttribute("thuoc") Thuoc thuoc, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "QuanLyNhanSu/EditMedicine";
+		}
+		thuocService.updateThuoc(thuoc);
+		return "redirect:/qlns/thuoc/ds-thuoc";
+	}
 	
 	@GetMapping("/thuoc/delete/{id}")
 	public String deleteThuoc(@PathVariable int id) {
-		thuocService.deleteThuoc(id);
-		// 404
-		return "redirect:/qlns/thuoc/ds-thuoc";
+		Optional<Thuoc> optThuoc = thuocService.findById(id);
+		if(optThuoc.isPresent()) {
+			thuocService.deleteThuoc(id);
+			return "redirect:/qlns/thuoc/ds-thuoc";
+		}
+		
+		return "redirect:/404";
+		
 	}
 	
 }

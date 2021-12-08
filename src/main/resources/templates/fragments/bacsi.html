@@ -23,7 +23,7 @@
 			<ul class="side-bar-list-btn">
 				<li class="side-bar-item"><img class="side-bar-item__icon-img"
 					th:src="@{/img/icon-doctor.png}" alt=""> <a
-					class="side-bar-item__link" th:href="@{/bacsi-list-benhan}">Danh
+					class="side-bar-item__link" th:href="@{/bacsi/list-benhan}">Danh
 						sách bệnh án</a></li>
 			</ul>
 		</div>
@@ -35,58 +35,38 @@
 
 	<!--  ---------------------- List Benh An Bac Si----------------------- -->
 	<div th:fragment="list_benhan_bacsi" th:remove="tag">
-		<div class="container-list-entity grow-full">
+		<div class="container-list-entity grow-full" th:object="${listBenhAn}"> 
 			<p class="list-entity-heading">Danh Sách Bệnh Án</p>
 			<div class="grid__full-width table-list">
 				<div
 					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
 					<div class="grid__col-lg-1 table-list__th table-list__cell">STT</div>
-					<div class="grid__col-lg-2 table-list__th table-list__cell">Mã
-						Bệnh nhân</div>
-					<div class="grid__col-lg-3 table-list__th table-list__cell">Họ
-						Tên</div>
+					<div class="grid__col-lg-2 table-list__th table-list__cell">Mã Bệnh Án</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">Họ tên</div>
 					<div class="grid__col-lg-3 table-list__th table-list__cell">CMT</div>
-					<div class="grid__col-lg-3 table-list__th table-list__cell">Ngày
-						sinh</div>
 					<div class="grid__col-lg-3 table-list__th table-list__cell">SĐT</div>
-					<div class="grid__col-lg-3 table-list__th table-list__cell">Hành
-						động</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">Ngày khám</div>
+					<div class="grid__col-lg-3 table-list__th table-list__cell">Hành động</div>
 				</div>
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
-					<div class="grid__col-lg-1 table-list__cell">1</div>
-					<div class="grid__col-lg-2 table-list__cell">BN1</div>
-					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
-					<div class="grid__col-lg-3 table-list__cell">021324564</div>
-					<div class="grid__col-lg-3 table-list__cell">19/08/2000</div>
-					<div class="grid__col-lg-3 table-list__cell">02132454</div>
-					<div class="grid__col-lg-3 table-list__cell">
+				<th:block th:each="benhan, state : ${listBenhAn}">
+                    <div class="grid__row grid__row--spbw grid__row--item-center table-list__row">
+                        <div class="grid__col-lg-1 table-list__cell" th:utext="${state.count}"></div>
+                         <div class="grid__col-lg-2 table-list__cell" th:utext="${benhan.id}"></div>
+                        <div class="grid__col-lg-3 table-list__cell" th:utext="${benhan.getBenhNhan().getTen()}"></div>
+                        <div class="grid__col-lg-3 table-list__cell" th:utext="${benhan.getBenhNhan().getCmt()}"></div>
+                        <div class="grid__col-lg-3 table-list__cell" th:utext="${benhan.getBenhNhan().getSdt()}"></div>
+                        <div class="grid__col-lg-3 table-list__cell" th:utext="${benhan.ngayKham}"></div>
+						<div class="grid__col-lg-3 table-list__cell">
 						<div class="grid__row grid__row--item-center">
 							<a href=""
-								class="table-list__cell-link btn btn-size-s btn--warning">Khám
-								bệnh</a> <a href=""
+								class="table-list__cell-link btn btn-size-s btn--warning">Khámbệnh</a> 
+							<a href=""
 								class="table-list__cell-link btn btn-size-s btn--warning">Xem</a>
 						</div>
 					</div>
 				</div>
 
-				<div
-					class="grid__row grid__row--spbw grid__row--item-center table-list__row">
-					<div class="grid__col-lg-1 table-list__cell">1</div>
-					<div class="grid__col-lg-2 table-list__cell">BN1</div>
-					<div class="grid__col-lg-3 table-list__cell">Đặng Anh Tuấn</div>
-					<div class="grid__col-lg-3 table-list__cell">021324564</div>
-					<div class="grid__col-lg-3 table-list__cell">19/08/2000</div>
-					<div class="grid__col-lg-3 table-list__cell">02132454</div>
-					<div class="grid__col-lg-3 table-list__cell">
-						<div class="grid__row grid__row--item-center">
-							<a href=""
-								class="table-list__cell-link btn btn-size-s btn--warning">Khám
-								bệnh</a> <a href=""
-								class="table-list__cell-link btn btn-size-s btn--warning">Xem</a>
-						</div>
-					</div>
-				</div>
+				
 
 			</div>
 		</div>
@@ -94,7 +74,7 @@
 	</div>
 
 
-	<!--  ---------------------- END List Benh An Y Ta----------------------- -->
+	<!--  ---------------------- END List Benh An Bac Si----------------------- -->
 
 
 
