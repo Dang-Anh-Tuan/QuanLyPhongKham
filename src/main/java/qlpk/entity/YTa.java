@@ -1,11 +1,8 @@
 package qlpk.entity;
 
 import lombok.Data;
-<<<<<<< HEAD
 import qlpk.security.User;
 
-=======
->>>>>>> 68353bf08e164e115238d4ce3df53a727df78e80
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
