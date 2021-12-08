@@ -12,4 +12,5 @@ public interface BenhNhanService {
 	boolean saveBenhNhan(BenhNhan benhNhan);
 	Optional<BenhNhan> findById(int id);
 	boolean updateBenhNhan(BenhNhan benhNhan);
+	
 }

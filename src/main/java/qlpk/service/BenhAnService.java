@@ -18,4 +18,6 @@ public interface BenhAnService {
 	void deleteBenhAn(int id);
 	
 	Optional<BenhAn> findById(int id);
+	
+	Optional<BenhAn> getById(Integer id);
 }
