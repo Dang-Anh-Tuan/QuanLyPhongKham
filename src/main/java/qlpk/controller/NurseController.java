@@ -16,18 +16,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.validation.Errors;
 
-import qlpk.entity.User;
+import qlpk.dto.UserDTO;
 import qlpk.entity.YTa;
 import qlpk.entity.enums.Role;
+import qlpk.service.UserService;
 import qlpk.service.YTaService;
 
 @Controller
 public class NurseController {
 	@Autowired
 	private YTaService yTaService;
+	@Autowired
+	private UserService userService;
 
-	public NurseController(YTaService yTaService) {
+	public NurseController(YTaService yTaService, UserService userService) {
 		this.yTaService = yTaService;
+		this.userService = userService;
 	}
 
 	@GetMapping("/qlns/yta/ds-yta")
@@ -40,10 +44,10 @@ public class NurseController {
 	@GetMapping("/qlns/yta/add")
 	public String showAddFormYTa(Model model) {
 		YTa yTa = new YTa();
-		User taiKhoan = new User();
+		UserDTO user = new UserDTO();;
 
 		model.addAttribute("yTa", yTa);
-		model.addAttribute("taikhoan", taiKhoan);
+		model.addAttribute("taikhoan", user);
 		return "QuanLyNhanSu/AddNurse";
 
 	}
@@ -52,18 +56,14 @@ public class NurseController {
 	public String handleAddYTa(
 			@Valid @ModelAttribute("yTa") YTa yTa,
 			BindingResult result,
-			@ModelAttribute("taikhoan") User taiKhoan,
-
-			Model model) {
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
 
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/AddNurse";
 		}
-		Role role = Role.YTA;
-		taiKhoan.setRole(role);
-//			 setTK
-//			yTa.setTaiKhoan(taiKhoan);
-		yTaService.saveYTa(yTa);
+		userDTO.setRole(Role.YTA);
+		userService.save(userDTO);
+		yTaService.saveYTa(yTa, userDTO);
 		return "redirect:/qlns/yta/ds-yta";
 
 	}
@@ -73,14 +73,12 @@ public class NurseController {
 		Optional<YTa> optYTa = yTaService.getById(id);
 		// get TaiKhoan map voi Bac Sy
 //		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
-		User taiKhoan = new User();
-
-		Role role = Role.YTA;
-		taiKhoan.setRole(role);
+		UserDTO userDTO;
 
 		if (optYTa.isPresent()) {
+			userDTO = userService.getUserByID(optYTa.get().getUser().getId());
 			model.addAttribute("yTa", optYTa.get());
-			model.addAttribute("taikhoan", taiKhoan);
+			model.addAttribute("taikhoan", userDTO);
 			return "QuanLyNhanSu/EditNurse";
 		}
 
@@ -90,7 +88,7 @@ public class NurseController {
 
 	@PostMapping("/qlns/yta/edit/{id}")
 	public String handleEditYTa(@PathVariable int id, @Valid @ModelAttribute("yTa") YTa yTa,
-								@Valid @ModelAttribute("taikhoan") User taiKhoan, Model model, Errors errors) {
+								@Valid @ModelAttribute("taikhoan") UserDTO userDTO, Model model, Errors errors) {
 
 		if (errors.hasErrors()) {
 //			Optional<YTa> optYTa = yTaService.getById(id);
@@ -98,8 +96,7 @@ public class NurseController {
 //			model.addAttribute("taikhoan", taiKhoan);
 			return "QuanLyNhanSu/EditNurse";
 		} else {
-			// setTK
-//			yta.setTaiKhoan(taiKhoan);
+			userService.save(userDTO);
 			yTaService.updateYTa(yTa);
 			return "redirect: /qlns/yta/ds-yta";
 		}
