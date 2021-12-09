@@ -20,7 +20,7 @@ public class ThongTinChamSoc {
     @ManyToOne(targetEntity = BenhNhan.class)
     @JoinColumn(name = "benh_nhan_id", referencedColumnName = "id")
     private BenhNhan benhNhan;
-    @OneToMany(targetEntity = DonThuoc.class, mappedBy = "thongTinChamSoc")
+    @OneToMany(targetEntity = DonThuoc.class)
     @JoinColumn(name = "don_thuoc_id", referencedColumnName = "id")
     @Nullable
     private Set<DonThuoc> donThuoc;
