@@ -3,6 +3,9 @@ package qlpk.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 @Data
@@ -10,9 +13,12 @@ import java.util.Date;
 public class BenhAn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayKham;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayVaoVien;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayXuatVien;
     private float tongTien;
     private boolean daPhat;
