@@ -2,7 +2,7 @@ package qlpk.entity.enums;
 
 public enum Role {
 
-    BACSY("bac sy",1), YTA("y ta",2), ADMIN("admin", 3);
+    BACSY("BACSY",0), YTA("YTA",1), ADMIN("ADMIN", 2);
     private final String type;
     private final Integer value;
     Role(String type, int value) {
