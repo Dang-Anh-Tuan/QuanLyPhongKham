@@ -81,6 +81,9 @@ body{
   margin-right: 100px;
 }
 
+.isVisible {
+	display: block;
+}
 
 
 .ml-4 {
@@ -99,6 +102,10 @@ body{
 }
 .ml-24 {
   margin-left: 24px;
+}
+
+.ml-36 {
+  margin-left: 36px;
 }
 
 .ml-50 {
@@ -126,7 +133,7 @@ body{
 }
 
 .mt-4 {
-  margin-top: 4px;
+  margin-top: 4px !important;
 }
 
 .mt-8 {
@@ -198,6 +205,14 @@ body{
   font-size: 1.6rem;
 }
 
+.text-font-20{
+  font-size: 2rem;
+}
+
+.text-lh-24{
+  line-height: 2.4rem
+}
+
 .text-font-32{
   font-size: 3.2rem;
 }
@@ -224,6 +239,11 @@ body{
   border-radius: 5px;
   color: var(--white-color);
   transition: all 0.4s;
+}
+
+.btn-size-ss {
+  min-width: 50px;
+  padding: 8px 16px;
 }
 
 .btn-size-s {
