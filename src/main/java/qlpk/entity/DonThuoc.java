@@ -22,6 +22,5 @@ public class DonThuoc {
     @JoinColumn(name = "thuoc_id")
     private Thuoc thuoc;
     @ManyToOne(targetEntity = ThongTinChamSoc.class)
-    @JoinColumn(name = "cham_soc_id", referencedColumnName = "id")
     private ThongTinChamSoc thongTinChamSoc;
 }
