@@ -1,4 +1,4 @@
-package qlpk.security;
+package qlpk.entity;
 
 import lombok.Data;
 import qlpk.entity.enums.Role;
@@ -15,6 +15,6 @@ public class User {
     private String password;
     @Enumerated(EnumType.ORDINAL)
     private Role role;
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true)
     private String userName;
 }

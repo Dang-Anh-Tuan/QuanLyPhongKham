@@ -5,7 +5,6 @@ import lombok.Data;
 import javax.persistence.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import qlpk.security.User;
 
 import java.util.Date;
 import java.util.Set;

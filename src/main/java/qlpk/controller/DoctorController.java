@@ -1,65 +1,64 @@
 package qlpk.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
-
+import qlpk.dto.UserDTO;
 import qlpk.entity.BacSy;
 import qlpk.entity.enums.Role;
-import qlpk.security.User;
 import qlpk.service.BacSyService;
+import qlpk.service.UserService;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class DoctorController {
 
 	@Autowired
 	private BacSyService bacSyService;
-//	@Autowired
-//	private TaiKhoanService taiKhoanService;
+	@Autowired
+	private UserService userService;
 
-	public DoctorController(BacSyService bacSyService) {
+	public DoctorController(BacSyService bacSyService, UserService userService) {
 		this.bacSyService = bacSyService;
+		this.userService = userService;
 	}
-	@RequestMapping("/")
-	public String showList() {
-		return "404";
-	}
+
 	@GetMapping("/qlns/bacsi/ds-bacsi")
 	public String showListBacSi(Model model) {
 		List<BacSy> dsBacSi = bacSyService.getAll();
+
 		model.addAttribute("dsBacSi", dsBacSi);
+
 		return "QuanLyNhanSu/ListDoctor";
 	}
 
 	@GetMapping("/qlns/bacsi/add")
 	public String showAddFormBacSi(Model model) {
 		BacSy bacSi = new BacSy();
-		User user = new User();
-		user.setRole(Role.BACSY);
-
+		UserDTO user = new UserDTO();
 		model.addAttribute("bacsi", bacSi);
 		model.addAttribute("taikhoan", user);
+
 		return "QuanLyNhanSu/AddDoctor";
 
 	}
 
 	@PostMapping("/qlns/bacsi/add")
 	public RedirectView handleAddBacSi(@ModelAttribute("bacsi") BacSy bacsi,
-			@ModelAttribute("taikhoan") User user) {
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
-		// setTK
-		bacsi.setUser(user);
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getUserName());
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getPassword());
-		//taiKhoanService.saveTaiKhoan(taiKhoan);
-		bacsi.setUser(user);
-		bacSyService.saveBacSy(bacsi);
+
+		userDTO.setRole(Role.BACSY);
+		userService.save(userDTO);
+		bacSyService.saveBacSy(bacsi, userDTO);
 
 		return redirectView;
 	}
@@ -67,16 +66,13 @@ public class DoctorController {
 	@GetMapping("/qlns/bacsi/edit/{id}")
 	public String showEditFormBacSi(@PathVariable int id, Model model) {
 		Optional<BacSy> optBacSi = bacSyService.getById(id);
-		// get TaiKhoan map voi Bac Sy
-//		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
-		User user = new User();
-
-		//Role role = Role.BACSY;
-		//taiKhoan.setRole(role);
+		UserDTO userDTO;
 
 		if (optBacSi.isPresent()) {
+			userDTO = userService.getUserByID(optBacSi.get().getUser().getId());
 			model.addAttribute("bacsi", optBacSi.get());
-			model.addAttribute("taikhoan", user);
+			model.addAttribute("taikhoan", userDTO);
+
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
@@ -86,12 +82,14 @@ public class DoctorController {
 
 	@PostMapping("/qlns/bacsi/edit/{id}")
 	public RedirectView handleEditBacSi(@ModelAttribute("bacsi") BacSy bacsi,
-			@ModelAttribute("taikhoan") User user) {
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
+
 		RedirectView redirectView = new RedirectView();
 		redirectView.setUrl("/qlns/bacsi/ds-bacsi");
-		// setTK
-//		bacsi.setTaiKhoan(taiKhoan);
+
+		userService.save(userDTO);
 		bacSyService.updateBacSy(bacsi);
+
 		return redirectView;
 	}
 	
@@ -122,4 +120,5 @@ public class DoctorController {
 	public String showViewKeDon() {
 		return "BacSi/KeDon";
 	}
+
 }

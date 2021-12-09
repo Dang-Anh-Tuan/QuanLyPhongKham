@@ -2,8 +2,12 @@ package qlpk.service.implement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import qlpk.dto.UserDTO;
 import qlpk.entity.BacSy;
+import qlpk.entity.Benh;
 import qlpk.repo.BacSyRepo;
+import qlpk.repo.BenhRepo;
+import qlpk.repo.UserRepo;
 import qlpk.service.BacSyService;
 
 import java.util.List;
@@ -13,39 +17,49 @@ import java.util.Optional;
 @Service
 public class BacSyServiceImp implements BacSyService {
     @Autowired
-    private BacSyRepo repo;
+    private BacSyRepo bacSyRepo;
+    @Autowired
+    private BenhRepo benhRepo;
+    @Autowired
+    private UserRepo userRepo;
 
     @Override
     public void deleteBacSy(int id) {
-        repo.deleteById(id);
+        bacSyRepo.deleteById(id);
     }
 
     @Override
-    public boolean saveBacSy(BacSy bacSy) {
-        repo.save(bacSy);
+    public boolean saveBacSy(BacSy bacSy, UserDTO userDTO) {
+        bacSy.setUser(userRepo.findByUserName(userDTO.getUserName()));
+        bacSyRepo.save(bacSy);
         return true;
     }
 
     @Override
     public boolean updateBacSy(BacSy bacSy) {
-    	repo.save(bacSy);
+        bacSyRepo.save(bacSy);
         return true;
     }
 
     @Override
     public BacSy searchBacSyByCMT(String cmt) {
-        return repo.findByCmt(cmt);
+        return bacSyRepo.findByCmt(cmt);
     }
 
     @Override
     public List<BacSy> getAll() {
-        return repo.findAll();
+        return bacSyRepo.findAll();
     }
 
 	@Override
 	public Optional<BacSy> getById(int id) {
-		return repo.findById(id);
+		return bacSyRepo.findById(id);
 	}
 
-	
+    @Override
+    public List<Benh> getListBenhByBacSy(int id) {
+        return benhRepo.findBenhByBacSy(bacSyRepo.findById(id));
+    }
+
+
 }
