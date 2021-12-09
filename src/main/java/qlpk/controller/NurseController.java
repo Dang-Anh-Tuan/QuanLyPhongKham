@@ -1,6 +1,5 @@
 package qlpk.controller;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,31 +16,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.validation.Errors;
 
-import qlpk.security.User;
-import qlpk.entity.Benh;
-import qlpk.entity.BenhAn;
-import qlpk.entity.BenhNhan;
+import qlpk.dto.UserDTO;
 import qlpk.entity.YTa;
 import qlpk.entity.enums.Role;
-import qlpk.service.BenhAnService;
+import qlpk.service.UserService;
 import qlpk.service.YTaService;
 
 @Controller
 public class NurseController {
 	@Autowired
 	private YTaService yTaService;
-
 	@Autowired
-	private BenhAnService benhAnService;
+	private UserService userService;
 
-	public NurseController(YTaService yTaService, BenhAnService benhAnService) {
+	public NurseController(YTaService yTaService, UserService userService) {
 		this.yTaService = yTaService;
-		this.benhAnService = benhAnService;
+		this.userService = userService;
 	}
 
 	@GetMapping("/qlns/yta/ds-yta")
 	public String showListYTa(Model model) {
-		List<YTa> dsYTa = yTaService.getAll();
+		List<YTa> dsYTa = yTaService.findAll();
 		model.addAttribute("dsYTa", dsYTa);
 		return "QuanLyNhanSu/ListNurse";
 	}
@@ -49,25 +44,26 @@ public class NurseController {
 	@GetMapping("/qlns/yta/add")
 	public String showAddFormYTa(Model model) {
 		YTa yTa = new YTa();
-		User taiKhoan = new User();
+		UserDTO user = new UserDTO();;
 
 		model.addAttribute("yTa", yTa);
-		model.addAttribute("taikhoan", taiKhoan);
+		model.addAttribute("taikhoan", user);
 		return "QuanLyNhanSu/AddNurse";
 
 	}
 
 	@PostMapping("/qlns/yta/add")
-	public String handleAddYTa(@Valid @ModelAttribute("yTa") YTa yTa, BindingResult result,
-			@ModelAttribute("taikhoan") User taiKhoan, Model model) {
+	public String handleAddYTa(
+			@Valid @ModelAttribute("yTa") YTa yTa,
+			BindingResult result,
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
 
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/AddNurse";
 		}
-		taiKhoan.setRole("Role.YTA");
-//			 setTK
-//			yTa.setTaiKhoan(taiKhoan);
-		yTaService.saveYTa(yTa);
+		userDTO.setRole(Role.YTA);
+		userService.save(userDTO);
+		yTaService.saveYTa(yTa, userDTO);
 		return "redirect:/qlns/yta/ds-yta";
 
 	}
@@ -77,13 +73,12 @@ public class NurseController {
 		Optional<YTa> optYTa = yTaService.getById(id);
 		// get TaiKhoan map voi Bac Sy
 //		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
-		User taiKhoan = new User();
-
-		taiKhoan.setRole("Role.YTA");
+		UserDTO userDTO;
 
 		if (optYTa.isPresent()) {
+			userDTO = userService.getUserByID(optYTa.get().getUser().getId());
 			model.addAttribute("yTa", optYTa.get());
-			model.addAttribute("taikhoan", taiKhoan);
+			model.addAttribute("taikhoan", userDTO);
 			return "QuanLyNhanSu/EditNurse";
 		}
 
@@ -92,19 +87,18 @@ public class NurseController {
 	}
 
 	@PostMapping("/qlns/yta/edit/{id}")
-	public String handleEditYTa(@PathVariable int id, @Valid @ModelAttribute("yTa") YTa yTa, BindingResult result,
-			@Valid @ModelAttribute("taikhoan") User taiKhoan, Model model) {
+	public String handleEditYTa(@PathVariable int id, @Valid @ModelAttribute("yTa") YTa yTa,
+								@Valid @ModelAttribute("taikhoan") UserDTO userDTO, Model model, Errors errors) {
 
-		if (result.hasErrors()) {
+		if (errors.hasErrors()) {
 //			Optional<YTa> optYTa = yTaService.getById(id);
 //			model.addAttribute("yTa", optYTa.get());
 //			model.addAttribute("taikhoan", taiKhoan);
 			return "QuanLyNhanSu/EditNurse";
 		} else {
-			// setTK
-//			yta.setTaiKhoan(taiKhoan);
+			userService.save(userDTO);
 			yTaService.updateYTa(yTa);
-			return "redirect:/qlns/yta/ds-yta";
+			return "redirect: /qlns/yta/ds-yta";
 		}
 
 	}
@@ -126,75 +120,6 @@ public class NurseController {
 		return redirectView;
 	}
 
-	// xem bệnh án
-	@GetMapping(value = { "/yta/xembenhan/{id}" })
-	public String showBSBenhAn(@PathVariable int id, Model model) {
-
-		Optional<BenhAn> optBenhAn = benhAnService.getById(id);
-		if (optBenhAn.isPresent()) {
-			BenhAn benhAn = optBenhAn.get();
-			BenhNhan benhNhan = benhAn.getBenhNhan();
-			// get All Thuoc
-//			List<Thuoc> dsThuoc = thuocService.getAll();
-
-			// model add benh an va benh nhanh
-			model.addAttribute("benhAn", benhAn);
-			model.addAttribute("benhNhan", benhNhan);
-
-			// fake benh
-			Benh benh1 = new Benh();
-			benh1.setId(10);
-			benh1.setTenBenh("ho");
-			Benh benh2 = new Benh();
-			benh2.setId(11);
-			benh2.setTenBenh("sot");
-			List<Benh> dsBenh = Arrays.asList(benh1, benh2);
-
-			// model add benh cua benh an
-			model.addAttribute("dsBenh", dsBenh);
-
-			return "YTa/ViewBenhAn";
-		}
-		return "redirect:/404";
-	}
-	
-	
-
-	@GetMapping(value = { "/yta/xemdonthuoc/{id}" })
-	public String showYTaDonThuoc(@PathVariable int id, Model model) {
-
-		Optional<BenhAn> optBenhAn = benhAnService.getById(id);
-		if (optBenhAn.isPresent()) {
-			BenhAn benhAn = optBenhAn.get();
-			BenhNhan benhNhan = benhAn.getBenhNhan();
-			// get All Thuoc
-//			List<Thuoc> dsThuoc = thuocService.getAll();
-
-			// model add benh an va benh nhanh
-			model.addAttribute("benhAn", benhAn);
-			model.addAttribute("benhNhan", benhNhan);
-
-			// get donThuoc
-
-			// model add don thuoc
-//			model.addAttribute("donThuoc", donThuoc);
-
-			return "YTa/ViewDonThuoc";
-		}
-		return "redirect:/404";
-	}
-	
-	@PostMapping(value = { "/yta/xemdonthuoc/{id}" })
-	public String handleYTaDonThuoc(@PathVariable int id, Model model) {
-
-		Optional<BenhAn> optBenhAn = benhAnService.getById(id);
-		if (optBenhAn.isPresent()) {
-			
-			// xoa don thuoc trong benh an nay
-
-			return "YTa/ViewDonThuoc";
-		}
-		return "redirect:/404";
-	}
-
+	// phat thuoc, tiem thuoc
+	// thanh toán viện phí
 }

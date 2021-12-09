@@ -16,7 +16,7 @@
 <body>
 	<!--  ---------------------- THONG TIN BENH AN ----------------------- -->
 	<div th:fragment="thong_tin_benh_an">
-		<div class="grid ml-12 mt-16" th:object="${benhNhan}">
+		<div class="grid ml-12 mt-16">
 			<div class="grid__row info-benhan-row">
 				<div
 					class="
@@ -25,10 +25,8 @@
           ">
 					<p class="info-benhan-field__content">Mã Bệnh án</p>
 				</div>
-				<div class="info-benhan-field__container-cell border--primary-thin"
-					th:object="${benhAn}">
-					<p class="info-benhan-field__content text-lh-24"
-						th:text="${benhAn.id}"></p>
+				<div class="info-benhan-field__container-cell border--primary-thin">
+					<p class="info-benhan-field__content">BN1</p>
 				</div>
 			</div>
 			<div class="grid__row info-benhan-row">
@@ -40,8 +38,7 @@
 					<p class="info-benhan-field__content">Họ tên</p>
 				</div>
 				<div class="info-benhan-field__container-cell border--primary-thin">
-					<p class="info-benhan-field__content text-lh-24"
-						th:text="${benhNhan.ten}"></p>
+					<p class="info-benhan-field__content">Đặng Anh Tuấn</p>
 				</div>
 			</div>
 			<div class="grid__row info-benhan-row">
@@ -53,8 +50,7 @@
 					<p class="info-benhan-field__content">CMT</p>
 				</div>
 				<div class="info-benhan-field__container-cell border--primary-thin">
-					<p class="info-benhan-field__content text-lh-24"
-						th:text="${benhNhan.cmt}"></p>
+					<p class="info-benhan-field__content">021324564</p>
 				</div>
 			</div>
 			<div class="grid__row info-benhan-row">
@@ -66,8 +62,7 @@
 					<p class="info-benhan-field__content">Ngày sinh</p>
 				</div>
 				<div class="info-benhan-field__container-cell border--primary-thin">
-					<p class="info-benhan-field__content text-lh-24"
-						th:utext="${#dates.format(benhNhan.ngaySinh, 'dd/MM/yyyy')}"></p>
+					<p class="info-benhan-field__content">19/08/2000</p>
 				</div>
 			</div>
 			<div class="grid__row info-benhan-row">
@@ -79,89 +74,14 @@
 					<p class="info-benhan-field__content">SĐT</p>
 				</div>
 				<div class="info-benhan-field__container-cell border--primary-thin">
-					<p class="info-benhan-field__content text-lh-24"
-						th:text="${benhNhan.sdt}"></p>
+					<p class="info-benhan-field__content">02132454</p>
 				</div>
 			</div>
 		</div>
 	</div>
 
 
-	<!--  ---------------------- END THONG TIN BENH AN ----------------------- -->
+	<!--  ----------------------THONG TIN BENH AN ----------------------- -->
 
-
-	<!--  ----------------------KET QUA KHAM BENH ----------------------- -->
-	<div th:fragment="ket_qua_kham_benh(actor)">
-		<div class="ml-12 mt-16">
-			<p class="phieu-sub-heading ml-24 mb-16">Kết quả khám bệnh</p>
-			<div th:each="benh : ${dsBenh}" th:object="${dsBenh}"
-				class="grid ml-36">
-				<div class="grid__row mt-8 grid__row--item-center">
-					<i class="text-font-20 mr-4 fas fa-chevron-circle-right"></i>
-					<p class="text-font-20" th:text="${benh.tenBenh}"></p>
-					<th:block th:object="${dsBenhBS}">
-						<button
-							th:if="${actor == 'bacsi' and #lists.contains(dsBenhBS, benh)}"
-							th:id="${benh.id}"
-							class="btn btn-size-ss btn--border-primary ml-4 btn-khoi-benh">Đã
-							khỏi</button>
-					</th:block>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--  ----------------------END KET QUA KHAM BENH ----------------------- -->
-
-
-	<!--  ----------------------XEM DON THUOC ----------------------- -->
-	<div th:fragment="xem_don_thuoc(actor)">
-		<div class="ml-12 mt-16">
-			<p class="phieu-sub-heading ml-24 mb-16">Đơn thuốc</p>
-			<div class="container-add-medicine mt-16">
-				<div class="grid">
-					<div class="grid__row grid__row--item-center">
-						<div class="grid__full-width table-list">
-							<div
-								class="
-           							 grid__row grid__row--spbw grid__row--item-center
-            					table-list__row
-         					 ">
-								<div class="grid__col-lg-1 table-list__th table-list__cell">STT</div>
-								<div class="grid__col-lg-3 table-list__th table-list__cell">
-									Tên thuốc</div>
-								<div class="grid__col-lg-2 table-list__th table-list__cell">
-									Liều dùng</div>
-								<div class="grid__col-lg-3 table-list__th table-list__cell">
-									Cách dùng</div>
-							</div>
-							<th:block th:each="item, state : ${donThuoc}"
-								th:object="donThuoc">
-								<div
-									class="
-           							 grid__row grid__row--spbw grid__row--item-center
-            					table-list__row
-         					 ">
-									<div class="grid__col-lg-1 table-list__th table-list__cell"
-										th:text="${state.count}"></div>
-									<div class="grid__col-lg-3 table-list__th table-list__cell">Tên
-										thuốc</div>
-									<div class="grid__col-lg-2 table-list__th table-list__cell">
-										Liều dùng</div>
-									<div class="grid__col-lg-3 table-list__th table-list__cell">
-										Cách dùng</div>
-								</div>
-							</th:block>
-						</div>
-					</div>
-				</div>
-				<div th:if="${actor=='yta'}"
-					class="grid__row grid__row--item-center content-item-center mt-32">
-					<input type="submit" class="btn btn--primary add-form__btn"
-						value="Xác nhận phát thuốc" />
-				</div>
-			</div>
-		</div>
-		<!--  ----------------------END XEM DON THUOC----------------------- -->
 </body>
 </html>

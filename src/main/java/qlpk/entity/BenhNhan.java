@@ -3,9 +3,6 @@ package qlpk.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
 @Data
@@ -18,6 +15,5 @@ public class BenhNhan {
     private String cmt;
     private String diaChi;
     private String sdt;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngaySinh;
 }
