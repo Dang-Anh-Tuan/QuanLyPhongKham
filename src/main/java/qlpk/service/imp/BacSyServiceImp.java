@@ -1,16 +1,18 @@
-package qlpk.service;
+package qlpk.service.imp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qlpk.entity.BacSy;
 import qlpk.repo.BacSyRepo;
+import qlpk.service.BacSyService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-public class BacSyServiceImp implements BacSyService{
+public class BacSyServiceImp implements BacSyService {
     @Autowired
     private BacSyRepo repo;
 
@@ -46,5 +48,8 @@ public class BacSyServiceImp implements BacSyService{
 		return repo.findById(id);
 	}
 
-	
+    @Override
+    public float tinhLuongBacSy(int id, Date sdate) {
+        return repo.tinhLuongBacSy(id, sdate);
+    }
 }

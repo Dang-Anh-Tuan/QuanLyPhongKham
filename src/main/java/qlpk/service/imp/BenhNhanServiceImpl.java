@@ -1,4 +1,4 @@
-package qlpk.service;
+package qlpk.service.imp;
 
 import java.util.Optional;
 
@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import qlpk.entity.BenhNhan;
 import qlpk.repo.BenhNhanRepo;
+import qlpk.service.BenhNhanService;
 
 @Service
-public class BenhNhanServiceImpl implements BenhNhanService{
+public class BenhNhanServiceImpl implements BenhNhanService {
 	@Autowired
 	BenhNhanRepo repo;
 	

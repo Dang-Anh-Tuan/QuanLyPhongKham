@@ -1,15 +1,16 @@
-package qlpk.service;
+package qlpk.service.imp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qlpk.entity.YTa;
 import qlpk.repo.YTaRepo;
+import qlpk.service.YTaService;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class YTaServiceImp implements YTaService{
+public class YTaServiceImp implements YTaService {
 	@Autowired
     private YTaRepo repo;
     

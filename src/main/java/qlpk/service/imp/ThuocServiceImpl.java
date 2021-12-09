@@ -1,4 +1,4 @@
-package qlpk.service;
+package qlpk.service.imp;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import qlpk.entity.Thuoc;
 import qlpk.repo.ThuocRepo;
+import qlpk.service.ThuocService;
+
 @Service
-public class ThuocServiceImpl implements ThuocService{
+public class ThuocServiceImpl implements ThuocService {
 
 	@Autowired
 	private ThuocRepo thuocRepo;
