@@ -13,7 +13,7 @@ public class Benh {
     private Integer id;
     private String tenBenh;
     private String mota;
-    @ManyToOne(targetEntity = BacSy.class)
+    @ManyToOne(targetEntity = BacSy.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "bac_sy_id", referencedColumnName = "id")
     private BacSy bacSy;
     @OneToMany(targetEntity = DonThuoc.class, mappedBy = "benh")
