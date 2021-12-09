@@ -21,6 +21,7 @@ public class DonThuoc {
     @ManyToOne(targetEntity = Thuoc.class)
     @JoinColumn(name = "thuoc_id")
     private Thuoc thuoc;
-    @OneToMany(targetEntity = ThongTinChamSoc.class, mappedBy = "donThuoc")
-    private Set<ThongTinChamSoc> thongTinChamSoc;
+    @ManyToOne(targetEntity = ThongTinChamSoc.class)
+    @JoinColumn(name = "cham_soc_id", referencedColumnName = "id")
+    private ThongTinChamSoc thongTinChamSoc;
 }
