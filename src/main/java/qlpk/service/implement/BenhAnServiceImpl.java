@@ -24,7 +24,7 @@ public class BenhAnServiceImpl implements BenhAnService {
 	
 	@Override
 	public List<BenhAn> getAll() {
-		return benhAnRepo.findAll();
+		return benhAnRepo.findBenhAnByIsDelete(false);
 	}
 
 	@Override

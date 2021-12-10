@@ -101,7 +101,6 @@
 					<p class="text-font-20" th:text="${benh.tenBenh}"></p>
 					<th:block th:object="${dsBenhBS}">
 						<button
-							th:if="${actor == 'bacsi' and #lists.contains(dsBenhBS, benh)}"
 							th:id="${benh.id}"
 							class="btn btn-size-ss btn--border-primary ml-4 btn-khoi-benh">Đã
 							khỏi</button>

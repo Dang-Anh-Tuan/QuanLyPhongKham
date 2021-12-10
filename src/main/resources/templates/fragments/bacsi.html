@@ -70,7 +70,7 @@
 						<div class="grid__col-lg-3 table-list__cell">
 							<div class="grid__row grid__row--item-center"
 								style="margin-left: 26px !important;">
-								<a th:href="@{'/bacsi/xembenhan/' + ${benhan.id}}"
+								<a th:if="${benhan.getIdBenh()!=null}" th:href="@{'/bacsi/xembenhan/' + ${benhan.id}}"
 									class="table-list__cell-link"><i
 									class="fas fa-eye table-list__cell-icon table-list__cell-icon--edit"></i>
 								</a>

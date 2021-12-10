@@ -2,7 +2,6 @@ package qlpk.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
@@ -245,22 +244,12 @@ public class DoctorController {
 			model.addAttribute("benhNhan", benhNhan);
 
 			// fake benh
-			Benh benh1 = new Benh();
-			benh1.setId(10);
-			benh1.setTenBenh("ho");
-			Benh benh2 = new Benh();
-			benh2.setId(11);
-			benh2.setTenBenh("sot");
-			List<Benh> dsBenh = Arrays.asList(benh1, benh2);
+			Optional<Benh> benh1 = benhService.getById(benhAn.getIdBenh());
+			List<Benh> dsBenh = Arrays.asList(benh1.get());
 
 			// model add benh cua benh an
 			model.addAttribute("dsBenh", dsBenh);
 
-			// fake benh cua bac si
-			List<Benh> dsBenhBS = Arrays.asList(benh1);
-
-			// model add benh cua benh an
-			model.addAttribute("dsBenhBS", dsBenhBS);
 
 			return "Bacsi/ViewBenhAn";
 		}
@@ -270,18 +259,10 @@ public class DoctorController {
 	@PostMapping("/bacsi/xembenhan/{id}")
 	public String handleUpdateKhoiBenh(@PathVariable int id, @RequestBody(required = false) String json) {
 		if (json != null) {
-			try {
-				JSONObject jsonObject = new JSONObject(json);
-				int idBenh = jsonObject.getInt("id");
-				System.out.println(idBenh);
-				return "redirect:/bacsi/list-benhan";
-			} catch (Exception e) {
-
-			}
-
-			// update khoi benh cho benh an do
-
-			// ******* redirect danh sach benh an *********
+			Optional<BenhAn> benhAn = benhAnService.getById(id);
+			benhAn.get().setDaKhoi(true);
+			benhAn.get().setDelete(true);
+			benhAnService.saveBenhAn(benhAn.get());
 
 		}
 		return "redirect:/bacsi/list-benhan";
