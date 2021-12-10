@@ -13,12 +13,10 @@ public class DonThuoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotEmpty(message = "Không được để trống")
     private String lieuLuong;
-    @NotEmpty(message = "Không được để trống")
     private float tongTien;
-    @NotEmpty(message = "Không được để trống")
     private Date ngayCap;
+    private String cacDung;
     @ManyToOne(targetEntity = Benh.class)
     @JoinColumn(name = "benh_id")
     private Benh benh;

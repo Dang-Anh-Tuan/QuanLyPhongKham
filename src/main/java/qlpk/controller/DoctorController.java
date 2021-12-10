@@ -38,15 +38,18 @@ public class DoctorController {
 	private BenhService benhService;
 	@Autowired
 	private ThuocService thuocService;
+	@Autowired
+	private DonThuocService donThuocService;
 
 	public DoctorController(BacSyService bacSyService, UserService userService,
 							BenhAnService benhAnService, BenhService benhService,
-							ThuocService thuocService) {
+							ThuocService thuocService, DonThuocService donThuocService) {
 		this.bacSyService = bacSyService;
 		this.benhAnService = benhAnService;
 		this.userService = userService;
 		this.benhService = benhService;
 		this.thuocService = thuocService;
+		this.donThuocService = donThuocService;
 	}
 
 	@GetMapping("/qlns/bacsi/ds-bacsi")
@@ -206,10 +209,22 @@ public class DoctorController {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
+			BenhAn benhAn = benhAnService.getById(id).get();
+			String dsDonThuoc = "";
 			List<DetailThuoc> listDetailThuoc = mapper.readValue(json, new TypeReference<List<DetailThuoc>>() {
 			});
-			System.out.println(listDetailThuoc.toString());
-
+			for (DetailThuoc detailThuoc: listDetailThuoc
+				 ) {
+				DonThuoc donThuoc = new DonThuoc();
+				donThuoc.setThuoc(thuocService.getById(detailThuoc.getIdThuoc()));
+				donThuoc.setLieuLuong(detailThuoc.getLieuDung()+"");
+				donThuoc.setCacDung(detailThuoc.getCachDung());
+				donThuoc.setTongTien(thuocService.getById(detailThuoc.getIdThuoc()).getGia()*detailThuoc.getLieuDung());
+				Integer iddonthuoc = donThuocService.saveThuoc(donThuoc);
+				dsDonThuoc = dsDonThuoc + iddonthuoc + " ";
+			}
+			benhAn.setDsDonThuoc(dsDonThuoc);
+			benhAnService.saveBenhAn(benhAn);
 		} catch (Exception e) {
 			System.out.println(e);
 		}

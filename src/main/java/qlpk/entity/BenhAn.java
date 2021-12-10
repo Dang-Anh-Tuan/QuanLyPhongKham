@@ -25,6 +25,7 @@ public class BenhAn {
     private float tongTien;
     private boolean daPhat;
     private boolean daKhoi;
+    private String dsDonThuoc;
     @ManyToOne(targetEntity = BacSy.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "bac_sy_id", referencedColumnName = "id")
     @Nullable
