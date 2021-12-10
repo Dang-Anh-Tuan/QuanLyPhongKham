@@ -20,9 +20,10 @@ import qlpk.entity.enums.Role;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private AuthenticationSuccessHandler handler;
-
+    @Bean
+    public AuthenticationSuccessHandler handler(){
+        return new CustomAuthenticationSuccessHandler();
+    }
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImp();
@@ -54,12 +55,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/*").permitAll()
                 .anyRequest().authenticated()
+
                 //cho phép login
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/authenticateTheUser")
-                .successHandler(handler)
+                .successHandler(handler())
                 //.defaultSuccessUrl("/loginSuccess")
                 .permitAll()
                 //còn lại phẳi authen mới được vào

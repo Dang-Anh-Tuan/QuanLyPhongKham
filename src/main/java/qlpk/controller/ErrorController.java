@@ -9,4 +9,8 @@ public class ErrorController {
 	public String showErrorView() {
 		return "404";
 	}
+	@GetMapping("/403")
+	public String showAccessDenied(){
+		return "403";
+	}
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,7 @@ import qlpk.entity.*;
 import qlpk.entity.enums.Role;
 import qlpk.modelUtil.BenhDanhSachBenh;
 import qlpk.modelUtil.DetailThuoc;
+import qlpk.security.CustomUserDetails;
 import qlpk.service.BacSyService;
 import qlpk.service.BenhAnService;
 import qlpk.service.UserService;
@@ -117,14 +120,15 @@ public class DoctorController {
 	}
 
 	@GetMapping("/bacsi/khambenh/{id}")
-	public String showViewKhamBenh(@PathVariable int id, Model model) {
+	public String showViewKhamBenh(@PathVariable int id, Model model, Authentication authentication) {
 		// get Benh An
 		Optional<BenhAn> optBenhAn = benhAnService.getById(id);
 		if (optBenhAn.isPresent()) {
 			BenhAn benhAn = optBenhAn.get();
 			BenhNhan benhNhan = benhAn.getBenhNhan();
-			// get All Benh cua Bac Si Kham ( Lấy Bac Si từ session )
-//			User userBS = session.get 
+//			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+//			BacSy bacSy = bacSyService.getByUsername(userDetails.getUsername());
+
 //			List<Benh> dsBenh = benhService.getByBacSi(idBacSi);
 
 			// model add benh an va benh nhanh

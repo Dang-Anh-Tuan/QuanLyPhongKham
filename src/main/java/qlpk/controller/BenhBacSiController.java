@@ -35,7 +35,6 @@ public class BenhBacSiController {
 		List<Benh> dsBenh = benhService.getAll();
 
 		BenhBacSi benhBacSi = new BenhBacSi();
-		
 
 		benhBacSi.setDsBenh(dsBenh);
 

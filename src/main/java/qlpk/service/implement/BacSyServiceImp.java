@@ -61,5 +61,10 @@ public class BacSyServiceImp implements BacSyService {
         return benhRepo.findBenhByBacSy(bacSyRepo.findById(id));
     }
 
+    @Override
+    public BacSy getByUsername(String username) {
+        return bacSyRepo.findBacSyByUser(userRepo.findByUserName(username));
+    }
+
 
 }
