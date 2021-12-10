@@ -5,11 +5,14 @@ import org.springframework.stereotype.Service;
 import qlpk.dto.UserDTO;
 import qlpk.entity.BacSy;
 import qlpk.entity.Benh;
+import qlpk.modelUtil.BacSyLuong;
 import qlpk.repo.BacSyRepo;
 import qlpk.repo.BenhRepo;
 import qlpk.repo.UserRepo;
 import qlpk.service.BacSyService;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,4 +70,16 @@ public class BacSyServiceImp implements BacSyService {
     }
 
 
+    @Override
+    public List<BacSyLuong> tinhLuongBacSy(Date sdate, Date edate) {
+        List<BacSy> listBacSi = bacSyRepo.findAll();
+        List<BacSyLuong> listBacSiLuong = new ArrayList<>();
+        for(BacSy bacSy:listBacSi){
+            BacSyLuong bacSyLuong = new BacSyLuong();
+            bacSyLuong.setBacSy(bacSy);
+            bacSyLuong.setLuong(bacSyRepo.tinhLuongBacSy(bacSy.getId(), sdate, edate).get(0));
+            listBacSiLuong.add(bacSyLuong);
+        }
+        return listBacSiLuong;
+    }
 }
