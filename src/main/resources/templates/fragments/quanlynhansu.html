@@ -54,13 +54,18 @@
 					class="side-bar-item__link" th:href="@{/qlns/benh/add}">Thêm
 						bệnh</a></li>
 				<li class="side-bar-item"><i
-					class="fas fa-chart-pie side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/statistic-diseases}">Thống
-						kê các bệnh mắc nhiều</a></li>
+					class="fas fa-money-check-alt side-bar-item__icon"></i> <a
+					class="side-bar-item__link" th:href="@{/qlns/xemluong-bs}">Xem lương 
+						bác sĩ</a></li>
 				<li class="side-bar-item"><i
 					class="fas fa-money-check-alt side-bar-item__icon"></i> <a
-					class="side-bar-item__link" th:href="@{/salary-employee}">Xem
-						bảng lương</a></li>
+					class="side-bar-item__link" th:href="@{/qlns/xemluong-yta}">Xem y lương 
+						tá</a></li>
+				<li class="side-bar-item"><i
+					class="fas fa-chart-pie side-bar-item__icon"></i> <a
+					class="side-bar-item__link" th:href="@{/qlns/xemluong-yta}">Thống
+						kê các bệnh mắc nhiều</a></li>
+
 			</ul>
 		</div>
 	</div>
@@ -291,9 +296,9 @@
 					<div th:if="${content=='Thêm y tá'}" class="form__field-container">
 						<p class="form__field-heading">Username</p>
 						<input type="text" class="form__field-input--text"
-							th:field="*{username}" />
-						<p class="error-msg" th:if="${#fields.hasErrors('username')}"
-							th:errors="*{username}"></p>
+							th:field="*{userName}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('userName')}"
+							th:errors="*{userName}"></p>
 					</div>
 					<div th:if="${content=='Thêm y tá'}" class="form__field-container">
 						<p class="form__field-heading">Password</p>
@@ -466,9 +471,9 @@
 						class="form__field-container">
 						<p class="form__field-heading">Username</p>
 						<input type="text" class="form__field-input--text"
-							th:field="*{username}" />
-						<p class="error-msg" th:if="${#fields.hasErrors('username')}"
-							th:errors="*{username}"></p>
+							th:field="*{userName}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('userName')}"
+							th:errors="*{userName}"></p>
 					</div>
 					<div th:if="${heading =='Thêm bác sĩ'}"
 						class="form__field-container">

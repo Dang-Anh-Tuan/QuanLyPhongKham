@@ -1,57 +1,42 @@
 package qlpk.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.mysql.cj.Session;
-
-import qlpk.entity.BacSy;
-import qlpk.entity.Benh;
-import qlpk.entity.BenhAn;
-import qlpk.entity.BenhNhan;
-import qlpk.entity.DonThuoc;
-import qlpk.entity.Thuoc;
-import qlpk.security.User;
-import qlpk.service.BacSyService;
-import qlpk.service.BenhAnService;
+import qlpk.dto.UserDTO;
+import qlpk.entity.*;
+import qlpk.entity.enums.Role;
 import qlpk.modelUtil.BenhDanhSachBenh;
 import qlpk.modelUtil.DetailThuoc;
+import qlpk.service.BacSyService;
+import qlpk.service.BenhAnService;
+import qlpk.service.UserService;
+
+import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class DoctorController {
 
 	@Autowired
 	private BacSyService bacSyService;
-//	@Autowired
-//	private TaiKhoanService taiKhoanService;
-
 	@Autowired
 	private BenhAnService benhAnService;
+	@Autowired
+	private UserService userService;
 
-	public DoctorController(BacSyService bacSyService, BenhAnService benhAnService) {
+	public DoctorController(BacSyService bacSyService, UserService userService, BenhAnService benhAnService) {
 		this.bacSyService = bacSyService;
 		this.benhAnService = benhAnService;
+		this.userService = userService;
 	}
 
 	@GetMapping("/qlns/bacsi/ds-bacsi")
@@ -64,9 +49,7 @@ public class DoctorController {
 	@GetMapping("/qlns/bacsi/add")
 	public String showAddFormBacSi(Model model) {
 		BacSy bacSi = new BacSy();
-		User user = new User();
-		user.setRole("Role.BACSY");
-
+		UserDTO user = new UserDTO();
 		model.addAttribute("bacsi", bacSi);
 		model.addAttribute("taikhoan", user);
 		return "QuanLyNhanSu/AddDoctor";
@@ -75,50 +58,43 @@ public class DoctorController {
 
 	@PostMapping("/qlns/bacsi/add")
 	public String handleAddBacSi(@Valid @ModelAttribute("bacsi") BacSy bacsi, BindingResult result,
-			@ModelAttribute("taikhoan") User user) {
+								 @ModelAttribute("taikhoan") UserDTO userDTO) {
 
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/AddDoctor";
 		}
 
-		// setTK
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getUsername());
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getPassword());
-		// userService.saveTaiKhoan(taiKhoan);
-//		bacsi.setUser(user);
+		userDTO.setRole(Role.BACSY);
+		userService.save(userDTO);
+		bacSyService.saveBacSy(bacsi, userDTO);
 
-		bacSyService.saveBacSy(bacsi);
 		return "redirect:/qlns/bacsi/ds-bacsi";
 	}
 
 	@GetMapping("/qlns/bacsi/edit/{id}")
 	public String showEditFormBacSi(@PathVariable int id, Model model) {
 		Optional<BacSy> optBacSi = bacSyService.getById(id);
-		// get TaiKhoan map voi Bac Sy
-//		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
-		User user = new User();
-
-		// Role role = Role.BACSY;
-		// taiKhoan.setRole(role);
+		UserDTO userDTO;
 
 		if (optBacSi.isPresent()) {
+			userDTO = userService.getUserByID(optBacSi.get().getUser().getId());
 			model.addAttribute("bacsi", optBacSi.get());
-			model.addAttribute("taikhoan", user);
+			model.addAttribute("taikhoan", userDTO);
+
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
+		// 404
 		return "404";
 	}
 
 	@PostMapping("/qlns/bacsi/edit/{id}")
 	public String handleEditBacSi(@Valid @ModelAttribute("bacsi") BacSy bacsi, BindingResult result,
-			@ModelAttribute("taikhoan") User user) {
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
-		// setTK
-//		bacsi.setTaiKhoan(taiKhoan);
 		bacSyService.updateBacSy(bacsi);
 		return "redirect:/qlns/bacsi/ds-bacsi";
 	}

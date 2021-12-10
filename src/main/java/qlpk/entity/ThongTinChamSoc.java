@@ -5,6 +5,7 @@ import org.springframework.lang.Nullable;
 import qlpk.entity.enums.HinhThuc;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,8 +20,7 @@ public class ThongTinChamSoc {
     @ManyToOne(targetEntity = BenhNhan.class)
     @JoinColumn(name = "benh_nhan_id", referencedColumnName = "id")
     private BenhNhan benhNhan;
-    @ManyToOne(targetEntity = DonThuoc.class)
-    @JoinColumn(name = "don_thuoc_id", referencedColumnName = "id")
+    @OneToMany(targetEntity = DonThuoc.class, mappedBy = "thongTinChamSoc")
     @Nullable
-    private DonThuoc donThuoc;
+    private Set<DonThuoc> donThuoc;
 }
