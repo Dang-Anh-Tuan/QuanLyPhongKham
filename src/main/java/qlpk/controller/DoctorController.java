@@ -17,10 +17,7 @@ import qlpk.modelUtil.BacSyLuong;
 import qlpk.modelUtil.BenhDanhSachBenh;
 import qlpk.modelUtil.DetailThuoc;
 import qlpk.security.CustomUserDetails;
-import qlpk.service.BacSyService;
-import qlpk.service.BenhAnService;
-import qlpk.service.BenhService;
-import qlpk.service.UserService;
+import qlpk.service.*;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -39,13 +36,17 @@ public class DoctorController {
 	private UserService userService;
 	@Autowired
 	private BenhService benhService;
+	@Autowired
+	private ThuocService thuocService;
 
 	public DoctorController(BacSyService bacSyService, UserService userService,
-							BenhAnService benhAnService, BenhService benhService) {
+							BenhAnService benhAnService, BenhService benhService,
+							ThuocService thuocService) {
 		this.bacSyService = bacSyService;
 		this.benhAnService = benhAnService;
 		this.userService = userService;
 		this.benhService = benhService;
+		this.thuocService = thuocService;
 	}
 
 	@GetMapping("/qlns/bacsi/ds-bacsi")
@@ -188,14 +189,8 @@ public class DoctorController {
 			model.addAttribute("benhNhan", benhNhan);
 
 			// fake thuoc
-			Thuoc thuoc1 = new Thuoc();
-			thuoc1.setId(10);
-			thuoc1.setTen("panadol");
-			Thuoc thuoc2 = new Thuoc();
-			thuoc2.setId(11);
-			thuoc2.setTen("panadol extra");
 
-			List<Thuoc> dsThuoc = Arrays.asList(thuoc1, thuoc2);
+			List<Thuoc> dsThuoc = thuocService.getAll();
 
 			// model add thuoc
 			model.addAttribute("dsThuoc", dsThuoc);
@@ -213,10 +208,7 @@ public class DoctorController {
 		try {
 			List<DetailThuoc> listDetailThuoc = mapper.readValue(json, new TypeReference<List<DetailThuoc>>() {
 			});
-			for (DetailThuoc d : listDetailThuoc) {
-				System.out.println(d.getIdThuoc() + " - " + d.getLieuDung() + " - " + d.getCachDung());
-				return "404";
-			}
+			System.out.println(listDetailThuoc.toString());
 
 		} catch (Exception e) {
 			System.out.println(e);
