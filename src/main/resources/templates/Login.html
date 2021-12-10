@@ -29,11 +29,10 @@
             class="form-heading"
           />
         </div>
-        <form th:action="login" method="post" class="login-main-form pd-0-24">
-          <p
-            class="login-label mt-32 form__field-heading"
-            style="font-size: 2rem; -webkit-user-select: none;"
-          >
+        <div th:if="${param.error != null}" class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div>
+        <form th:action="@{/authenticateTheUser}" method="post" class="login-main-form pd-0-24">
+          <p class="login-label mt-32 form__field-heading"
+            style="font-size: 2rem; -webkit-user-select: none;">
             Tên đăng nhập
           </p>
           <div class="login-icon-container">
