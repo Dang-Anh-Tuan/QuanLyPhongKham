@@ -100,7 +100,7 @@
 					<i class="text-font-20 mr-4 fas fa-chevron-circle-right"></i>
 					<p class="text-font-20" th:text="${benh.tenBenh}"></p>
 					<th:block th:object="${dsBenhBS}">
-						<button
+						<button th:if="${actor=='bacsi'}"
 							th:id="${benh.id}"
 							class="btn btn-size-ss btn--border-primary ml-4 btn-khoi-benh">Đã
 							khỏi</button>

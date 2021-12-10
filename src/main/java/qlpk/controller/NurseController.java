@@ -16,6 +16,7 @@ import qlpk.entity.YTa;
 import qlpk.entity.enums.Role;
 import qlpk.modelUtil.YtaLuong;
 import qlpk.service.BenhAnService;
+import qlpk.service.BenhService;
 import qlpk.service.UserService;
 import qlpk.service.YTaService;
 
@@ -34,11 +35,15 @@ public class NurseController {
 	private BenhAnService benhAnService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private BenhService benhService;
 
-	public NurseController(YTaService yTaService, BenhAnService benhAnService, UserService userService) {
+	public NurseController(YTaService yTaService, BenhAnService benhAnService,
+						   UserService userService, BenhService benhService) {
 		this.yTaService = yTaService;
 		this.benhAnService = benhAnService;
 		this.userService = userService;
+		this.benhService = benhService;
 	}
 
 	@GetMapping("/qlns/yta/ds-yta")
@@ -142,14 +147,9 @@ public class NurseController {
 			model.addAttribute("benhAn", benhAn);
 			model.addAttribute("benhNhan", benhNhan);
 
-			// fake benh
-			Benh benh1 = new Benh();
-			benh1.setId(10);
-			benh1.setTenBenh("ho");
-			Benh benh2 = new Benh();
-			benh2.setId(11);
-			benh2.setTenBenh("sot");
-			List<Benh> dsBenh = Arrays.asList(benh1, benh2);
+
+			Optional<Benh> benh1 = benhService.getById(benhAn.getIdBenh());
+			List<Benh> dsBenh = Arrays.asList(benh1.get());
 
 			// model add benh cua benh an
 			model.addAttribute("dsBenh", dsBenh);
