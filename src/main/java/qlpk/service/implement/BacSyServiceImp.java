@@ -5,16 +5,17 @@ import org.springframework.stereotype.Service;
 import qlpk.dto.UserDTO;
 import qlpk.entity.BacSy;
 import qlpk.entity.Benh;
+import qlpk.entity.BenhAn;
 import qlpk.modelUtil.BacSyLuong;
 import qlpk.repo.BacSyRepo;
+import qlpk.repo.BenhAnRepo;
 import qlpk.repo.BenhRepo;
 import qlpk.repo.UserRepo;
 import qlpk.service.BacSyService;
+import qlpk.service.BenhAnService;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,10 +26,13 @@ public class BacSyServiceImp implements BacSyService {
     private BenhRepo benhRepo;
     @Autowired
     private UserRepo userRepo;
-
+    @Autowired
+    private BenhAnRepo benhAnRepo;
     @Override
     public void deleteBacSy(int id) {
-        bacSyRepo.deleteById(id);
+        BacSy bacSy = bacSyRepo.getById(id);
+        bacSy.setDelete(true);
+        bacSyRepo.save(bacSy);
     }
 
     @Override
@@ -51,12 +55,12 @@ public class BacSyServiceImp implements BacSyService {
 
     @Override
     public List<BacSy> getAll() {
-        return bacSyRepo.findAll();
+        return bacSyRepo.findBacSyByIsDelete(false);
     }
 
 	@Override
 	public Optional<BacSy> getById(int id) {
-		return bacSyRepo.findById(id);
+		return bacSyRepo.findBacSyByIdAndIsDelete(id, false);
 	}
 
     @Override
@@ -66,7 +70,7 @@ public class BacSyServiceImp implements BacSyService {
 
     @Override
     public BacSy getByUsername(String username) {
-        return bacSyRepo.findBacSyByUser(userRepo.findByUserName(username));
+        return bacSyRepo.findBacSyByUserAndIsDelete(userRepo.findByUserName(username), false);
     }
 
 

@@ -34,7 +34,8 @@ public class YTa {
     private Set<BenhAn> benhAn;
     @OneToMany(targetEntity = ThongTinChamSoc.class, mappedBy = "yTa")
     private Set<ThongTinChamSoc> thongTinChamSoc;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userName")
     private User user;
+    private boolean isDelete = false;
 }

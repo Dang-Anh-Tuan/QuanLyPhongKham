@@ -1,6 +1,8 @@
 package qlpk.controller;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,8 +49,14 @@ public class BenhBacSiController {
 			@PathVariable Integer id, 
 			@ModelAttribute("benhBacSi") BenhBacSi benhBacSi) {
 			List<Benh> benhChon = benhBacSi.getDsBenhChon();
-			for(Benh benh : benhChon) {
-				System.out.println(benh.getId());
+			Optional<BacSy> bacSy = bacSyService.getById(id);
+			if(bacSy.isPresent()){
+				for(Benh benh : benhChon) {
+					benh.setBacSy(bacSy.get());
+					benhService.updateBenh(benh);
+				}
+//				bacSy.get().setBenh(benhSet);
+//				bacSyService.updateBacSy(bacSy.get());
 			}
 			return "redirect:/qlns/bacsi/ds-bacsi";
 	}

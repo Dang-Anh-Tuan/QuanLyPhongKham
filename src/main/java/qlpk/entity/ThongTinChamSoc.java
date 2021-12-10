@@ -14,10 +14,10 @@ public class ThongTinChamSoc {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private HinhThuc hinhThuc;
-    @ManyToOne(targetEntity = YTa.class)
+    @ManyToOne(targetEntity = YTa.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "y_ta_id", referencedColumnName = "id")
     private YTa yTa;
-    @ManyToOne(targetEntity = BenhNhan.class)
+    @ManyToOne(targetEntity = BenhNhan.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "benh_nhan_id", referencedColumnName = "id")
     private BenhNhan benhNhan;
     @OneToMany(targetEntity = DonThuoc.class, mappedBy = "thongTinChamSoc")

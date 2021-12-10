@@ -3,7 +3,6 @@ package qlpk.service;
 import qlpk.entity.Thuoc;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ThuocService {
     void deleteThuoc(int id);
@@ -11,5 +10,5 @@ public interface ThuocService {
     boolean updateThuoc(Thuoc thuoc);
     Thuoc searchThuocByName(String name);
     List<Thuoc> getAll();
-    Optional<Thuoc> getById(int id);
+    Thuoc getById(int id);
 }

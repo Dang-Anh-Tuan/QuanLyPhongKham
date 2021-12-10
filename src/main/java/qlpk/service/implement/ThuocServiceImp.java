@@ -7,7 +7,6 @@ import qlpk.repo.ThuocRepo;
 import qlpk.service.ThuocService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ThuocServiceImp implements ThuocService {
@@ -15,7 +14,9 @@ public class ThuocServiceImp implements ThuocService {
     private ThuocRepo repo;
     @Override
     public void deleteThuoc(int id) {
-        repo.deleteById(id);
+        Thuoc thuoc = repo.getById(id);
+        thuoc.setDelete(true);
+        saveThuoc(thuoc);
     }
 
     @Override
@@ -38,11 +39,11 @@ public class ThuocServiceImp implements ThuocService {
 
     @Override
     public List<Thuoc> getAll() {
-        return repo.findAll();
+        return repo.findAllByIsDelete(false);
     }
 
     @Override
-    public Optional<Thuoc> getById(int id) {
-        return repo.findById(id);
+    public Thuoc getById(int id) {
+        return repo.findThuocByIdAndIsDelete(id, false);
     }
 }

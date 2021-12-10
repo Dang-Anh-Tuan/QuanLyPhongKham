@@ -50,14 +50,12 @@ public class ThuocController {
 	
 	@GetMapping("/thuoc/edit/{id}")
 	public String showEditThuoc(@PathVariable int id, Model model) {
-		Optional<Thuoc> optThuoc = thuocService.getById(id);
-		if(optThuoc.isPresent()) {
-			Thuoc thuoc = optThuoc.get();
+
+			Thuoc thuoc = thuocService.getById(id);
 			model.addAttribute("thuoc", thuoc);
 			return "QuanLyNhanSu/EditMedicine";
-		}
-		
-		return "redirect:/404";
+
+
 	}
 	
 	@PostMapping("/thuoc/edit/{id}") 
@@ -71,13 +69,8 @@ public class ThuocController {
 	
 	@GetMapping("/thuoc/delete/{id}")
 	public String deleteThuoc(@PathVariable int id) {
-		Optional<Thuoc> optThuoc = thuocService.getById(id);
-		if(optThuoc.isPresent()) {
 			thuocService.deleteThuoc(id);
 			return "redirect:/qlns/thuoc/ds-thuoc";
-		}
-		
-		return "redirect:/404";
 		
 	}
 	

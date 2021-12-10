@@ -26,15 +26,16 @@ public class YTaServiceImp implements YTaService{
         this.userRepo = userRepo;
 	}
 
-
     @Override
     public List<YTa> findAll() {
-        return yTaRepo.findAll();
+        return yTaRepo.findYTaByIsDelete(false);
     }
 
     @Override
     public void deleteYTa(int id) {
-        yTaRepo.deleteById(id);
+        YTa yTa = yTaRepo.getById(id);
+        yTa.setDelete(true);
+        updateYTa(yTa);
     }
 
     @Override
@@ -57,14 +58,12 @@ public class YTaServiceImp implements YTaService{
 
     @Override
     public Optional<YTa> getById(int id) {
-        return yTaRepo.findById(id);
+        return yTaRepo.findYTaByIdAndIsDelete(id, false);
     }
 
     @Override
     public List<YtaLuong> tinhLuongYta(Date sdate, Date edate) {
-        System.err.println("111111111111111111111111");
         List<YTa> listYta = yTaRepo.findAll();
-        System.err.println("2222222222222222222222222");
         List<YtaLuong> listYtaLuong = new ArrayList<>();
         for(YTa yta:listYta){
             YtaLuong ytaLuong = new YtaLuong();
@@ -72,7 +71,6 @@ public class YTaServiceImp implements YTaService{
             ytaLuong.setLuong(yTaRepo.tinhLuongYta(yta.getId(), sdate, edate).get(0));
             listYtaLuong.add(ytaLuong);
         }
-        System.err.println("3333333333333333333333333333");
         return listYtaLuong;
     }
 }

@@ -2,6 +2,7 @@ package qlpk.entity;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -37,4 +38,5 @@ public class BacSy  {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userName")
     private User user;
+    private boolean isDelete = false;
 }

@@ -22,7 +22,9 @@ public class BenhServiceImpl implements BenhService {
 
 	@Override
 	public void deleteBenh(int id) {
-		benhRepo.deleteById(id);
+		Benh benh = benhRepo.getById(id);
+		benh.setDelete(true);
+		saveBenh(benh);
 	}
 
 	@Override
@@ -37,14 +39,20 @@ public class BenhServiceImpl implements BenhService {
 		return true;
 	}
 
+
 	@Override
 	public List<Benh> getAll() {
-		return benhRepo.findAll();
+		return benhRepo.findBenhByIsDelete(false);
 	}
 
 	@Override
 	public Optional<Benh> getById(int id) {
 		return benhRepo.findById(id);
+	}
+
+	@Override
+	public List<Benh> getBenhByBacSy(int idbacsy) {
+		return benhRepo.findBenhByBacSy_IdAndIsDelete(idbacsy, false);
 	}
 
 }

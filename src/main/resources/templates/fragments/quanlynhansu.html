@@ -381,7 +381,7 @@
 
 	<div th:fragment="add_edit_form_doctor_qlns(heading)" th:remove="tag">
 		<form class="container-add-form grow-full" method="post">
-			<p class="add-form__heading">Thêm Bác Sĩ</p>
+			<p class="add-form__heading" th:text="${heading}"></p>
 			<div class="grid__full-width add-form__form" th:object="${bacsi}">
 
 				<div class="grid__row form__row">

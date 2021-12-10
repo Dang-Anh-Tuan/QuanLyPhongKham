@@ -17,8 +17,10 @@ import qlpk.entity.enums.Role;
 import qlpk.modelUtil.BacSyLuong;
 import qlpk.modelUtil.BenhDanhSachBenh;
 import qlpk.modelUtil.DetailThuoc;
+import qlpk.security.CustomUserDetails;
 import qlpk.service.BacSyService;
 import qlpk.service.BenhAnService;
+import qlpk.service.BenhService;
 import qlpk.service.UserService;
 
 import javax.validation.Valid;
@@ -36,11 +38,15 @@ public class DoctorController {
 	private BenhAnService benhAnService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private BenhService benhService;
 
-	public DoctorController(BacSyService bacSyService, UserService userService, BenhAnService benhAnService) {
+	public DoctorController(BacSyService bacSyService, UserService userService,
+							BenhAnService benhAnService, BenhService benhService) {
 		this.bacSyService = bacSyService;
 		this.benhAnService = benhAnService;
 		this.userService = userService;
+		this.benhService = benhService;
 	}
 
 	@GetMapping("/qlns/bacsi/ds-bacsi")
@@ -126,23 +132,15 @@ public class DoctorController {
 		if (optBenhAn.isPresent()) {
 			BenhAn benhAn = optBenhAn.get();
 			BenhNhan benhNhan = benhAn.getBenhNhan();
-//			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-//			BacSy bacSy = bacSyService.getByUsername(userDetails.getUsername());
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			BacSy bacSy = bacSyService.getByUsername(userDetails.getUsername());
 
-//			List<Benh> dsBenh = benhService.getByBacSi(idBacSi);
+			List<Benh> dsBenh = benhService.getBenhByBacSy(bacSy.getId());
 
 			// model add benh an va benh nhanh
 			model.addAttribute("benhAn", benhAn);
 			model.addAttribute("benhNhan", benhNhan);
 
-			// fake benh
-			Benh benh1 = new Benh();
-			benh1.setId(10);
-			benh1.setTenBenh("ho");
-			Benh benh2 = new Benh();
-			benh2.setId(11);
-			benh2.setTenBenh("sot");
-			List<Benh> dsBenh = Arrays.asList(benh1, benh2);
 
 			Benh benh = new Benh();
 
@@ -161,10 +159,13 @@ public class DoctorController {
 	public String handleKhamBenh(@PathVariable int id, @ModelAttribute("benhAn") BenhAn benhAn,
 			@ModelAttribute("benhNhan") BenhNhan benhNhan,
 			@ModelAttribute("benhDanhSachBenh") BenhDanhSachBenh benhDanhSachBenh) {
+		Optional<BenhAn> benhAn1 = benhAnService.getById(id);
+		if(benhAn1.isPresent()){
+			benhAn1.get().setIdBenh(benhDanhSachBenh.getIdBenh());
 
-		System.out.println(benhDanhSachBenh.getIdBenh());
+			benhAnService.updateBenhAn(benhAn1.get());
 
-
+		}
 		return "redirect:/bacsi/list-benhan";
 	}
 

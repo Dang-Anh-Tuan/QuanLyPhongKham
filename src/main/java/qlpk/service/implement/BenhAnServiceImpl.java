@@ -46,7 +46,9 @@ public class BenhAnServiceImpl implements BenhAnService {
 
 	@Override
 	public void deleteBenhAn(int id) {
-		benhAnRepo.deleteById(id);	
+		BenhAn benhAn = benhAnRepo.getById(id);
+		benhAn.setDelete(true);
+		saveBenhAn(benhAn);
 	}
 
 

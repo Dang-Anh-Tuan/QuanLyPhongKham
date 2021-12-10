@@ -17,4 +17,5 @@ public class Thuoc {
     private Float gia;
     @OneToMany(targetEntity = DonThuoc.class, mappedBy = "thuoc")
     private Set<DonThuoc> donThuoc;
+    private boolean isDelete = false;
 }
