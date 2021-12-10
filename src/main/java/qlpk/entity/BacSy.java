@@ -16,13 +16,18 @@ public class BacSy  {
     private Integer id;
     @NotEmpty(message = "Tên không được để trống")
     private String ten;
+    @NotEmpty(message = "Không được để trống")
     private String cmt;
+    @NotEmpty(message = "Không được để trống")
     private String diaChi;
     @DateTimeFormat (pattern = "yyyy-MM-dd")
     private Date ngaySinh;
+    @NotEmpty(message = "Không được để trống")
     private String bacNghe;
     private int thamNien;
+    @NotEmpty(message = "Không được để trống")
     private String trinhDo;
+    @NotEmpty(message = "Không được để trống")
     private String chuyenMon;
     private String sdt;
     @OneToMany(targetEntity = Benh.class, mappedBy = "bacSy")

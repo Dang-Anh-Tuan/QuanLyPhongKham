@@ -74,13 +74,13 @@
 						<div class="grid__col-lg-1 table-list__cell"
 							th:utext="${state.count}"></div>
 						<div class="grid__col-lg-2 table-list__cell"
-							th:utext="${bacsi.id}"></div>
+							th:utext="${bacsi.getBacSy().getId()}"></div>
 						<div class="grid__col-lg-3 table-list__cell"
-							th:utext="${bacsi.ten}"></div>
+							th:utext="${bacsi.getBacSy().getTen()}"></div>
 						<div class="grid__col-lg-3 table-list__cell"
-							th:utext="${#dates.format(bacsi.ngaySinh, 'dd/MM/yyyy')}"></div>
+							th:utext="${#dates.format(bacsi.getBacSy().getNgaySinh(), 'dd/MM/yyyy')}"></div>
 						<div class="grid__col-lg-3 table-list__cell"
-							th:utext="${bacsi.diaChi}"></div>
+							th:utext="${bacsi.getLuong()}"></div>
 					</div>
 				</th:block>
 
@@ -113,19 +113,19 @@
 						sinh</div>
 					<div class="grid__col-lg-3 table-list__th table-list__cell">Lương</div>
 				</div>
-				<th:block th:each="bacsi, state : ${dsBacSiLuong}">
+				<th:block th:each="yta, state : ${dsYTaLuong}">
 					<div
 						class="grid__row grid__row--spbw grid__row--item-center table-list__row">
 						<div class="grid__col-lg-1 table-list__cell"
 							th:utext="${state.count}"></div>
 						<div class="grid__col-lg-2 table-list__cell"
-							th:utext="${yta.id}"></div>
+							th:utext="${yta.getYta().getId()}"></div>
 						<div class="grid__col-lg-3 table-list__cell"
-							th:utext="${yta.ten}"></div>
+							th:utext="${yta.getYta().getTen()}"></div>
 						<div class="grid__col-lg-3 table-list__cell"
-							th:utext="${#dates.format(yta.ngaySinh, 'dd/MM/yyyy')}"></div>
+							th:utext="${#dates.format(yta.getYta().getBd(), 'dd/MM/yyyy')}"></div>
 						<div class="grid__col-lg-3 table-list__cell"
-							th:utext="${luong}"></div>
+							th:utext="${yta.getLuong()}"></div>
 					</div>
 				</th:block>
 
