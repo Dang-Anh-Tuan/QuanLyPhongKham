@@ -8,13 +8,8 @@ import qlpk.entity.enums.Role;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping({"/"})
 public class LoginController {
-	@GetMapping
-	public String showDashBoard(){
-		return "404";
-	}
-	@GetMapping("/login")
+	@GetMapping(value = {"/", "/login"})
 	public String showLoginForm() {
 		return "Login";
 	}
