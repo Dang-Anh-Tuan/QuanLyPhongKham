@@ -1,6 +1,7 @@
 package qlpk.service;
 
 import qlpk.entity.BacSy;
+import qlpk.modelUtil.BacSyLuong;
 
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ public interface BacSyService {
     boolean saveBacSy(BacSy bacSy);
     boolean updateBacSy(BacSy bacSy);
     BacSy searchBacSyByCMT(String cmt);
-    float tinhLuongBacSy(int id, Date sdate);
+    List<BacSyLuong> tinhLuongBacSy(Date sdate, Date edate);
     List<BacSy> getAll();
     Optional<BacSy> getById(int id);
 }

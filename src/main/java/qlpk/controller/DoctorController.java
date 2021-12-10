@@ -6,14 +6,11 @@ import javax.validation.Valid;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -29,6 +26,7 @@ import qlpk.entity.BenhAn;
 import qlpk.entity.BenhNhan;
 import qlpk.entity.DonThuoc;
 import qlpk.entity.Thuoc;
+import qlpk.modelUtil.BacSyLuong;
 import qlpk.security.User;
 import qlpk.service.BacSyService;
 import qlpk.service.BenhAnService;
@@ -325,8 +323,14 @@ public class DoctorController {
 		}
 		return "redirect:/404";
 	}
-	@GetMapping("tinhluong")
-	public float tinhLuongBacSy(int id, Date sdate){
-		return bacSyService.tinhLuongBacSy(id, sdate);
+	@GetMapping("/bacsi/luong")
+	public String tinhLuongBacSy(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date sdate, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date edate,Model model){
+
+		List<BacSyLuong> listLuong = bacSyService.tinhLuongBacSy(sdate, edate);
+		System.err.println("55555555555555555555555555555");
+		model.addAttribute("listLuong", listLuong);
+		System.err.println("4444444444444444444444444444444");
+//		System.out.println(listLuong);
+		return "QuanLyNhanSu/Salary";
 	}
 }

@@ -1,22 +1,23 @@
 package qlpk.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.validation.Errors;
 
+import qlpk.modelUtil.BacSyLuong;
+import qlpk.modelUtil.YtaLuong;
 import qlpk.security.User;
 import qlpk.entity.Benh;
 import qlpk.entity.BenhAn;
@@ -196,5 +197,13 @@ public class NurseController {
 		}
 		return "redirect:/404";
 	}
-
+	@GetMapping("/yta/luong")
+	public String tinhLuongYta(@RequestParam int id, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date sdate, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date edate, Model model){
+		List<YtaLuong> listLuong = yTaService.tinhLuongYta(sdate, edate);
+		System.err.println("55555555555555555555555555555");
+		model.addAttribute("listLuong", listLuong);
+		System.err.println("4444444444444444444444444444444");
+//		System.out.println(listLuong);
+		return "QuanLyNhanSu/Salary";
+	}
 }

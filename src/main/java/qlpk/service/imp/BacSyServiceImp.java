@@ -3,9 +3,11 @@ package qlpk.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qlpk.entity.BacSy;
+import qlpk.modelUtil.BacSyLuong;
 import qlpk.repo.BacSyRepo;
 import qlpk.service.BacSyService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +51,18 @@ public class BacSyServiceImp implements BacSyService {
 	}
 
     @Override
-    public float tinhLuongBacSy(int id, Date sdate) {
-        return repo.tinhLuongBacSy(id, sdate);
+    public List<BacSyLuong> tinhLuongBacSy(Date sdate, Date edate) {
+        System.err.println("111111111111111111111111");
+        List<BacSy> listBacSi = repo.findAll();
+        System.err.println("2222222222222222222222222");
+        List<BacSyLuong> listBacSiLuong = new ArrayList<>();
+        for(BacSy bacSy:listBacSi){
+            BacSyLuong bacSyLuong = new BacSyLuong();
+            bacSyLuong.setBacSy(bacSy);
+            bacSyLuong.setLuong(repo.tinhLuongBacSy(bacSy.getId(), sdate, edate).get(0));
+            listBacSiLuong.add(bacSyLuong);
+        }
+        System.err.println("3333333333333333333333333333");
+        return listBacSiLuong;
     }
 }
