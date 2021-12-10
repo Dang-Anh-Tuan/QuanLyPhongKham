@@ -3,8 +3,10 @@ package qlpk.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import qlpk.security.User;
 
 import java.util.Date;
 import java.util.Set;
@@ -15,10 +17,11 @@ public class BacSy  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotEmpty(message = "Tên không được để trống")
     private String ten;
     private String cmt;
     private String diaChi;
-    @DateTimeFormat (pattern="dd/MM/yyyy")
+    @DateTimeFormat (pattern = "yyyy-MM-dd")
     private Date ngaySinh;
     private String bacNghe;
     private int thamNien;

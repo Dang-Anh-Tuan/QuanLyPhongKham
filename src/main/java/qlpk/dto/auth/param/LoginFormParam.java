@@ -1,7 +1,6 @@
-package qlpk.dto;
+package qlpk.dto.auth.param;
 
 import lombok.*;
-import qlpk.entity.enums.Role;
 
 @Getter
 @Setter
@@ -9,9 +8,7 @@ import qlpk.entity.enums.Role;
 @NoArgsConstructor
 @ToString
 //cái này dùng để test object gửi từ form qua
-public class UserDTO {
-    private Integer id;
-    private String userName;
+public class LoginFormParam {
+    private String username;
     private String password;
-    private Role role;
 }
