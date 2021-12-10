@@ -291,9 +291,9 @@
 					<div th:if="${content=='Thêm y tá'}" class="form__field-container">
 						<p class="form__field-heading">Username</p>
 						<input type="text" class="form__field-input--text"
-							th:field="*{username}" />
-						<p class="error-msg" th:if="${#fields.hasErrors('username')}"
-							th:errors="*{username}"></p>
+							th:field="*{userName}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('userName')}"
+							th:errors="*{userName}"></p>
 					</div>
 					<div th:if="${content=='Thêm y tá'}" class="form__field-container">
 						<p class="form__field-heading">Password</p>
@@ -466,9 +466,9 @@
 						class="form__field-container">
 						<p class="form__field-heading">Username</p>
 						<input type="text" class="form__field-input--text"
-							th:field="*{username}" />
-						<p class="error-msg" th:if="${#fields.hasErrors('username')}"
-							th:errors="*{username}"></p>
+							th:field="*{userName}" />
+						<p class="error-msg" th:if="${#fields.hasErrors('userName')}"
+							th:errors="*{userName}"></p>
 					</div>
 					<div th:if="${heading =='Thêm bác sĩ'}"
 						class="form__field-container">
