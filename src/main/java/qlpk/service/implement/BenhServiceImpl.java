@@ -1,4 +1,4 @@
-package qlpk.service;
+package qlpk.service.implement;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import qlpk.entity.Benh;
 import qlpk.repo.BenhRepo;
+import qlpk.service.BenhService;
 
 @Service
 public class BenhServiceImpl implements BenhService {

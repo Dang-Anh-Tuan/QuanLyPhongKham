@@ -1,27 +1,16 @@
 package qlpk.controller;
 
-import java.lang.System.Logger;
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.mysql.cj.log.Log;
-
+import org.springframework.web.bind.annotation.*;
 import qlpk.entity.Thuoc;
 import qlpk.service.ThuocService;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/qlns")
@@ -56,7 +45,7 @@ public class ThuocController {
 	
 	@GetMapping("/thuoc/edit/{id}")
 	public String showEditThuoc(@PathVariable int id, Model model) {
-		Optional<Thuoc> optThuoc = thuocService.findById(id);
+		Optional<Thuoc> optThuoc = thuocService.getById(id);
 		if(optThuoc.isPresent()) {
 			Thuoc thuoc = optThuoc.get();
 			model.addAttribute("thuoc", thuoc);
@@ -77,7 +66,7 @@ public class ThuocController {
 	
 	@GetMapping("/thuoc/delete/{id}")
 	public String deleteThuoc(@PathVariable int id) {
-		Optional<Thuoc> optThuoc = thuocService.findById(id);
+		Optional<Thuoc> optThuoc = thuocService.getById(id);
 		if(optThuoc.isPresent()) {
 			thuocService.deleteThuoc(id);
 			return "redirect:/qlns/thuoc/ds-thuoc";

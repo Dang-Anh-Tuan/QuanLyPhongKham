@@ -7,6 +7,7 @@ import qlpk.repo.BenhNhanRepo;
 import qlpk.service.BenhNhanService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BenhNhanServiceImp implements BenhNhanService {
@@ -37,5 +38,10 @@ public class BenhNhanServiceImp implements BenhNhanService {
     @Override
     public BenhNhan searchBenhNhanByCMT(String cmt) {
         return repo.findByCmt(cmt);
+    }
+
+    @Override
+    public Optional<BenhNhan> findById(int id) {
+        return repo.findById(id);
     }
 }

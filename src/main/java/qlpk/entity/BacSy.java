@@ -1,13 +1,10 @@
 package qlpk.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import qlpk.security.User;
-
 import java.util.Date;
 import java.util.Set;
 

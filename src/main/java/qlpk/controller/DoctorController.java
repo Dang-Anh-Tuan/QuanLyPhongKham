@@ -1,46 +1,25 @@
 package qlpk.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.mysql.cj.Session;
-
 import qlpk.dto.UserDTO;
-import qlpk.entity.BacSy;
-import qlpk.entity.Benh;
-import qlpk.entity.BenhAn;
-import qlpk.entity.BenhNhan;
-import qlpk.entity.DonThuoc;
-import qlpk.entity.Thuoc;
-import qlpk.security.User;
+import qlpk.entity.*;
 import qlpk.entity.enums.Role;
-import qlpk.service.BacSyService;
-import qlpk.service.BenhAnService;
 import qlpk.modelUtil.BenhDanhSachBenh;
 import qlpk.modelUtil.DetailThuoc;
+import qlpk.service.BacSyService;
+import qlpk.service.BenhAnService;
 import qlpk.service.UserService;
 
+import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +33,7 @@ public class DoctorController {
 	@Autowired
 	private UserService userService;
 
-	public DoctorController(BacSyService bacSyService, UserService userService) {
+	public DoctorController(BacSyService bacSyService, UserService userService, BenhAnService benhAnService) {
 		this.bacSyService = bacSyService;
 		this.benhAnService = benhAnService;
 		this.userService = userService;
@@ -89,7 +68,6 @@ public class DoctorController {
 		userService.save(userDTO);
 		bacSyService.saveBacSy(bacsi, userDTO);
 
-		bacSyService.saveBacSy(bacsi);
 		return "redirect:/qlns/bacsi/ds-bacsi";
 	}
 

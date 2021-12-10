@@ -1,6 +1,7 @@
 package qlpk.service.implement;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,8 +34,13 @@ public class BenhAnServiceImpl implements BenhAnService {
 
 	@Override
 	public boolean updateBenhAn(BenhAn benhAn) {
+		benhAnRepo.save(benhAn);
+		return true;
+	}
 
-		return false;
+	@Override
+	public Optional<BenhAn> getById(int id) {
+		return benhAnRepo.findById(id);
 	}
 
 	@Override
