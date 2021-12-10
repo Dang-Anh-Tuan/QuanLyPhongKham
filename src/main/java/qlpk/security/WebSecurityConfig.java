@@ -13,12 +13,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import qlpk.entity.enums.Role;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    @Bean
+    public AuthenticationSuccessHandler handler(){
+        return new CustomAuthenticationSuccessHandler();
+    }
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImp();
@@ -46,18 +51,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // cho phép dùng các resource
                 .antMatchers("/resources/**", "/img/**", "/css/**", "/js/**").permitAll()
-//                .antMatchers("/qlns/**").hasAnyRole("ADMIN")
-//                .antMatchers("/bacsy/**").hasAnyAuthority("BACSY")
-//                .antMatchers("/yta/**").hasAnyAuthority("YTA")
+                .antMatchers("/qlns/**").hasAuthority(Role.ADMIN.getType())
                 .antMatchers(HttpMethod.POST, "/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/*").permitAll()
                 .anyRequest().authenticated()
+
                 //cho phép login
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/authenticateTheUser")
-//                .defaultSuccessUrl("/404")
+                .successHandler(handler())
+                //.defaultSuccessUrl("/loginSuccess")
                 .permitAll()
                 //còn lại phẳi authen mới được vào
                 .and()

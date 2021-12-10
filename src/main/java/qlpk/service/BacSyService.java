@@ -15,4 +15,5 @@ public interface BacSyService {
     List<BacSy> getAll();
     Optional<BacSy> getById(int id);
     List<Benh> getListBenhByBacSy(int id);
+    BacSy getByUsername(String username);
 }

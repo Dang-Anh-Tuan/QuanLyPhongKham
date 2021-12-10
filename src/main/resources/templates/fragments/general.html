@@ -23,11 +23,11 @@
       <div class="nav-bar__logo">Logo</div>
       <div class="nav-bar__user">
         <div class="user__contain-avatar"></div>
-        <p class="user__name">Dang Anh Tuan</p>
+        <p th:text="${session.username}" class="user__name"></p>
         <div class="user__btn-extra"><i class="fas fa-sort-down"></i></div>
         <div class="user__sub-nav">
             <div class="user__sub-nav-item">
-                <a href="" class="user__logout-btn">Log out</a>
+                <a href="/logout" class="user__logout-btn">Log out</a>
             </div>
         </div>
       </div>
