@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.mysql.cj.Session;
 
+import qlpk.dto.UserDTO;
 import qlpk.entity.BacSy;
 import qlpk.entity.Benh;
 import qlpk.entity.BenhAn;
@@ -82,6 +83,7 @@ public class DoctorController {
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/AddDoctor";
 		}
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
 
 		userDTO.setRole(Role.BACSY);
 		userService.save(userDTO);
@@ -117,6 +119,7 @@ public class DoctorController {
 
 		// setTK
 //		bacsi.setTaiKhoan(taiKhoan);
+		userService.save(userDTO);
 		bacSyService.updateBacSy(bacsi);
 		return "redirect:/qlns/bacsi/ds-bacsi";
 	}
