@@ -73,4 +73,10 @@ public class YTaServiceImp implements YTaService{
         }
         return listYtaLuong;
     }
+
+    @Override
+    public YTa getByUsername(String username) {
+        return yTaRepo.findYTaByUserAndIsDelete(userRepo.findByUserName(username), false);
+        //return yTaRepo.findYTaByUser(userRepo.findByUserName(username));
+    }
 }

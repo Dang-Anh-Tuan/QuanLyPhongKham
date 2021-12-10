@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import qlpk.entity.BacSy;
 import qlpk.entity.BenhAn;
 import qlpk.entity.BenhNhan;
+import qlpk.entity.YTa;
+import qlpk.security.CustomUserDetails;
 import qlpk.service.BenhAnService;
 import qlpk.service.BenhNhanService;
+import qlpk.service.YTaService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,10 +35,16 @@ public class BenhAnController {
 	
 	@Autowired
 	private BenhNhanService benhNhanService;
+
+	@Autowired
+	private YTaService yTaService;
 	
-	public BenhAnController (BenhAnService benhAnService, BenhNhanService benhNhanService) {
+	public BenhAnController (BenhAnService benhAnService,
+							 YTaService yTaService,
+							 BenhNhanService benhNhanService) {
 		this.benhAnService = benhAnService;
 		this.benhNhanService = benhNhanService;
+		this.yTaService = yTaService;
 	};
 	
 	@GetMapping("bacsi/list-benhan")
@@ -58,13 +69,18 @@ public class BenhAnController {
 	}
 	
 	@PostMapping("/yta/benhan/add")
-	public String handleAddBenhAn(@Valid @ModelAttribute("benhNhan") BenhNhan benhNhan,  BindingResult bindingResult) {
+	public String handleAddBenhAn(@Valid @ModelAttribute("benhNhan") BenhNhan benhNhan,
+								  BindingResult bindingResult,
+								  Authentication authentication) {
 		if(bindingResult.hasErrors()) {
 			return "YTa/AddBenhAn";
 		}
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		YTa yTa = yTaService.getByUsername(userDetails.getUsername());
 		benhNhanService.saveBenhNhan(benhNhan);
 		BenhAn benhAn = new BenhAn();
 		benhAn.setBenhNhan(benhNhan);
+		benhAn.setYTa(yTa);
 		benhAnService.saveBenhAn(benhAn);
 		return "redirect:/yta/list-benhan";
 	}

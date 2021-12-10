@@ -157,11 +157,14 @@ public class DoctorController {
 	@PostMapping("/bacsi/khambenh/{id}")
 	public String handleKhamBenh(@PathVariable int id, @ModelAttribute("benhAn") BenhAn benhAn,
 			@ModelAttribute("benhNhan") BenhNhan benhNhan,
+			Authentication authentication,
 			@ModelAttribute("benhDanhSachBenh") BenhDanhSachBenh benhDanhSachBenh) {
 		Optional<BenhAn> benhAn1 = benhAnService.getById(id);
 		if(benhAn1.isPresent()){
 			benhAn1.get().setIdBenh(benhDanhSachBenh.getIdBenh());
-
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			BacSy bacSy = bacSyService.getByUsername(userDetails.getUsername());
+			benhAn1.get().setBacSy(bacSy);
 			benhAnService.updateBenhAn(benhAn1.get());
 
 		}

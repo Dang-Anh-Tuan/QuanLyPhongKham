@@ -18,4 +18,5 @@ public interface YTaService {
     YTa searchYTaByCMT(String cmt);
     Optional<YTa> getById(int id);
     List<YtaLuong> tinhLuongYta(Date sdate, Date edate);
+    YTa getByUsername(String username);
 }

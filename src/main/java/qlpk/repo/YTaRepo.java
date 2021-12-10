@@ -18,6 +18,7 @@ public interface YTaRepo extends JpaRepository<YTa, Integer> {
     YTa findByCmt(String cmt);
     YTa findYTaByUserAndIsDelete(User user, boolean isDelete);
     Optional<YTa> findYTaByIdAndIsDelete(int id, boolean isDelete);
+    YTa findYTaByUser(User user);
     List<YTa> findYTaByIsDelete(boolean isDelete);
     @Query(value = "CALL get_salary_nurse(:nid, :sdate, :edate);", nativeQuery = true)
     public List<Float> tinhLuongYta(@RequestParam("nid") int nid, @RequestParam("sdate") Date sdate, @RequestParam("edate") Date edate);
