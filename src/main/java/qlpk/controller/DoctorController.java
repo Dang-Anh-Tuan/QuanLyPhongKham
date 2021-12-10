@@ -1,9 +1,6 @@
 package qlpk.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import javax.validation.Valid;
 
@@ -328,5 +325,8 @@ public class DoctorController {
 		}
 		return "redirect:/404";
 	}
-
+	@GetMapping("tinhluong")
+	public float tinhLuongBacSy(int id, Date sdate){
+		return bacSyService.tinhLuongBacSy(id, sdate);
+	}
 }
