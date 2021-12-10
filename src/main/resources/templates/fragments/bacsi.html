@@ -106,9 +106,9 @@
 	<!--  ---------------------- SELECT Benh Bac Si----------------------- -->
 
 	<div th:fragment="select_benh_bacsi">
-		<th:block th:object="${benh}">
-			<select name="" id="select1" class="select-box" th:field="${benh.id}" th:value="${benh.id}">
-				<th:block th:object="${dsBenh}" th:each="item, state : ${dsBenh}">
+		<th:block th:object="${benhDanhSachBenh}">
+			<select name="" id="select1" class="select-box" th:field="*{idBenh}">
+				<th:block  th:each="item, state : ${benhDanhSachBenh.getDsBenh()}">
 					<option class="select-option" th:value="${item.getId()}"
 						th:text="${item.getTenBenh()}"></option>
 				</th:block>

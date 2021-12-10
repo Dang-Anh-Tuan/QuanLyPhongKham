@@ -35,6 +35,7 @@ import qlpk.entity.Thuoc;
 import qlpk.security.User;
 import qlpk.service.BacSyService;
 import qlpk.service.BenhAnService;
+import qlpk.modelUtil.BenhDanhSachBenh;
 import qlpk.modelUtil.DetailThuoc;
 
 @Controller
@@ -162,29 +163,13 @@ public class DoctorController {
 			benh2.setTenBenh("sot");
 			List<Benh> dsBenh = Arrays.asList(benh1, benh2);
 
-			// model add benh cua bac si
-			model.addAttribute("dsBenh", dsBenh);
-
-			// check co benh cua bac si nay chua
-
 			Benh benh = new Benh();
-	
 
-//			List<Benh> benhCuaBenhAn = benhService.getByBenhAn(id);
-//			for(Benh item : benhCuaBenhAn) {
+			BenhDanhSachBenh benhDanhSachBenh = new BenhDanhSachBenh();
+			benhDanhSachBenh.setIdBenh(benh.getId());
+			benhDanhSachBenh.setDsBenh(dsBenh);
 
-			// neu benh an nay da co benh cua bac si dang kham
-
-//				if(dsBenh.contains(item)) {
-//					benh = benhService.getById(item.getId()).get();
-//					idBenhCu = item.getId();
-//					model.addAttribute("benh", benh);
-//					return "BacSi/KhamBenh";
-//				}
-
-//			}
-			
-			model.addAttribute("benh", benh);
+			model.addAttribute("benhDanhSachBenh", benhDanhSachBenh);
 			return "BacSi/KhamBenh";
 		}
 		return "redirect:/404";
@@ -193,20 +178,11 @@ public class DoctorController {
 
 	@PostMapping("/bacsi/khambenh/{id}")
 	public String handleKhamBenh(@PathVariable int id, @ModelAttribute("benhAn") BenhAn benhAn,
-			@ModelAttribute("benhNhan") BenhNhan benhNhan, @ModelAttribute("benh") Benh benh,
-			@ModelAttribute("idBenhCu") Integer idBenhCu) {
+			@ModelAttribute("benhNhan") BenhNhan benhNhan,
+			@ModelAttribute("benhDanhSachBenh") BenhDanhSachBenh benhDanhSachBenh) {
 
-		System.out.println(benh.getId());
-//		if (idBenhCu != 0) {
-//			// xoa benh cu trong danh sach benh cua benh an do
-//			if (benh.getId() != 1) {
-//				// get id cua benh
-//				
-//				// benhAnService.updateBenh(id)
-//			} else {
-//				// benhAnService.updateBenh(id)
-//			}
-//		}
+		System.out.println(benhDanhSachBenh.getIdBenh());
+
 
 		return "redirect:/bacsi/list-benhan";
 	}
