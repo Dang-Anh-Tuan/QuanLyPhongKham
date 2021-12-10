@@ -20,10 +20,7 @@ import qlpk.security.CustomUserDetails;
 import qlpk.service.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class DoctorController {
@@ -224,6 +221,7 @@ public class DoctorController {
 				dsDonThuoc = dsDonThuoc + iddonthuoc + " ";
 			}
 			benhAn.setDsDonThuoc(dsDonThuoc);
+			benhAn.setDaPhat(false);
 			benhAnService.saveBenhAn(benhAn);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -291,11 +289,15 @@ public class DoctorController {
 			// model add benh an va benh nhanh
 			model.addAttribute("benhAn", benhAn);
 			model.addAttribute("benhNhan", benhNhan);
-
-			// get donThuoc
-
-			// model add don thuoc
-//			model.addAttribute("donThuoc", donThuoc);
+			List<String> donthuoc = Arrays.asList(benhAn.getDsDonThuoc().split(" "));
+			List<DonThuoc> listDonThuoc = new LinkedList<>();
+			for (String s: donthuoc
+				 ) {
+				int idDonThuoc = Integer.parseInt(s);
+				DonThuoc donThuoc = donThuocService.getByIdDelete(idDonThuoc);
+				listDonThuoc.add(donThuoc);
+			}
+			model.addAttribute("donThuoc", listDonThuoc);
 
 			return "Bacsi/ViewDonThuoc";
 		}

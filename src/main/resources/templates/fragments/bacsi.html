@@ -79,7 +79,7 @@
 									class="side-bar-item__icon-img" th:src="@{/img/ongnghe.jpg}"
 									alt="" style="margin-left: 6px !important;">
 									</a> 
-									<a
+									<a th:if="${benhan.getDsDonThuoc()==null}"
 									th:href="@{'/bacsi/kedon/' + ${benhan.id}}"
 									class="table-list__cell-link"> <img
 									class="side-bar-item__icon-img"

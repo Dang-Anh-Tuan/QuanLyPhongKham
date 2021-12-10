@@ -9,28 +9,20 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import qlpk.dto.UserDTO;
-import qlpk.entity.Benh;
-import qlpk.entity.BenhAn;
-import qlpk.entity.BenhNhan;
-import qlpk.entity.YTa;
+import qlpk.entity.*;
 import qlpk.entity.enums.Role;
 import qlpk.modelUtil.YtaLuong;
-import qlpk.service.BenhAnService;
-import qlpk.service.BenhService;
-import qlpk.service.UserService;
-import qlpk.service.YTaService;
+import qlpk.service.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class NurseController {
 	@Autowired
 	private YTaService yTaService;
-
+	@Autowired
+	private DonThuocService donThuocService;
 	@Autowired
 	private BenhAnService benhAnService;
 	@Autowired
@@ -39,11 +31,13 @@ public class NurseController {
 	private BenhService benhService;
 
 	public NurseController(YTaService yTaService, BenhAnService benhAnService,
-						   UserService userService, BenhService benhService) {
+						   UserService userService, DonThuocService donThuocService,
+						   BenhService benhService) {
 		this.yTaService = yTaService;
 		this.benhAnService = benhAnService;
 		this.userService = userService;
 		this.benhService = benhService;
+		this.donThuocService = donThuocService;
 	}
 
 	@GetMapping("/qlns/yta/ds-yta")
@@ -176,7 +170,18 @@ public class NurseController {
 			model.addAttribute("benhNhan", benhNhan);
 
 			// get donThuoc
+			List<String> donthuoc = Arrays.asList(benhAn.getDsDonThuoc().split(" "));
+			List<DonThuoc> listDonThuoc = new LinkedList<>();
+			for (String s: donthuoc
+			) {
+				int idDonThuoc = Integer.parseInt(s);
+				DonThuoc donThuoc = donThuocService.getByIdDelete(idDonThuoc);
 
+
+					listDonThuoc.add(donThuoc);
+
+			}
+			model.addAttribute("donThuoc", listDonThuoc);
 			// model add don thuoc
 //			model.addAttribute("donThuoc", donThuoc);
 
@@ -190,9 +195,21 @@ public class NurseController {
 
 		Optional<BenhAn> optBenhAn = benhAnService.getById(id);
 		if (optBenhAn.isPresent()) {
-			
-			// xoa don thuoc trong benh an nay
 
+			optBenhAn.get().setDaPhat(true);
+			List<String> donthuoc = Arrays.asList(optBenhAn.get().getDsDonThuoc().split(" "));
+			List<DonThuoc> listDonThuoc = new LinkedList<>();
+			for (String s: donthuoc
+			) {
+				int idDonThuoc = Integer.parseInt(s);
+				Optional<DonThuoc> donThuoc = donThuocService.getById(idDonThuoc);
+
+				if (donThuoc.isPresent()){
+					donThuocService.delete(donThuoc.get());
+				}
+			}
+			optBenhAn.get().setDsDonThuoc(null);
+			benhAnService.saveBenhAn(optBenhAn.get());
 			return "redirect:/yta/list-benhan";
 		}
 		return "redirect:/404";

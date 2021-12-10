@@ -23,7 +23,7 @@ public class BenhAn {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayXuatVien;
     private float tongTien;
-    private boolean daPhat;
+    private boolean daPhat = true;
     private boolean daKhoi;
     private String dsDonThuoc;
     @ManyToOne(targetEntity = BacSy.class, cascade = CascadeType.ALL)

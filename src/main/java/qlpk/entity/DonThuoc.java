@@ -25,4 +25,5 @@ public class DonThuoc {
     private Thuoc thuoc;
     @ManyToOne(targetEntity = ThongTinChamSoc.class)
     private ThongTinChamSoc thongTinChamSoc;
+    private boolean isDelete = false;
 }

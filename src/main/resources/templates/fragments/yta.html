@@ -71,7 +71,13 @@
 									th:href="@{'/yta/xemdonthuoc/' + ${benhan.id}}"
 									class="table-list__cell-link"><i
 									class="fas fa-list-alt table-list__cell-icon table-list__cell-icon--edit"></i></a>
-                            </div>
+								<a th:href="@{'/yta/benhan/edit/' + ${benhan.id}}"
+								   class="table-list__cell-link"><i
+										class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+								<a th:href="@{'/yta/benhan/delete/' + ${benhan.id}}"
+								   class="table-list__cell-link"><i
+										class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
+							</div>
                         </div>
                     </div>
                 </th:block>
