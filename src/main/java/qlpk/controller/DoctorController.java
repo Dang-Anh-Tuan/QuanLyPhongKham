@@ -51,6 +51,7 @@ public class DoctorController {
 	private BacSyService bacSyService;
 	@Autowired
 	private BenhAnService benhAnService;
+	@Autowired
 	private UserService userService;
 
 	public DoctorController(BacSyService bacSyService, UserService userService) {
@@ -78,12 +79,11 @@ public class DoctorController {
 
 	@PostMapping("/qlns/bacsi/add")
 	public String handleAddBacSi(@Valid @ModelAttribute("bacsi") BacSy bacsi, BindingResult result,
-			@ModelAttribute("taikhoan") User user) {
+								 @ModelAttribute("taikhoan") UserDTO userDTO) {
 
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/AddDoctor";
 		}
-			@ModelAttribute("taikhoan") UserDTO userDTO) {
 
 		userDTO.setRole(Role.BACSY);
 		userService.save(userDTO);
@@ -112,13 +112,11 @@ public class DoctorController {
 
 	@PostMapping("/qlns/bacsi/edit/{id}")
 	public String handleEditBacSi(@Valid @ModelAttribute("bacsi") BacSy bacsi, BindingResult result,
-			@ModelAttribute("taikhoan") User user) {
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
-		// setTK
-//		bacsi.setTaiKhoan(taiKhoan);
 		userService.save(userDTO);
 		bacSyService.updateBacSy(bacsi);
 		return "redirect:/qlns/bacsi/ds-bacsi";
