@@ -5,6 +5,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<th:block th:each="luong : ${listLuong}">
+    <li th:utext="${luong.bacSy.Ten}">..</li>
+    <li th:utext="${luong.luong}">..</li>
+</th:block>
+</div>
+</div>
 </body>
 </html>

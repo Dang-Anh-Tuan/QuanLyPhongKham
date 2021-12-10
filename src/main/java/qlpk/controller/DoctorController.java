@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,15 +14,16 @@ import org.springframework.web.servlet.view.RedirectView;
 import qlpk.dto.UserDTO;
 import qlpk.entity.*;
 import qlpk.entity.enums.Role;
+import qlpk.modelUtil.BacSyLuong;
 import qlpk.modelUtil.BenhDanhSachBenh;
 import qlpk.modelUtil.DetailThuoc;
-import qlpk.security.CustomUserDetails;
 import qlpk.service.BacSyService;
 import qlpk.service.BenhAnService;
 import qlpk.service.UserService;
 
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -308,5 +309,14 @@ public class DoctorController {
 		}
 		return "redirect:/404";
 	}
+	@GetMapping("/bacsi/luong")
+	public String tinhLuongBacSy(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date sdate, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date edate,Model model){
 
+		List<BacSyLuong> listLuong = bacSyService.tinhLuongBacSy(sdate, edate);
+		System.err.println("55555555555555555555555555555");
+		model.addAttribute("listLuong", listLuong);
+		System.err.println("4444444444444444444444444444444");
+//		System.out.println(listLuong);
+		return "QuanLyNhanSu/Salary";
+	}
 }
