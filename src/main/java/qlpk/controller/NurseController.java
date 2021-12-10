@@ -33,6 +33,7 @@ public class NurseController {
 
 	@Autowired
 	private BenhAnService benhAnService;
+	private UserService userService;
 
 	public NurseController(YTaService yTaService, BenhAnService benhAnService) {
 		this.yTaService = yTaService;
@@ -49,25 +50,26 @@ public class NurseController {
 	@GetMapping("/qlns/yta/add")
 	public String showAddFormYTa(Model model) {
 		YTa yTa = new YTa();
-		User taiKhoan = new User();
+		UserDTO user = new UserDTO();;
 
 		model.addAttribute("yTa", yTa);
-		model.addAttribute("taikhoan", taiKhoan);
+		model.addAttribute("taikhoan", user);
 		return "QuanLyNhanSu/AddNurse";
 
 	}
 
 	@PostMapping("/qlns/yta/add")
-	public String handleAddYTa(@Valid @ModelAttribute("yTa") YTa yTa, BindingResult result,
-			@ModelAttribute("taikhoan") User taiKhoan, Model model) {
+	public String handleAddYTa(
+			@Valid @ModelAttribute("yTa") YTa yTa,
+			BindingResult result,
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
 
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/AddNurse";
 		}
-		taiKhoan.setRole("Role.YTA");
-//			 setTK
-//			yTa.setTaiKhoan(taiKhoan);
-		yTaService.saveYTa(yTa);
+		userDTO.setRole(Role.YTA);
+		userService.save(userDTO);
+		yTaService.saveYTa(yTa, userDTO);
 		return "redirect:/qlns/yta/ds-yta";
 
 	}
@@ -77,13 +79,12 @@ public class NurseController {
 		Optional<YTa> optYTa = yTaService.getById(id);
 		// get TaiKhoan map voi Bac Sy
 //		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
-		User taiKhoan = new User();
-
-		taiKhoan.setRole("Role.YTA");
+		UserDTO userDTO;
 
 		if (optYTa.isPresent()) {
+			userDTO = userService.getUserByID(optYTa.get().getUser().getId());
 			model.addAttribute("yTa", optYTa.get());
-			model.addAttribute("taikhoan", taiKhoan);
+			model.addAttribute("taikhoan", userDTO);
 			return "QuanLyNhanSu/EditNurse";
 		}
 
@@ -93,16 +94,15 @@ public class NurseController {
 
 	@PostMapping("/qlns/yta/edit/{id}")
 	public String handleEditYTa(@PathVariable int id, @Valid @ModelAttribute("yTa") YTa yTa, BindingResult result,
-			@Valid @ModelAttribute("taikhoan") User taiKhoan, Model model) {
+								@Valid @ModelAttribute("taikhoan") UserDTO userDTO, Model model, Errors errors) {
 
-		if (result.hasErrors()) {
+		if (errors.hasErrors()) {
 //			Optional<YTa> optYTa = yTaService.getById(id);
 //			model.addAttribute("yTa", optYTa.get());
 //			model.addAttribute("taikhoan", taiKhoan);
 			return "QuanLyNhanSu/EditNurse";
 		} else {
-			// setTK
-//			yta.setTaiKhoan(taiKhoan);
+			userService.save(userDTO);
 			yTaService.updateYTa(yTa);
 			return "redirect:/qlns/yta/ds-yta";
 		}
