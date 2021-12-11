@@ -5,6 +5,6 @@ import qlpk.entity.Benh;
 
 @Data
 public class ThongkeBenhDetail {
-    Benh benh;
-    Integer soCa;
+    private Benh benh;
+    private Integer soCa;
 }
