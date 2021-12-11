@@ -69,7 +69,12 @@ public class BenhServiceImpl implements BenhService {
 			thongkeBenhDetail.setSoCa(benhRepo.thongKeBenh(benh.getId(),sdate,edate).get(0));
 			listThongKeBenh.add(thongkeBenhDetail);
 		}
-
+		listThongKeBenh.sort(new Comparator<ThongkeBenhDetail>() {
+			@Override
+			public int compare(ThongkeBenhDetail o1, ThongkeBenhDetail o2) {
+				return o1.getSoCa()-o2.getSoCa();
+			}
+		});
 		return listThongKeBenh;
 	}
 
