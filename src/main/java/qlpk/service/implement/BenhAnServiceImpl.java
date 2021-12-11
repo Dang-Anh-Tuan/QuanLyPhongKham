@@ -1,10 +1,10 @@
-package qlpk.service.imp;
+
+package qlpk.service.implement;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import org.springframework.stereotype.Service;
 import qlpk.entity.BenhAn;
@@ -18,13 +18,13 @@ public class BenhAnServiceImpl implements BenhAnService {
 	private BenhAnRepo benhAnRepo;
 	
 	public BenhAnServiceImpl(BenhAnRepo benhAnRepo) {
-		
+		super();
 		this.benhAnRepo = benhAnRepo;
 	}
 	
 	@Override
 	public List<BenhAn> getAll() {
-		return benhAnRepo.findAll();
+		return benhAnRepo.findBenhAnByIsDelete(false);
 	}
 
 	@Override
@@ -40,14 +40,16 @@ public class BenhAnServiceImpl implements BenhAnService {
 	}
 
 	@Override
-	public void deleteBenhAn(int id) {
-		benhAnRepo.deleteById(id);	
-	}
-
-
-	@Override
-	public Optional<BenhAn> getById(Integer id) {
+	public Optional<BenhAn> getById(int id) {
 		return benhAnRepo.findById(id);
 	}
+
+	@Override
+	public void deleteBenhAn(int id) {
+		BenhAn benhAn = benhAnRepo.getById(id);
+		benhAn.setDelete(true);
+		saveBenhAn(benhAn);
+	}
+
 
 }

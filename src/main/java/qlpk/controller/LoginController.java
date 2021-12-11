@@ -3,18 +3,25 @@ package qlpk.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import qlpk.dto.auth.param.LoginFormParam;
+import qlpk.entity.enums.Role;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping({"/", "/login"})
 public class LoginController {
-	@GetMapping
+	@GetMapping(value = {"/", "/login"})
 	public String showLoginForm() {
 		return "Login";
 	}
-	@PostMapping
-	public String postLoginForm(@ModelAttribute LoginFormParam loginFormParam){
-		System.out.println(loginFormParam.toString());
-		return "Login";
-	}
+//	@GetMapping("/loginSuccess")
+//	public String redirectAfterLogin(Model model, HttpServletRequest request){
+//
+//		if(request.isUserInRole(Role.ADMIN.getType())){
+//			return "redirect:/qlns/bacsi/ds-bacsi";
+//		}
+//		else if (request.isUserInRole(Role.BACSY.getType())){
+//			return "redirect:/bacsi/list-benhan";
+//		}
+//		else return "redirect:/yta/list-benhan";
+//	}
 }

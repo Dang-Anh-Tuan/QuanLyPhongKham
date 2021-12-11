@@ -1,56 +1,52 @@
 package qlpk.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
-import org.json.JSONObject;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.mysql.cj.Session;
-
-import qlpk.entity.BacSy;
-import qlpk.entity.Benh;
-import qlpk.entity.BenhAn;
-import qlpk.entity.BenhNhan;
-import qlpk.entity.DonThuoc;
-import qlpk.entity.Thuoc;
-import qlpk.security.User;
-import qlpk.service.BacSyService;
-import qlpk.service.BenhAnService;
+import qlpk.dto.UserDTO;
+import qlpk.entity.*;
+import qlpk.entity.enums.Role;
+import qlpk.modelUtil.BacSyLuong;
+import qlpk.modelUtil.BenhDanhSachBenh;
 import qlpk.modelUtil.DetailThuoc;
+import qlpk.security.CustomUserDetails;
+import qlpk.service.*;
+
+import javax.validation.Valid;
+import java.util.*;
 
 @Controller
 public class DoctorController {
 
 	@Autowired
 	private BacSyService bacSyService;
-//	@Autowired
-//	private TaiKhoanService taiKhoanService;
-
 	@Autowired
 	private BenhAnService benhAnService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private BenhService benhService;
+	@Autowired
+	private ThuocService thuocService;
+	@Autowired
+	private DonThuocService donThuocService;
 
-	public DoctorController(BacSyService bacSyService, BenhAnService benhAnService) {
+	public DoctorController(BacSyService bacSyService, UserService userService,
+							BenhAnService benhAnService, BenhService benhService,
+							ThuocService thuocService, DonThuocService donThuocService) {
 		this.bacSyService = bacSyService;
 		this.benhAnService = benhAnService;
+		this.userService = userService;
+		this.benhService = benhService;
+		this.thuocService = thuocService;
+		this.donThuocService = donThuocService;
 	}
 
 	@GetMapping("/qlns/bacsi/ds-bacsi")
@@ -63,9 +59,7 @@ public class DoctorController {
 	@GetMapping("/qlns/bacsi/add")
 	public String showAddFormBacSi(Model model) {
 		BacSy bacSi = new BacSy();
-		User user = new User();
-		user.setRole("Role.BACSY");
-
+		UserDTO user = new UserDTO();
 		model.addAttribute("bacsi", bacSi);
 		model.addAttribute("taikhoan", user);
 		return "QuanLyNhanSu/AddDoctor";
@@ -74,50 +68,43 @@ public class DoctorController {
 
 	@PostMapping("/qlns/bacsi/add")
 	public String handleAddBacSi(@Valid @ModelAttribute("bacsi") BacSy bacsi, BindingResult result,
-			@ModelAttribute("taikhoan") User user) {
+								 @ModelAttribute("taikhoan") UserDTO userDTO) {
 
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/AddDoctor";
 		}
 
-		// setTK
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getUsername());
-		java.util.logging.Logger.getLogger(DoctorController.class.getName()).info(user.getPassword());
-		// userService.saveTaiKhoan(taiKhoan);
-//		bacsi.setUser(user);
+		userDTO.setRole(Role.BACSY);
+		userService.save(userDTO);
+		bacSyService.saveBacSy(bacsi, userDTO);
 
-		bacSyService.saveBacSy(bacsi);
 		return "redirect:/qlns/bacsi/ds-bacsi";
 	}
 
 	@GetMapping("/qlns/bacsi/edit/{id}")
 	public String showEditFormBacSi(@PathVariable int id, Model model) {
 		Optional<BacSy> optBacSi = bacSyService.getById(id);
-		// get TaiKhoan map voi Bac Sy
-//		model.addAttribute("taikhoan",  taiKhoanService.getByUsername(String username).get());
-		User user = new User();
-
-		// Role role = Role.BACSY;
-		// taiKhoan.setRole(role);
+		UserDTO userDTO;
 
 		if (optBacSi.isPresent()) {
+			userDTO = userService.getUserByID(optBacSi.get().getUser().getId());
 			model.addAttribute("bacsi", optBacSi.get());
-			model.addAttribute("taikhoan", user);
+			model.addAttribute("taikhoan", userDTO);
+
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
+		// 404
 		return "404";
 	}
 
 	@PostMapping("/qlns/bacsi/edit/{id}")
 	public String handleEditBacSi(@Valid @ModelAttribute("bacsi") BacSy bacsi, BindingResult result,
-			@ModelAttribute("taikhoan") User user) {
+			@ModelAttribute("taikhoan") UserDTO userDTO) {
 		if (result.hasErrors()) {
 			return "QuanLyNhanSu/EditDoctor";
 		}
 
-		// setTK
-//		bacsi.setTaiKhoan(taiKhoan);
 		bacSyService.updateBacSy(bacsi);
 		return "redirect:/qlns/bacsi/ds-bacsi";
 	}
@@ -139,52 +126,29 @@ public class DoctorController {
 	}
 
 	@GetMapping("/bacsi/khambenh/{id}")
-	public String showViewKhamBenh(@PathVariable int id, Model model) {
+	public String showViewKhamBenh(@PathVariable int id, Model model, Authentication authentication) {
 		// get Benh An
 		Optional<BenhAn> optBenhAn = benhAnService.getById(id);
 		if (optBenhAn.isPresent()) {
 			BenhAn benhAn = optBenhAn.get();
 			BenhNhan benhNhan = benhAn.getBenhNhan();
-			// get All Benh cua Bac Si Kham ( Lấy Bac Si từ session )
-//			User userBS = session.get 
-//			List<Benh> dsBenh = benhService.getByBacSi(idBacSi);
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			BacSy bacSy = bacSyService.getByUsername(userDetails.getUsername());
+
+			List<Benh> dsBenh = benhService.getBenhByBacSy(bacSy.getId());
 
 			// model add benh an va benh nhanh
 			model.addAttribute("benhAn", benhAn);
 			model.addAttribute("benhNhan", benhNhan);
 
-			// fake benh
-			Benh benh1 = new Benh();
-			benh1.setId(10);
-			benh1.setTenBenh("ho");
-			Benh benh2 = new Benh();
-			benh2.setId(11);
-			benh2.setTenBenh("sot");
-			List<Benh> dsBenh = Arrays.asList(benh1, benh2);
-
-			// model add benh cua bac si
-			model.addAttribute("dsBenh", dsBenh);
-
-			// check co benh cua bac si nay chua
 
 			Benh benh = new Benh();
-	
 
-//			List<Benh> benhCuaBenhAn = benhService.getByBenhAn(id);
-//			for(Benh item : benhCuaBenhAn) {
+			BenhDanhSachBenh benhDanhSachBenh = new BenhDanhSachBenh();
+			benhDanhSachBenh.setIdBenh(benh.getId());
+			benhDanhSachBenh.setDsBenh(dsBenh);
 
-			// neu benh an nay da co benh cua bac si dang kham
-
-//				if(dsBenh.contains(item)) {
-//					benh = benhService.getById(item.getId()).get();
-//					idBenhCu = item.getId();
-//					model.addAttribute("benh", benh);
-//					return "BacSi/KhamBenh";
-//				}
-
-//			}
-			
-			model.addAttribute("benh", benh);
+			model.addAttribute("benhDanhSachBenh", benhDanhSachBenh);
 			return "BacSi/KhamBenh";
 		}
 		return "redirect:/404";
@@ -193,21 +157,18 @@ public class DoctorController {
 
 	@PostMapping("/bacsi/khambenh/{id}")
 	public String handleKhamBenh(@PathVariable int id, @ModelAttribute("benhAn") BenhAn benhAn,
-			@ModelAttribute("benhNhan") BenhNhan benhNhan, @ModelAttribute("benh") Benh benh,
-			@ModelAttribute("idBenhCu") Integer idBenhCu) {
+			@ModelAttribute("benhNhan") BenhNhan benhNhan,
+			Authentication authentication,
+			@ModelAttribute("benhDanhSachBenh") BenhDanhSachBenh benhDanhSachBenh) {
+		Optional<BenhAn> benhAn1 = benhAnService.getById(id);
+		if(benhAn1.isPresent()){
+			benhAn1.get().setIdBenh(benhDanhSachBenh.getIdBenh());
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			BacSy bacSy = bacSyService.getByUsername(userDetails.getUsername());
+			benhAn1.get().setBacSy(bacSy);
+			benhAnService.updateBenhAn(benhAn1.get());
 
-		System.out.println(benh.getId());
-//		if (idBenhCu != 0) {
-//			// xoa benh cu trong danh sach benh cua benh an do
-//			if (benh.getId() != 1) {
-//				// get id cua benh
-//				
-//				// benhAnService.updateBenh(id)
-//			} else {
-//				// benhAnService.updateBenh(id)
-//			}
-//		}
-
+		}
 		return "redirect:/bacsi/list-benhan";
 	}
 
@@ -228,14 +189,8 @@ public class DoctorController {
 			model.addAttribute("benhNhan", benhNhan);
 
 			// fake thuoc
-			Thuoc thuoc1 = new Thuoc();
-			thuoc1.setId(10);
-			thuoc1.setTen("panadol");
-			Thuoc thuoc2 = new Thuoc();
-			thuoc2.setId(11);
-			thuoc2.setTen("panadol extra");
 
-			List<Thuoc> dsThuoc = Arrays.asList(thuoc1, thuoc2);
+			List<Thuoc> dsThuoc = thuocService.getAll();
 
 			// model add thuoc
 			model.addAttribute("dsThuoc", dsThuoc);
@@ -251,13 +206,23 @@ public class DoctorController {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
+			BenhAn benhAn = benhAnService.getById(id).get();
+			String dsDonThuoc = "";
 			List<DetailThuoc> listDetailThuoc = mapper.readValue(json, new TypeReference<List<DetailThuoc>>() {
 			});
-			for (DetailThuoc d : listDetailThuoc) {
-				System.out.println(d.getIdThuoc() + " - " + d.getLieuDung() + " - " + d.getCachDung());
-				return "404";
+			for (DetailThuoc detailThuoc: listDetailThuoc
+				 ) {
+				DonThuoc donThuoc = new DonThuoc();
+				donThuoc.setThuoc(thuocService.getById(detailThuoc.getIdThuoc()));
+				donThuoc.setLieuLuong(detailThuoc.getLieuDung()+"");
+				donThuoc.setCacDung(detailThuoc.getCachDung());
+				donThuoc.setTongTien(thuocService.getById(detailThuoc.getIdThuoc()).getGia()*detailThuoc.getLieuDung());
+				Integer iddonthuoc = donThuocService.saveThuoc(donThuoc);
+				dsDonThuoc = dsDonThuoc + iddonthuoc + " ";
 			}
-
+			benhAn.setDsDonThuoc(dsDonThuoc);
+			benhAn.setDaPhat(false);
+			benhAnService.saveBenhAn(benhAn);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -287,22 +252,12 @@ public class DoctorController {
 			model.addAttribute("benhNhan", benhNhan);
 
 			// fake benh
-			Benh benh1 = new Benh();
-			benh1.setId(10);
-			benh1.setTenBenh("ho");
-			Benh benh2 = new Benh();
-			benh2.setId(11);
-			benh2.setTenBenh("sot");
-			List<Benh> dsBenh = Arrays.asList(benh1, benh2);
+			Optional<Benh> benh1 = benhService.getById(benhAn.getIdBenh());
+			List<Benh> dsBenh = Arrays.asList(benh1.get());
 
 			// model add benh cua benh an
 			model.addAttribute("dsBenh", dsBenh);
 
-			// fake benh cua bac si
-			List<Benh> dsBenhBS = Arrays.asList(benh1);
-
-			// model add benh cua benh an
-			model.addAttribute("dsBenhBS", dsBenhBS);
 
 			return "Bacsi/ViewBenhAn";
 		}
@@ -312,18 +267,10 @@ public class DoctorController {
 	@PostMapping("/bacsi/xembenhan/{id}")
 	public String handleUpdateKhoiBenh(@PathVariable int id, @RequestBody(required = false) String json) {
 		if (json != null) {
-			try {
-				JSONObject jsonObject = new JSONObject(json);
-				int idBenh = jsonObject.getInt("id");
-				System.out.println(idBenh);
-				return "redirect:/bacsi/list-benhan";
-			} catch (Exception e) {
-
-			}
-
-			// update khoi benh cho benh an do
-
-			// ******* redirect danh sach benh an *********
+			Optional<BenhAn> benhAn = benhAnService.getById(id);
+			benhAn.get().setDaKhoi(true);
+			benhAn.get().setDelete(true);
+			benhAnService.saveBenhAn(benhAn.get());
 
 		}
 		return "redirect:/bacsi/list-benhan";
@@ -342,15 +289,28 @@ public class DoctorController {
 			// model add benh an va benh nhanh
 			model.addAttribute("benhAn", benhAn);
 			model.addAttribute("benhNhan", benhNhan);
-
-			// get donThuoc
-
-			// model add don thuoc
-//			model.addAttribute("donThuoc", donThuoc);
+			List<String> donthuoc = Arrays.asList(benhAn.getDsDonThuoc().split(" "));
+			List<DonThuoc> listDonThuoc = new LinkedList<>();
+			for (String s: donthuoc
+				 ) {
+				int idDonThuoc = Integer.parseInt(s);
+				DonThuoc donThuoc = donThuocService.getByIdDelete(idDonThuoc);
+				listDonThuoc.add(donThuoc);
+			}
+			model.addAttribute("donThuoc", listDonThuoc);
 
 			return "Bacsi/ViewDonThuoc";
 		}
 		return "redirect:/404";
 	}
+	@GetMapping("/bacsi/luong")
+	public String tinhLuongBacSy(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date sdate, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date edate,Model model){
 
+		List<BacSyLuong> listLuong = bacSyService.tinhLuongBacSy(sdate, edate);
+		System.err.println("55555555555555555555555555555");
+		model.addAttribute("listLuong", listLuong);
+		System.err.println("4444444444444444444444444444444");
+//		System.out.println(listLuong);
+		return "QuanLyNhanSu/Salary";
+	}
 }

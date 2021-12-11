@@ -70,7 +70,7 @@
 						<div class="grid__col-lg-3 table-list__cell">
 							<div class="grid__row grid__row--item-center"
 								style="margin-left: 26px !important;">
-								<a th:href="@{'/bacsi/xembenhan/' + ${benhan.id}}"
+								<a th:if="${benhan.getIdBenh()!=null}" th:href="@{'/bacsi/xembenhan/' + ${benhan.id}}"
 									class="table-list__cell-link"><i
 									class="fas fa-eye table-list__cell-icon table-list__cell-icon--edit"></i>
 								</a>
@@ -79,13 +79,13 @@
 									class="side-bar-item__icon-img" th:src="@{/img/ongnghe.jpg}"
 									alt="" style="margin-left: 6px !important;">
 									</a> 
-									<a
+									<a th:if="${benhan.getDsDonThuoc()==null}"
 									th:href="@{'/bacsi/kedon/' + ${benhan.id}}"
 									class="table-list__cell-link"> <img
 									class="side-bar-item__icon-img"
 									th:src="@{/img/icon-medicine.png}" alt=""
 									style="margin-left: 6px !important;"></a>
-									 <a
+									 <a th:if="${benhan.getDsDonThuoc()!=null}"
 									th:href="@{'/bacsi/xemdonthuoc/' + ${benhan.id}}"
 									class="table-list__cell-link"><i
 									class="fas fa-list-alt table-list__cell-icon table-list__cell-icon--edit"></i></a>
@@ -106,9 +106,9 @@
 	<!--  ---------------------- SELECT Benh Bac Si----------------------- -->
 
 	<div th:fragment="select_benh_bacsi">
-		<th:block th:object="${benh}">
-			<select name="" id="select1" class="select-box" th:field="${benh.id}" th:value="${benh.id}">
-				<th:block th:object="${dsBenh}" th:each="item, state : ${dsBenh}">
+		<th:block th:object="${benhDanhSachBenh}">
+			<select name="" id="select1" class="select-box" th:field="*{idBenh}">
+				<th:block  th:each="item, state : ${benhDanhSachBenh.getDsBenh()}">
 					<option class="select-option" th:value="${item.getId()}"
 						th:text="${item.getTenBenh()}"></option>
 				</th:block>

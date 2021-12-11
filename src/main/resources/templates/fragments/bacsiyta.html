@@ -100,8 +100,7 @@
 					<i class="text-font-20 mr-4 fas fa-chevron-circle-right"></i>
 					<p class="text-font-20" th:text="${benh.tenBenh}"></p>
 					<th:block th:object="${dsBenhBS}">
-						<button
-							th:if="${actor == 'bacsi' and #lists.contains(dsBenhBS, benh)}"
+						<button th:if="${actor=='bacsi'}"
 							th:id="${benh.id}"
 							class="btn btn-size-ss btn--border-primary ml-4 btn-khoi-benh">Đã
 							khỏi</button>
@@ -136,7 +135,7 @@
 									Cách dùng</div>
 							</div>
 							<th:block th:each="item, state : ${donThuoc}"
-								th:object="donThuoc">
+								th:object="${donThuoc}">
 								<div
 									class="
            							 grid__row grid__row--spbw grid__row--item-center
@@ -144,12 +143,13 @@
          					 ">
 									<div class="grid__col-lg-1 table-list__th table-list__cell"
 										th:text="${state.count}"></div>
-									<div class="grid__col-lg-3 table-list__th table-list__cell">Tên
-										thuốc</div>
-									<div class="grid__col-lg-2 table-list__th table-list__cell">
-										Liều dùng</div>
-									<div class="grid__col-lg-3 table-list__th table-list__cell">
-										Cách dùng</div>
+									<div class="grid__col-lg-3 table-list__th table-list__cell"
+										 th:text="${item.getThuoc().getTen()}"></div>
+									<div class="grid__col-lg-2 table-list__th table-list__cell"
+										 th:text="${item.getLieuLuong()}"></div>
+									<div class="grid__col-lg-3 table-list__th table-list__cell"
+										 th:text="${item.getCacDung()}">
+										</div>
 								</div>
 							</th:block>
 						</div>

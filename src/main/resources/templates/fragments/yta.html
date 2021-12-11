@@ -63,15 +63,21 @@
                         <div class="grid__col-lg-3 table-list__cell" th:utext="${benhan.ngayKham}"></div>            
                         <div class="grid__col-lg-3 table-list__cell">
                             <div class="grid__row" style="margin-left: 48px !important;">
-                                <a th:href="@{'/yta/xembenhan/' + ${benhan.id}}"
+                                <a th:if="${benhan.getIdBenh()!=null}" th:href="@{'/yta/xembenhan/' + ${benhan.id}}"
 									class="table-list__cell-link"><i
 									class="fas fa-eye table-list__cell-icon table-list__cell-icon--edit"></i>
 								</a>
-								 <a
+								 <a th:if="${benhan.getDsDonThuoc()!=null}"
 									th:href="@{'/yta/xemdonthuoc/' + ${benhan.id}}"
 									class="table-list__cell-link"><i
 									class="fas fa-list-alt table-list__cell-icon table-list__cell-icon--edit"></i></a>
-                            </div>
+								<a th:href="@{'/yta/benhan/edit/' + ${benhan.id}}"
+								   class="table-list__cell-link"><i
+										class="fas fa-edit table-list__cell-icon table-list__cell-icon--edit"></i></a>
+								<a th:href="@{'/yta/benhan/delete/' + ${benhan.id}}"
+								   class="table-list__cell-link"><i
+										class="fas fa-trash-alt table-list__cell-icon table-list__cell-icon--delete"></i></a>
+							</div>
                         </div>
                     </div>
                 </th:block>
